@@ -25,5 +25,5 @@ The Redis project does not officially support Windows. However, the Microsoft Op
 
 설치과정은 간단하므로 설명할 필요는 없을 것 같고, 설치가 다 되면 Redis 서버가 자동으로 윈도우 서비스로 등록된다.
 
-**<font style='color:red'>주의!</font>**<br />
+**주의!**<br />
 이 방법으로는 Redis의 최신 버전을 사용할 수 없다. 이를 위해서는 소스를 직접 내려받아서 컴파일해야한다.
