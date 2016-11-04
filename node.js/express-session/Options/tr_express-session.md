@@ -1,6 +1,46 @@
-# Options
+[express-session](https://github.com/expressjs/session)의 내용을 번역하여 정리한다.
 
-[express-session](https://github.com/expressjs/session)의 [Options](https://github.com/expressjs/session#options) 내용을 번역하여 정리한다.
+# express-session
+
+# 설치
+```
+$ npm install express-session
+```
+# API
+```javascript
+var session = require('express-session')
+```
+
+## session(options)
+특정 옵션을 통해서 세션 미들웨어를 생성하라.
+
+**노트** 세션 데이터는 쿠키에 저장되지 않고, 쿠키에는 단지 세션 ID만이 저장된다. 세션 데이터는 서버단에 저장된다.
+
+**노트** 1.5.0버전부터, 이 모듈이 동작하기 위해서 [`cookie-parser` middleware](https://www.npmjs.com/package/cookie-parser)는 더이상 사용되지 않는다. 이제, 이 모듈은 `req/res`에서 직접 쿠키를 읽고 쓴다. 만약, 이 모듈과 `cookie-parser`의 `secret`옵션 값이 서로 다른 경우 `cookie-parser`를 사용하는 것은 문제를 일으킬 수 있다.
+
+**Warning** 기본 서버단 세션 저장소는 `MemoryStore`이다. 이것은 의도적으로 제품을 위해서 설계되지 않았다. 대부분의 환경에서 메모리 릭을 발생 시킬것이고, 하나의 프로세스를 넘어 확장되지 않는다. 결국, 디버깅과 개발 환경을 위해서 설계되었다는 말이다.
+
+세션 저장소 목록에 대해서는 ['호환되는 세션 저장소'](https://github.com/expressjs/session#compatible-session-stores)을 환인해라.
+
+## Options
+
+`express-session`은 options 오브젝트에서 다음 프로퍼티들을 사용한다.
+
+#### cookie
+
+세션 ID 쿠키를 위한 설정 오브젝트이다. 기본값은 `{ path: '/', httpOnly: true, secure: false, maxAge: null}`이다. 다음은 이 오브젝트에 설정 될 수 있는 옵션들이다.
+
+#### cookie.domain
+
+`Domain` `Set-Cookie` 속성의 값을 명시한다. 기본값으로는 도메인은 설정되지 않는다. 대부분의 클라이언트들은 오직 현재 도메인에 적용하기 위한 쿠키를 고려할 것이다.
+
+#### cookie.expires
+
+`Expires` `Set-Cookie` 속성의 값이 될 `Date` 오브젝트를 명시한다. 기본값으로는 만료시간이 설정되지 않는다. 대부분의 클라이언트는 "지속되지 않는 쿠키"를 고려할 것이고 웹 브라우저를 닫을 때 쿠키를 삭제할 것이다.
+
+**Note** 만약 `expires`와 `maxAge`를 모두 설정한다면, 그때는 마지막으로 설정 된 옵션이 사용된다.
+
+**Note** `expires`옵션은 직접적으로 설정되지 않아야한다. 대신, 오직 `maxAge`옵션을 사용해야한다. 
 
 ### 
 ### resave
