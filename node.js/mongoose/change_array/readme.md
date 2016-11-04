@@ -66,6 +66,6 @@ userObj.roles.set(0, 'Administrator');
 ```
 ## 참조
 
-[Model.save() doesn't save embedded arrays](https://github.com/Automattic/mongoose/issues/1204)
-[FAQ](http://mongoosejs.com/docs/faq.html)
-[MongooseArray.set()](http://mongoosejs.com/docs/api.html#types_array_MongooseArray.set)
+* [Model.save() doesn't save embedded arrays](https://github.com/Automattic/mongoose/issues/1204)
+* [FAQ](http://mongoosejs.com/docs/faq.html)
+* [MongooseArray.set()](http://mongoosejs.com/docs/api.html#types_array_MongooseArray.set)
