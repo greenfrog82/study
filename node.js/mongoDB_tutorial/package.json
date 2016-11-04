@@ -1,0 +1,21 @@
+{
+  "name": "project_template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run:mongodb": "babel ./src/using_mongodb.js --out-dir ./dist&&node ./dist/src/using_mongodb.js",
+    "run:mongoose": "babel ./src/using_mongoose.js --out-dir ./dist&&node ./dist/src/using_mongoose.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0"
+  },
+  "dependencies": {
+    "mongoose": "^4.6.6"
+  }
+}

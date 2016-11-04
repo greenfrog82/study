@@ -11,7 +11,12 @@ const client  = redis.createClient();
 const app = express();
 
 app.use(session({
-    secret: 'ssshhhhh',
+    secret: '@#!@)($)*@#$)(#@$)(!@$*)',
+    cookie: {
+      httpOnly: true,
+      maxAge: 60000,
+      secure: false
+    },
     // create new redis store.
     store: new redisStore({ host: 'localhost', port: 6379}),
     saveUninitialized: false,
