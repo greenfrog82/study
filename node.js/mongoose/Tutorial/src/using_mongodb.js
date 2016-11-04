@@ -102,36 +102,36 @@ function select() {
 
 function curosr() {
   // Use connect method to connect to the Server
-MongoClient.connect(url, function (err, db) {
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  } else {
-    //HURRAY!! We are connected. :)
-    console.log('Connection established to', url);
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      console.log('Unable to connect to the mongoDB server. Error:', err);
+    } else {
+      //HURRAY!! We are connected. :)
+      console.log('Connection established to', url);
 
-    // Get the documents collection
-    var collection = db.collection('users');
+      // Get the documents collection
+      var collection = db.collection('users');
 
-    //We have a cursor now with our find criteria
-    var cursor = collection.find({});
+      //We have a cursor now with our find criteria
+      var cursor = collection.find({});
 
-    //We need to sort by age descending
-    cursor.sort({age: -1});
+      //We need to sort by age descending
+      cursor.sort({age: -1});
 
-    //Limit to max 10 records
-    cursor.limit(1);
+      //Limit to max 10 records
+      cursor.limit(1);
 
-    //Skip specified records. 0 for skipping 0 records.
-    cursor.skip(1);
+      //Skip specified records. 0 for skipping 0 records.
+      cursor.skip(1);
 
-    //Lets iterate on the result
-    cursor.each(function (err, doc) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Fetched:', doc);
-      }
-    });
-  }
-});
+      //Lets iterate on the result
+      cursor.each(function (err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Fetched:', doc);
+        }
+      });
+    }
+  });
 }
