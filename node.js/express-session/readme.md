@@ -18,7 +18,7 @@ var session = require('express-session')
 
 **노트** 1.5.0버전부터, 이 모듈이 동작하기 위해서 [`cookie-parser` middleware](https://www.npmjs.com/package/cookie-parser)는 더이상 사용되지 않는다. 이제, 이 모듈은 `req/res`에서 직접 쿠키를 읽고 쓴다. 만약, 이 모듈과 `cookie-parser`의 `secret`옵션 값이 서로 다른 경우 `cookie-parser`를 사용하는 것은 문제를 일으킬 수 있다.
 
-**Warning** 기본 서버단 세션 저장소는 `MemoryStore`이다. 이것은 의도적으로 제품을 위해서 설계되지 않았다. 대부분의 환경에서 메모리 릭을 발생 시킬것이고, 하나의 프로세스를 넘어 확장되지 않는다. 결국, 디버깅과 개발 환경을 위해서 설계되었다는 말이다.
+**주의** 기본 서버단 세션 저장소는 `MemoryStore`이다. 이것은 의도적으로 제품을 위해서 설계되지 않았다. 대부분의 환경에서 메모리 릭을 발생 시킬것이고, 하나의 프로세스를 넘어 확장되지 않는다. 결국, 디버깅과 개발 환경을 위해서 설계되었다는 말이다.
 
 세션 저장소 목록에 대해서는 ['호환되는 세션 저장소'](https://github.com/expressjs/session#compatible-session-stores)을 환인해라.
 
@@ -38,11 +38,32 @@ var session = require('express-session')
 
 `Expires` `Set-Cookie` 속성의 값이 될 `Date` 오브젝트를 명시한다. 기본값으로는 만료시간이 설정되지 않는다. 대부분의 클라이언트는 "지속되지 않는 쿠키"를 고려할 것이고 웹 브라우저를 닫을 때 쿠키를 삭제할 것이다.
 
-**Note** 만약 `expires`와 `maxAge`를 모두 설정한다면, 그때는 마지막으로 설정 된 옵션이 사용된다.
+**노트** 만약 `expires`와 `maxAge`를 모두 설정한다면, 그때는 마지막으로 설정 된 옵션이 사용된다.
 
-**Note** `expires`옵션은 직접적으로 설정되지 않아야한다. 대신, 오직 `maxAge`옵션을 사용해야한다. 
+**노트** `expires`옵션은 직접적으로 설정되지 않아야한다. 대신, 오직 `maxAge`옵션을 사용해야한다.
 
-### 
+#### cookie.httpOnly
+
+`HttpOnly` `Set-Cookie` 속성에 대한 `boolean`값을 명시한다. 이 속성이 true로 설정되면 `HttpOnly`속성이 적용되고 false로 설정되면 해제된다.
+
+**노트** 클라이언트가 웹 표준을 잘 지키고 있다면, 클라이언트 단에서 자바스크립트의 `document.cookie`를 통해 쿠키의 내용에 접근 할 수 없기때문에 이 속성을 설정하는것에는 주의가 필요하다.
+
+#### cookie.maxAge
+
+`Expires` `Set-Cookie`속성을 계산할 때 사용하기 위한 `number`(밀리세컨드 단위)를 명시한다. `Expires` `Set-Cookie`속성은 현재 서버의 시간에 `Expires` datetime을 계산하기 위한 `maxAge` 밀리세컨드를 더한 값을 더하여 설정된다. 기본적으로 최대 기간은 설정되지 않는다.
+
+**노트** 만약 `expires`와 `maxAge`를 모두 설정한다면, 그때는 마지막으로 설정 된 옵션이 사용된다.
+
+#### cookie.sameSite
+
+`SameSite` `Set-Cookie`속성을 지정하기 위한 `boolean` 또는 `string`값을 명시한다.
+
+* 엄격한 same site 집행을 위해서 `true`는 `SameSite`속성을 `Strict`로 설정한다.
+* `false`는 `SameSite`속성을 설정하지 않는다.
+* 느슨한 same site 집행을 위해서 `lax`는 `SameSite`속성을 `Lax`로 설정한다.
+* 엄격한 same site 집행을 위해서 `strict`는 `SameSite`속성을 `Strict`로 설정한다.
+
+
 ### resave
 
 비록 요청이 처리되는 동안 세션이 수정되지 않더라도 세션 저장소에 다시 저장되도록 강제한다.
@@ -164,3 +185,9 @@ _작성 중 ... _
   * 주의 내용되로라면 초기화 되지 않은 세션을 포함한 응답에대한 세션은 사라질 것이므로 클라이언트가 접속하면 session-id가 변해있을 것이다 확인하자.
 * saveUninitialized
   *클라이언트에서 세션이 포함되지 않은 요청이 가능한지 ..
+
+# Reference
+
+* [Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
+* [Cross-site request forgery](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
+* [Cross-site scripting](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
