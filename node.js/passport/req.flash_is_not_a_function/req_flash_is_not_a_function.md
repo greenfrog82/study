@@ -33,15 +33,17 @@ TypeError : req.flash is not a function
 Passport.js의 [Docs](http://passportjs.org/docs)의 'Flash Messages' 항목에는 다음과 같은 내용이 있다.
 
 ```
-Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's verify callback, if any.
+Setting the failureFlash option to true instructs Passport to flash an error message
+using the message given by the strategy's verify callback, if any.
 ```
 
 failureFlash옵션을 true로 설정하면 Passport가 인증 콜백 함수로부터 전달받은 message를 'flash'에 error message로 전달한다는 내용이다.
 
-그리고 또 다음과 같은 내용이 있다.
+그리고 다음과 같은 내용도 있다.
 
 ```
-Note: Using flash messages requires a req.flash() function. Express 2.x provided this functionality, however it was removed from Express 3.x.
+Note: Using flash messages requires a req.flash() function.
+Express 2.x provided this functionality, however it was removed from Express 3.x.
 Use of connect-flash middleware is recommended to provide this functionality when using Express 3.x.
 ```
 
@@ -50,7 +52,10 @@ flash messages를 사용하는 것은 req.flash() 함수를 요구하는데, Exp
 그런데 여기서 .. 도대체 flash messages라는 내용이 나오는데 이것이 도대체 뭐람 ...?? 이에 대한 내용은 [connect-flash](https://github.com/jaredhanson/connect-flash)의 Github 설명에 나와있다. 다음과 같다.
 
 ```
-The flash is a special area of the session used for storing messages. Messages are written to the flash and cleared after being displayed to the user. The flash is typically used in combination with redirects, ensuring that the message is available to the next page that is to be rendered.
+The flash is a special area of the session used for storing messages.
+Messages are written to the flash and cleared after being displayed to the user.
+The flash is typically used in combination with redirects,
+ensuring that the message is available to the next page that is to be rendered.
 ```
 
 'flash'라는 것이 메시지를 저장하기 위한 세션의 특별한 장소라고 한다. 메시지들은 flash에 저장되고 사용자에게 보여진 후 삭제된다고 한다. 'flash'는 일반적으로 '리다이렉트'와 결합되어 사용되고, 다음 페이지에서 메시지를 사용할 수 있도록 보장한다고 한다.
@@ -71,6 +76,5 @@ The flash is a special area of the session used for storing messages. Messages a
 
 ## 참조
 
-
-	* [Passport - Flash Messages](http://passportjs.org/docs)
-	* [connect-flash](https://github.com/jaredhanson/connect-flash)
+* [Passport - Flash Messages](http://passportjs.org/docs)
+* [connect-flash](https://github.com/jaredhanson/connect-flash)
