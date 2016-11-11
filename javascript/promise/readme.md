@@ -6,6 +6,8 @@
 
 example_1 ~ example_4는 위 문서의 내용을 공부하고 예제들을 코딩해 본 것이다.
 
+좀 더 자세한 내용과 통찰을 얻고 싶으면, [[자바스크립트] Promise 이해하기](http://yubylab.tistory.com/entry/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-Promise-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)를 읽어보자. 
+
 ## 체이닝
 
 체이닝은 [Promise.prototype.then()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) 또는 [Promise.prototype.catch()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch)가 [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)를 반환하는 특성을 이용해서 앞선 [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)의 동작이 끝나면 [Promise.prototype.then()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then)에서 제공하는 resolve 또는 reject 함수를 호출하게 되고 이때 반환되는 값이 자동으로 다음에 제공되는 [Promise.prototype.then()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) 함수의 resolve 함수로 랩핑되어 호출되는 것을 말한다.
@@ -102,7 +104,7 @@ setTimeout(() => {
 }, 10);
 ```
 
-따라서, [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)는 비동기 처리를 위한 코드를 가독성있게 작성하기 위해서 사용해야하며, 이것이 쓰레드와 같이 실행흐름을 분리하는 것이 아니라는 것에 주의해야한다. 
+따라서, [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)는 비동기 처리를 위한 코드를 가독성있게 작성하기 위해서 사용해야하며, 이것이 쓰레드와 같이 실행흐름을 분리하는 것이 아니라는 것에 주의해야한다.
 
 
 ## 참조
@@ -110,3 +112,4 @@ setTimeout(() => {
 * [[Javascript] 바보들을 위한 Promise 강의 - 도대체 Promise는 어떻게 쓰는거야?](http://programmingsummaries.tistory.com/325)
 * [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 * [How to Chain JavaScript Promises – Intro Tutorial to JavaScript Promises](https://html5hive.org/how-to-chain-javascript-promises/)
+* [[자바스크립트] Promise 이해하기](http://yubylab.tistory.com/entry/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-Promise-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
