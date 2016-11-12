@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "babel ./src/main.js --out-dir ./dist&&node ./dist/src/main.js"
+    "start": "babel ./src --out-dir ./dist&&node ./dist/main.js"
   },
   "keywords": [],
   "author": "",
