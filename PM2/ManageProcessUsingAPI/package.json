@@ -1,0 +1,17 @@
+{
+  "name": "node-api",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/scotch-io/node-token-authentication"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Chris Sevilleja <scotch.io>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.0.0",
+    "pm2": "^2.1.5"
+  }
+}
