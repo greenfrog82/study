@@ -36,8 +36,7 @@ router.post('/process', (req, res) => {
 	pm2.connect((err) => {
 	  if (err) {
 			res.status(500).json({
-				msg: '[pm2.connect] Error is ocurred.',
-				detail: err.toString()
+				msg: '[pm2.connect] ' + err.toString()
 			});
 			return;
 	  }
@@ -62,8 +61,7 @@ router.post('/process', (req, res) => {
 	    pm2.disconnect();   // Disconnect from PM2
 	    if (err) {
 				res.status(500).json({
-					msg: '[pm2.start] Error is ocurred.',
-					detail: err.toString()
+					msg: '[pm2.start] ' + err.toString()
 				});
 			} else {
 				const services = [];
@@ -85,8 +83,7 @@ router.get('/process', (req, res) => {
 	pm2.connect((err) => {
 		if (err) {
 			res.status(500).json({
-				msg: '[pm2.connect] Error is ocurred.',
-				detail: err.toString()
+				msg: '[pm2.connect] ' + err.toString()
 			});
 			return;
 	  }
@@ -95,8 +92,7 @@ router.get('/process', (req, res) => {
 			pm2.disconnect();
 			if(err) {
 				res.status(500).json({
-					msg: '[pm2.list] Error is ocurred.',
-					detail: err.toString()
+					msg: '[pm2.list] ' + err.toString()
 				});
 			} else {
 				const services = [];
@@ -115,13 +111,12 @@ router.get('/process', (req, res) => {
 });
 
 router.put('/process/stop', (req, res) => {
-	const pm_id = parseInt(req.body.pm_id);
+	const pm_id = req.body.pm_id;
 
 	pm2.connect((err) => {
 		if (err) {
 			res.status(500).json({
-				msg: '[pm2.connect] Error is ocurred.',
-				detail: err.toString()
+				msg: '[pm2.connect] ' + err.toString()
 			});
 			return;
 		}
@@ -129,8 +124,7 @@ router.put('/process/stop', (req, res) => {
 			pm2.disconnect();
 			if(err) {
 				res.status(500).json({
-					msg: '[pm2.stop] Error is ocurred.',
-					detail: err.toString()
+					msg: '[pm2.stop] ' + err.toString()
 				});
 			} else {
 				res.status(200).json(proc);
@@ -145,8 +139,7 @@ router.put('/process/start', (req, res) => {
 	pm2.connect((err) => {
 		if (err) {
 			res.status(500).json({
-				msg: '[pm2.connect] Error is ocurred.',
-				detail: err.toString()
+				msg: '[pm2.connect] ' + err.toString()
 			});
 			return;
 		}
@@ -154,8 +147,7 @@ router.put('/process/start', (req, res) => {
 			pm2.disconnect();
 			if(err) {
 				res.status(500).json({
-					msg: '[pm2.start] Error is ocurred.',
-					detail: err.toString()
+					msg: '[pm2.start] ' + err.toString()
 				});
 			} else {
 				res.status(200).json(proc);
@@ -170,8 +162,7 @@ router.put('/process/restart', (req, res) =>{
 	pm2.connect((err) => {
 		if (err) {
 			res.status(500).json({
-				msg: '[pm2.connect] Error is ocurred.',
-				detail: err.toString()
+				msg: '[pm2.connect] ' + err.toString()
 			});
 			return;
 		}
@@ -179,8 +170,30 @@ router.put('/process/restart', (req, res) =>{
 			pm2.disconnect();
 			if(err) {
 				res.status(500).json({
-					msg: '[pm2.restart] Error is ocurred.',
-					detail: err.toString()
+					msg: '[pm2.restart] ' + err.toString()
+				});
+			} else {
+				res.status(200).json(proc);
+			}
+		});
+	});
+});
+
+router.delete('/process', (req, res) => {
+	const pm_id = req.body.pm_id;
+
+	pm2.connect((err) => {
+		if (err) {
+			res.status(500).json({
+				msg: '[pm2.connect] ' + err.toString()
+			});
+			return;
+		}
+		pm2.delete(pm_id, (err, proc) => {
+			pm2.disconnect();
+			if(err) {
+				res.status(500).json({
+					msg: '[pm2.restart] ' + err.toString()
 				});
 			} else {
 				res.status(200).json(proc);
