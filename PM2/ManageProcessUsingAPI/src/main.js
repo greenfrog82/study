@@ -3,6 +3,7 @@
 
 // call the packages we need
 import express from 'express';
+import bodyParser from 'body-parser';
 import pm2 from 'pm2';
 
 const app   = express();
@@ -14,6 +15,8 @@ const port  = process.env.PORT || 4000; // set our port
 // create our router
 const router = express.Router();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 // middleware to use for all requests
 router.use((req, res, next) => {
 	// do logging
@@ -26,8 +29,13 @@ router.get('/', (req, res) => {
 	res.json({ message: 'hooray! welcome to our api!', port:process.env.PORT });
 });
 
-router.get('/pm2', (req, res) => {
-	console.log("pm2");
+router.post('/pm2', (req, res) => {
+	console.log("--- /pm2");
+
+	const procName = req.body.name;
+	const port = parseInt(req.body.port);
+	const error_file = `logs/${procName}.err.log`;
+	const out_file = `logs/${procName}.out.log`;
 
 	pm2.connect((err) => {
 	  if (err) {
@@ -40,37 +48,39 @@ router.get('/pm2', (req, res) => {
 		    {
 		      "exec_mode": "fork_mode",
 		      "script": "./dist/main.js",
-		      "name": "proj-0",
+		      "name": procName,
 		      "node_args": [ "--harmony" ],
 		      "env": {
-		        "PORT": 4001,
-		        "NODE_ENV": "production"
+		        "PORT": port,
+		        "NODE_ENV": app.get('env')
 		      },
-		      "error_file": "logs/proj-0.err.log",
-		      "out_file": "logs/proj-0.out.log"
-		    },
-		    {
-		      "exec_mode": "fork_mode",
-		      "script": "./dist/main.js",
-		      "name": "proj-1",
-		      "node_args": [ "--harmony" ],
-		      "env": {
-		        "PORT": 4002,
-		        "NODE_ENV": "production"
-		      },
-		      "error_file": "logs/proj-1.err.log",
-		      "out_file": "logs/proj-1.out.log"
+		      "error_file": error_file,
+		      "out_file": out_file
 		    }
 		  ]
 	  }, function(err, apps) {
 			console.log("pm2 start");
+			// TODO Why does it call that the follow code?
 	    pm2.disconnect();   // Disconnect from PM2
-	    if (err) throw err;
+	    if (err) {
+				res.status(500).json({
+					msg: 'Error is ocurred.',
+					detail: err
+				});
+			} else {
+				const services = [];
+				apps.forEach(service => {
+					services.push({
+						name: service.pm2_env.name,
+						port: service.pm2_env.PORT,
+						pm_id: service.pm2_env.pm_id,
+						pid: service.pid
+					});
+				});
+				res.status(200).json(services);
+			}
 	  });
 	});
-
-
-	res.json({ message: 'pm2 test!!' });
 });
 
 // REGISTER OUR ROUTES -------------------------------
