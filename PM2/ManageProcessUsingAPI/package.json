@@ -6,12 +6,23 @@
     "url": "git://github.com/scotch-io/node-token-authentication"
   },
   "scripts": {
-    "start": "node server.js"
+    "clean": "echo --clean&&rimraf ./dist",
+    "build": "echo --build&&babel ./src --out-dir ./dist",
+    "build:all": "echo --build all&&npm run clean&&npm run build",
+    "start:development": "echo --start:development&&npm run build:all&&cross-env NODE_ENV=development node ./dist/main.js",
+    "start:production": "echo --start:development&&npm run build:all&&cross-env NODE_ENV=production node ./dist/main.js"
   },
-  "author": "Chris Sevilleja <scotch.io>",
-  "license": "MIT",
+  "author": "",
+  "license": "",
   "dependencies": {
     "express": "~4.0.0",
     "pm2": "^2.1.5"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "cross-env": "^3.1.3",
+    "rimraf": "^2.5.4"
   }
 }

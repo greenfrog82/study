@@ -2,34 +2,34 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');
-var app        = express();
-var pm2 			 = require('pm2');
+import express from 'express';
+import pm2 from 'pm2';
 
-var port     = process.env.PORT || 4000; // set our port
+const app   = express();
+const port  = process.env.PORT || 4000; // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
 
 // create our router
-var router = express.Router();
+const router = express.Router();
 
 // middleware to use for all requests
-router.use(function(req, res, next) {
+router.use((req, res, next) => {
 	// do logging
 	console.log('Something is happening.');
 	next();
 });
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
 	console.log("test");
 	res.json({ message: 'hooray! welcome to our api!', port:process.env.PORT });
 });
 
-router.get('/pm2', function(req, res) {
+router.get('/pm2', (req, res) => {
 	console.log("pm2");
 
-	pm2.connect(function(err) {
+	pm2.connect((err) => {
 	  if (err) {
 	    console.error(err);
 	    process.exit(2);
@@ -39,7 +39,7 @@ router.get('/pm2', function(req, res) {
 			"apps": [
 		    {
 		      "exec_mode": "fork_mode",
-		      "script": "./server.js",
+		      "script": "./dist/main.js",
 		      "name": "proj-0",
 		      "node_args": [ "--harmony" ],
 		      "env": {
@@ -51,7 +51,7 @@ router.get('/pm2', function(req, res) {
 		    },
 		    {
 		      "exec_mode": "fork_mode",
-		      "script": "./server.js",
+		      "script": "./dist/main.js",
 		      "name": "proj-1",
 		      "node_args": [ "--harmony" ],
 		      "env": {
@@ -65,7 +65,7 @@ router.get('/pm2', function(req, res) {
 	  }, function(err, apps) {
 			console.log("pm2 start");
 	    pm2.disconnect();   // Disconnect from PM2
-	    if (err) throw err
+	    if (err) throw err;
 	  });
 	});
 
