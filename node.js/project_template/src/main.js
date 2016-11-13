@@ -1,1 +1,1 @@
-console.log('test');
+console.log('--- start :', process.env.NODE_ENV)
