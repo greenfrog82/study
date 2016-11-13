@@ -1,0 +1,141 @@
+{
+	"variables": [],
+	"info": {
+		"name": "mongoose - CRUD",
+		"_postman_id": "bcc1f5f1-530f-3e94-9fbd-5ae44eb70454",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[Read - All]",
+			"request": {
+				"url": "http://localhost:3000/groups?query={}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "[Create] groups document",
+			"request": {
+				"url": "http://localhost:3000/groups",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "groups: [\r\n          {\r\n            name: 'Back-End',\r\n            users: [\r\n              {\r\n                name: 'Scala',\r\n                age: 20\r\n              },\r\n              {\r\n                name: 'Node.js',\r\n                age: 21\r\n              },\r\n              {\r\n                name: 'Clojure',\r\n                age: 18\r\n              },\r\n            ]\r\n          },\r\n          {\r\n            name: 'Front-End',\r\n            users: [\r\n              {\r\n                name: 'React',\r\n                age: 17\r\n              },\r\n              {\r\n                name: 'Angular',\r\n                age: 23\r\n              }\r\n            ]\r\n          }\r\n        ]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "[Read - Only one, Using find]",
+			"request": {
+				"url": "http://localhost:3000/groups?query={\"groups.name\": \"Front-End\"}&projection={\"groups.$\":1}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "[Read - Only one, Using findOne]",
+			"request": {
+				"url": "http://localhost:3000/itemInGroups?query={\"groups.name\": \"Front-End\"}&projection={\"groups.$\":1}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "[Read - All, Using FindOne]",
+			"request": {
+				"url": "http://localhost:3000/itemInGroups?query={}",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/itemUsingId?id=5827ff597292cc056ce15d28",
+			"request": {
+				"url": "http://localhost:3000/itemUsingId?id=5827ff597292cc056ce15d28",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "[Update Using id]",
+			"request": {
+				"url": "http://localhost:3000/groups",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"5827ff597292cc056ce15d28\",\n\t\"groups\": [\n\t\t{\n\t\t\t\"name\": \"New Mobile Team\",\n\t\t\t\"users\": [\n\t\t\t\t{\n\t\t\t\t\t\"name\":\"React Native\",\n\t\t\t\t\t\"age\": 25\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"name\":\"Xamarin\",\n\t\t\t\t\t\"age\": 22\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "[Delete, By Id]",
+			"request": {
+				"url": "http://localhost:3000/groups",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"5827ff597292cc056ce15d28\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
