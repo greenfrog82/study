@@ -39,8 +39,11 @@ router.post('/pm2', (req, res) => {
 
 	pm2.connect((err) => {
 	  if (err) {
-	    console.error(err);
-	    process.exit(2);
+			res.status(500).json({
+				msg: 'Error is ocurred.',
+				detail: err
+			});
+			return;
 	  }
 
 	  pm2.start({
@@ -58,7 +61,7 @@ router.post('/pm2', (req, res) => {
 		      "out_file": out_file
 		    }
 		  ]
-	  }, function(err, apps) {
+	  }, (err, apps) => {
 			console.log("pm2 start");
 			// TODO Why does it call that the follow code?
 	    pm2.disconnect();   // Disconnect from PM2
@@ -80,6 +83,41 @@ router.post('/pm2', (req, res) => {
 				res.status(200).json(services);
 			}
 	  });
+	});
+});
+
+router.get('/list', (req, res) => {
+	console.log('--- /list');
+
+	pm2.connect((err) => {
+		if (err) {
+			res.status(500).json({
+				msg: 'Error is ocurred.',
+				detail: err
+			});
+			return;
+	  }
+
+	  pm2.list((err, processDescriptionList) => {
+			pm2.disconnect();
+			if(err) {
+				res.status(500).json({
+					msg: 'Error is ocurred.',
+					detail: err
+				});
+			} else {
+				const services = [];
+				processDescriptionList.forEach(service => {
+					services.push({
+						name: service.name,
+						port: service.pm2_env.PORT,
+						pm_id: service.pm_id,
+						pid: service.pid
+					});
+				});
+				res.status(200).json(services);
+			}
+		});
 	});
 });
 
