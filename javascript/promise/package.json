@@ -14,7 +14,8 @@
     "example_8": "babel ./src/example_8.js --out-dir ./dist&&node ./dist/src/example_8.js",
     "example_9": "babel ./src/example_9.js --out-dir ./dist&&node ./dist/src/example_9.js",
     "example_10": "babel ./src/example_10.js --out-dir ./dist&&node ./dist/src/example_10.js",
-    "example_11": "babel ./src/example_11.js --out-dir ./dist&&node ./dist/src/example_11.js"
+    "example_11": "babel ./src/example_11.js --out-dir ./dist&&node ./dist/src/example_11.js",
+    "example_12": "babel ./src/example_11.js --out-dir ./dist&&node ./dist/src/example_12.js"
   },
   "keywords": [],
   "author": "",
