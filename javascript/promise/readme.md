@@ -6,7 +6,7 @@
 
 example_1 ~ example_4는 위 문서의 내용을 공부하고 예제들을 코딩해 본 것이다.
 
-좀 더 자세한 내용과 통찰을 얻고 싶으면, [[자바스크립트] Promise 이해하기](http://yubylab.tistory.com/entry/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-Promise-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)를 읽어보자. 
+좀 더 자세한 내용과 통찰을 얻고 싶으면, [[자바스크립트] Promise 이해하기](http://yubylab.tistory.com/entry/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-Promise-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)를 읽어보자.
 
 ## 체이닝
 
@@ -105,6 +105,9 @@ setTimeout(() => {
 ```
 
 따라서, [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)는 비동기 처리를 위한 코드를 가독성있게 작성하기 위해서 사용해야하며, 이것이 쓰레드와 같이 실행흐름을 분리하는 것이 아니라는 것에 주의해야한다.
+
+
+### 작성 중 ... 아직 공부해야할 내용이 많다 ...
 
 
 ## 참조
