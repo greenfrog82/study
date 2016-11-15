@@ -21,7 +21,10 @@ import fs from 'fs';
 // })
 Promise.resolve(first())
 .then(second)
-.then(third);
+.then(third)
+.catch(err => {
+  cosnole.log('--- ERROR HANDLER :', err.toString());
+});
 
 // function first(resolve) {
 //   const msg = 'Good!';
