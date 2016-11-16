@@ -30,7 +30,14 @@
 
 하지만, 자바스크립트를 하면서 많은 것을 배우고 다룰수 있게 되었기 때문에 이것을 또 포기할 수 없고 해서 자바스크립트에 타입을 더할 수 있는 TypeScript를 공부해보기로 했다.
 
+## 개발환경
+
+Javascript와 Node.js 그리고 React.js로 이쪽 세계에 입문하고부터 쭉 Atom을 쓰고 있으므로 Atom을 통해 TypeScript도 공부할 생각이다. 이를 위해 Atom에 다음 플러그인을 설치해야한다.
+
+[atom-typescript](https://atom.io/packages/atom-typescript)
+
 
 ## 참조
 
 * Programming in Scala seond Edition 한국어판
+* [TypeScript](https://www.typescriptlang.org/index.html)
