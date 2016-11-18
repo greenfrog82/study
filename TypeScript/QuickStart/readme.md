@@ -47,7 +47,7 @@ tsc greeter.ts
 > **역자주**
 > 만약, ATOM Editor에서 [atom-typescript](https://atom.io/packages/atom-typescript)패키지를 사용중이라면, F6을 누르면 컴파일 된다.
 
-컴파일 결과로 여러분이 작성한 자바스크립트와 동일한 내용을 담고있는  <font style='color:#C7524F'>greeter.js</font>파일이 생성될 것이다. 우리는 우리의 JavaScript 어플리케이션에서 TypeScript를 설정하고 실행하고 있다.
+컴파일 결과로 여러분이 작성한 자바스크립트와 동일한 내용을 담고있는  <font style='color:#C7524F'>greeter.js</font>파일이 생성될 것이다. 우리는 우리의 자바스크립트 어플리케이션에서 TypeScript를 설정하고 실행하고 있다.
 
 이제 우리는 TypeScript가 제공하는 몇가지 새로운 툴들을 사용할 수 있다. 다음 코드에서 보이는 것과 같이 <font style='color:#C7524F'>: string</font> 타입 어노테이션을 'person' 함수의 인자에 추가하여라.
 
@@ -87,9 +87,70 @@ greeter.ts(7,26): Supplied parameters do not match any signature of call target
 
 ### 인터페이스
 
-우리의 예제를 좀 더 작성해보자.
+우리의 예제를 좀 더 작성해보자. 여기서 우리는 firstName과 latName 필드를 갖는 오브젝트를 설명하는 인터페이스를 사용한다. TypeScript에서 오브젝트와 인터페이스의 구조가 호환 된다면 두개의 타입은 호환된다. 이것은 명시적으로 <font style='color:#C7524F'>implements</font> 키워드를 사용하지 않고, 인터페이스가 요구하는 형태를 갖는 것만으로도 인터페이스를 구현할 수 있도록 한다.
 
-여기까지 작성 ... 넘 피곤해서 자야겠다 ...@.@
+```javascript
+interface Person {
+  firstName: string;
+  lastName: string;
+}
+
+function greeter(person: Person) {
+  return 'Hello, ' + person.firstName + ' ' + person.lastName;
+}
+
+var user = {firstName: 'Jane', lstName: 'User'};
+
+document.body.innerHTML = greeter(user);
+```
+
+### 클래스
+
+마지막으로, 클래스를 가지고 예제를 확장해보자. TypeScript는 클래스 기반의 객체지향 프로그래밍과 같은 새로운 기능을 지원한다.
+
+여기서 우리는 생성자와 몇개의 public 필드를 가지고 <font style='color:#C7524F'>Student</font>클래스를 생성할 것이다. 클래스와 인터페이스는 함께 잘 어울려서, 프로그래머가 적절한 추상화 레벨을 사용할 수 있도록 한다.
+
+또한, 생성자의 인자들에서 사용된 <font style='color:#C7524F'>public</font>은 인자명으로 프로퍼티를 자동으로 생성되게 하는 간단한 표기법이다.
+
+```javascript
+class Student {
+  fullName: string;
+  constructor(public firstName, public middleInitial, public lastName) {
+    this.fullName = firstName + ' ' + middleInitial + ' ' + lastName;
+  }
+}
+
+interface Person {
+  firstName: string;
+  lastName: string;
+}
+
+function greeter(person: Person) {
+  return 'Hello, ' + person.firstName + ' ' + person.lastName;
+}
+
+var user = new Student('Jane', 'M.', 'User');
+
+document.body.innerHTML = greenter(user);
+```
+
+다시 <font style='color:#C7524F'>tsc greeter.ts</font>를 실행하면, 여러분은 앞선 예제의 코드와 동일하게 생성 된 자바스크립트코드를 보게 될 것이다. TypeScript에서 클래스는 단지 자바스크립트에서 빈번하게 사용되는 프로토타입 기반의 객체를 위한 간단한 표기법에 지나지 않는다.
+
+### TypeScript 웹 어플리케이션 실행하기
+
+이제 <font style='color:#C7524F'>tsc greeter.ts</font>안에 다음 코드를 작성해라.
+
+```html
+<!DOCTYPE html>
+<html>
+<head><title>TypeScript Greeter</title></head>
+<body>
+  <script src='greeter.js'></script>
+</body>
+</html>
+```
+
+여러분의 첫 간단한 TypeScript 웹 어플리케이션을 실행하기 위해 웹 브라우저에서 <font style='color:#C7524F'>tsc greeter.ts</font>를 열어라.
 
 
 ## 참조

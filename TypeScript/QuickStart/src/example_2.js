@@ -12,12 +12,3 @@ function _greeter(person) {
 }
 var _user = new Student('Jane', 'M.', 'User');
 document.getElementById('ex_2').innerHTML = _greeter(_user);
-function Test() {
-    console.log('test');
-}
-function Build() {
-    test();
-}
-function AllBuild() {
-    console.log('All Build');
-}

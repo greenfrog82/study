@@ -1,6 +1,7 @@
 class Student {
+  // private fullName: string;
   fullName: string;
-  constructor(public firstName, public middleInitial, public lastName) {
+  constructor(public firstName, private middleInitial, public lastName) {
     this.fullName = `${firstName} ${middleInitial} ${lastName}`;
   }
 }
@@ -17,15 +18,4 @@ function _greeter(person : Person) {
 const _user = new Student('Jane', 'M.', 'User');
 
 document.getElementById('ex_2').innerHTML = _greeter(_user);
-
-function Test() {
-  console.log('test');
-}
-
-function Build() {
-    test();
-}
-
-function AllBuild() {
-  console.log('All Build');
-}
+// document.getElementById('ex_2').innerHTML = _user.fullName;
