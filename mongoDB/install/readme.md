@@ -34,10 +34,10 @@ MongoDB(3.2.10 / Windows Server 2008 R2 64-bit and later, with SSl support x64)�
 
     ```
     systemLog:
-    destination: file
-    path: d:\develop\mongodb_repository\log\mongod.log
+      destination: file
+      path: d:\develop\mongodb_repository\log\mongod.log
     storage:
-    dbPath: d:\develop\mongodb_repository
+      dbPath: d:\develop\mongodb_repository
     ```  
 
 2. 여기서부터는 **관리자 권한**을 획득한 명령 프롬프트에서 작업을 해야한다. MongoDB를 윈도우 서비스에 등록하기 위해서는 mongod.exe의 **--install**옵션과 **--config**옵션에 앞서 생성한 설정파일(d:\\develop\\mongodb_repository\\mongod.cfg)을 전달한다.
