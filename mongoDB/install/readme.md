@@ -32,13 +32,12 @@ MongoDB(3.2.10 / Windows Server 2008 R2 64-bit and later, with SSl support x64)�
 
   [systemLog.path](https://docs.mongodb.com/manual/reference/configuration-options/#systemLog.path)를 설정할때는 반드시 파일명을 제외한 경로가 미리 생성되어 있어야한다.
 
-    ```
     systemLog:
       destination: file
       path: d:\develop\mongodb_repository\log\mongod.log
     storage:
       dbPath: d:\develop\mongodb_repository
-    ```  
+
 
 2. 여기서부터는 **관리자 권한**을 획득한 명령 프롬프트에서 작업을 해야한다. MongoDB를 윈도우 서비스에 등록하기 위해서는 mongod.exe의 **--install**옵션과 **--config**옵션에 앞서 생성한 설정파일(d:\\develop\\mongodb_repository\\mongod.cfg)을 전달한다.
 
@@ -53,6 +52,44 @@ MongoDB(3.2.10 / Windows Server 2008 R2 64-bit and later, with SSl support x64)�
  위 명령이 정상적으로 실행되면 MongoDB의 시작유형은 '자동'으로 설정되어 서비스가 실행되므로 다음부터는 MongoDB에 문제가 있지 않는 이상 컴퓨터가 부팅되면 MongoDB 서비스는 자동으로 실행된다.
 
  ![windows_service](windows_service.png)
+
+## 트러블 슈팅
+
+### Error parsing YAML config file: yaml-cpp: error at line 5, column 8: illegal map value
+
+윈도우 서비스를 등록하기 위해 설정파일을 만든 후 서비스 등록 명령을 Command에서 실행시켰더니 다음 그림과 같은 오류가 발생하였다.
+
+![trouble1](trouble1.png)
+
+위 문제는 설정파일을 작성을 잘못했을 때 발생하는데, Yaml형식은 Key:Value 작성 시 space로만 분리를 해야한다고 한다. 하지만 설정 파일을 만들 때 tab을 사용한 것이 화근이 되었다.
+
+아래는 tab을 사용해 문제가 되었던 설정파일 내용이다.
+
+```
+systemLog:
+  destination: file
+  path: D:\programs\MongoDB\Repository\log\mongod.log
+storage:
+  dbPath: D:\programs\MongoDB\Repository
+```
+
+이를 space로 변경해서 저장하고 실행하면 문제가 해결된다.
+
+```
+systemLog:
+ destination: file
+ path: D:\programs\MongoDB\Repository\log\mongod.log
+storage:
+ dbPath: D:\programs\MongoDB\Repository
+```
+
+### [main] Failed global initialization: Bad Value: config requires an absolute file path with Windows services
+
+설정파일을 정의하고 윈도우 서비스 등록을 위해 명령을 날리면 다음과 같은 오류가 발생하였다.
+
+![trouble2](trouble2.png)
+
+위 문제는 설정파일의 경로가 상대경로여서 발생한 문제로 절대경로로 입력해주면 문제가 해결된다.
 
 ## 참조
 
