@@ -1,4 +1,4 @@
-const process = require('child_process').exec;
+// const process = require('child_process').exec;
 // const spawn = require('child_process').spawn;
 const os = require('os');
 
@@ -11,38 +11,46 @@ function OpenFirewallForWindows(serverName, port) {
   if('win32' !== os.platform()) {
     return;
   }
-  new Promise((resolve, reject) => {
-    process(`netstat -na | findstr /r /c:\".*TCP.*:${port} \"`, (err, stdout, stderr) => {
-      // 위 내용으로 열려있는 포트를 못찾으면 에러 발생!
-      if(err) {
-        console.log(`1. exec error: ${err}`);
-        return resolve();
-      }
 
-      // 이미 존재하는 포트가 있다는 응답.
-      console.log(`1. stdout: ${stdout}`);
-      console.log(`1. stderr: ${stderr}`);
+  const name = `name=\"${serverName}:${port}\"`;
+  const localPort = `localport=${port}`;
 
-      reject('Found');
-    });
-  })
-  .then(
-    () => {
-      const cmd = `netsh advfirewall firewall add rule name=\"${serverName}:${port}\" dir=in action=allow protocol=TCP localport=${port}`;
-      process(cmd, (err, stdout, stderr) => {
+  // const cmd = `netsh advfirewall firewall add rule name=\"${serverName}:${port}\" dir=in action=allow protocol=TCP localport=${port}`;
+  // require('child_process').execFile(
+  //     'netsh',
+  //     [
+  //       'advfirewall',
+  //       'firewall',
+  //       'add',
+  //       'rule',
+  //       name,
+  //       'dir=in',
+  //       'action=allow',
+  //       'protocol=TCP',
+  //       localPort
+  //     ],
+  //     (err, stdout, stderr) => {
+  //       if(err) {
+  //         console.error('ERROR : ', err);
+  //         return;
+  //       }
+  //       console.log('STDOUT : ', stdout);
+  //       console.log('STDERR : ', stderr);
+  //     });
+
+  const cmd = 'copy /?';
+
+  require('child_process').execFile(
+      'copy',
+      ['/?'],
+      (err, stdout, stderr) => {
         if(err) {
-          console.error(`2. exec error: ${err}`);
+          console.error('ERROR : ', err);
           return;
         }
-        // 이미 존재하는 포트가 있다는 응답.
-        console.log(`2. stdout: ${stdout}`);
-        // console.log(`2. stderr: ${stderr}`);
+        console.log('STDOUT : ', stdout);
+        console.log('STDERR : ', stderr);
       });
-    },
-    (reseaon)=> {
-      console.log(reseaon);
-    }
-  );
 }
 
 OpenFirewallForWindows(serverName, port);
