@@ -4,6 +4,5 @@ node_modules
 # distribution folder
 dist
 
-# debug
-npm-debug.log
-PM2/ManageProcessUsingAPI/greenfrog.hello.test
+# log
+*.log
