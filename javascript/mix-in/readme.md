@@ -17,3 +17,6 @@ C++의 문제점 중 하나인 다중상속은 [객체지향의 5대 원칙(SOLI
 * [생활코딩 - Mixin](https://opentutorials.org/course/1750/9970)
 * [다중상속의 문제점](http://soen.kr/lecture/ccpp/cpp3/29-3-2.htm)
 * [ES6 In Depth: 서브클래스 만들기](http://hacks.mozilla.or.kr/2016/04/es6-in-depth-subclassing/)
+* [자바스크립트의 믹스인패턴](https://vnthf.github.io/blog/mixin/)
+* [객체 패턴](http://djwordpress.dothome.co.kr/index.php/javascript-6/)
+* [Wikipedia - Mixin](https://en.wikipedia.org/wiki/Mixin)
