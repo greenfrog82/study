@@ -1,0 +1,8 @@
+{
+  "apps" : [{
+    "name"             : "FirewallHandler",
+    "script"           : "E:/PLServer2016/src/server/firewall/bin/debug/FirewallHandler.exe",
+    "exec_mode"        : "fork",
+    "exec_interpreter" : "none"
+  }]
+}
