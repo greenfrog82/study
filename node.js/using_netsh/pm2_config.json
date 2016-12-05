@@ -1,8 +1,11 @@
 {
-  "apps" : [{
-    "name"             : "FirewallHandler",
-    "script"           : "E:/PLServer2016/src/server/firewall/bin/debug/FirewallHandler.exe",
-    "exec_mode"        : "fork",
-    "exec_interpreter" : "none"
-  }]
+	"apps": [
+		{
+		  "exec_mode": "fork_mode",
+		  "script": "E:/greenfrog/study/node.js/using_netsh/src/main.js",
+		  "name": "using_netsh",
+			"out_file": "E:/greenfrog/study/node.js/using_netsh/logs/out.log",
+		  "error_file": "E:/greenfrog/study/node.js/using_netsh/logs/err.log"
+		}
+	]
 }
