@@ -17,8 +17,7 @@ app.use(session({
     store: new NedbStore({
       // filename: `${os.homedir()}/session_store.db`,
       // filename: './session_store.db'
-      filename: 'session_store.db',
-      defaultExpiry: 3000
+      filename: 'session_store.db'
     }),
     saveUninitialized: false,
     resave: false
