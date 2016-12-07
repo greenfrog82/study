@@ -6,11 +6,13 @@ const os = require('os');
 const connect = require('camo').connect;
 const Document = require('camo').Document;
 const EmbeddedDocument = require('camo').EmbeddedDocument;
+const Movie = require('./schema');
 
 let database;
 // const uri = 'nedb:///Users/scott/data/animals';
 // const uri = `nedb:///${os.homedir()}/pidotech/license/repository.db`;
-const uri = 'nedb://c:/users/greenfrog/nedb-repo';  // drive를 작성하기 위해t서는 nedb:// 여기까지만, 대부분 리눅스 기준이라 /users가 붙어서 nedb:/// 이렇게 3개로 보이는거임 ... @.@
+// const uri = 'nedb://c:/users/greenfrog/nedb-repo';  // drive를 작성하기 위해t서는 nedb:// 여기까지만, 대부분 리눅스 기준이라 /users가 붙어서 nedb:/// 이렇게 3개로 보이는거임 ... @.@
+const uri = 'nedb://./db';
 
 connect(uri)
 .then(
@@ -18,38 +20,11 @@ connect(uri)
     database = db;
     console.log('Success to connect into nedb.');
 
-    class Dummy extends EmbeddedDocument {
-      constructor() {
-        super();
-        this.name = String;
-      }
-    }
-
-    class Movie extends Document {
-        constructor() {
-            super();
-
-            this.title = String;
-            this.rating = {
-                type: String,
-                choices: ['G', 'PG', 'PG-13', 'R']
-            };
-            this.releaseDate = Date;
-            this.hasCreditCookie = Boolean;
-            this.contents = [Dummy];
-        }
-
-        static collectionName() {
-            return 'movies';
-        }
-    }
-
     var thor = Movie.create({
       title: 'Thor',
       rating: 'PG-13',
       releaseDate: new Date(2011, 4, 2),
       hasCreditCookie: true,
-      contents : [Dummy.create({name:'1'}), Dummy.create({name:'2'})]
     });
 
     thor.save().then(function(t) {
