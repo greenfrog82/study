@@ -3,6 +3,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const NedbStore = require('nedb-session-store')(session);
+const os = require('os');
 
 const app = express();
 
@@ -14,7 +15,9 @@ app.use(session({
       secure: false
     },
     store: new NedbStore({
-      filename: './session_store.db',
+      // filename: `${os.homedir()}/session_store.db`,
+      // filename: './session_store.db'
+      filename: 'session_store.db',
       defaultExpiry: 3000
     }),
     saveUninitialized: false,
