@@ -26,6 +26,6 @@ if '%errorlevel%' NEQ '0' (
 
 PUSHD %~DP0
 
-node src\server.js
+node src\main.js
 
 pause
