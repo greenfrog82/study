@@ -22,6 +22,13 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
+app.use(function (req, res, next) {
+  if (req.session) {
+    next();
+  } else {
+    res.status(500).end('Fail to initialize redis server. Please check the redis server.');
+  }
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use((req, res, next) => {
