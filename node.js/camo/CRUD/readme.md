@@ -112,4 +112,4 @@ Movie.deleteMany({}).then(
 ## 참조
 
 * [Camo](https://github.com/scottwrobinson/camo)
-* [Example](./src/main)
+* [Example](./src/main.js)
