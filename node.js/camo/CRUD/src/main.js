@@ -17,7 +17,7 @@ const uri = 'nedb://./db';
 
 connect(uri)
 .then(
-  function(db) {
+  db => {
     database = db;
     console.log('Success to connect into nedb.');
 
@@ -25,28 +25,36 @@ connect(uri)
       title: 'Thor',
       rating: 'PG-13',
       releaseDate: new Date(2011, 4, 2),
-      hasCreditCookie: true,
+      hasCreditCookie: true
+      // hasCreditCookie: 'true', // 이 코드의 주석을 풀면 Promise의 reject 메소드가 호출되는 것을 확인할 수 있다.
     });
 
-    thor.save().then(function(t) {
-        console.log(thor);
+    thor.save()
+      .then(
+        savedRes => {
+          console.log(`Success to save successfully. ${JSON.stringify(savedRes)}`);
 
-        // // Update 'Thor' to have a rating of 'R'
-        // Movie.findOneAndUpdate({ _id: thor._id }, { rating: 'R' })
-        // .then(movies => {
-        //     console.log(movies);
-        // });
-
-        Movie.findOneAndUpdate({_id: t._id}, {title: 'test'})
-        .then(movie => {
-          console.log(movie);
-        })
-        .catch(err => {
-          console.log('ERROR HANDLER : ', err);
-        });
-    });
-
-
+          Movie.findOneAndUpdate({_id: savedRes._id}, {title: 'test'})
+            .then(
+              movie => {
+                console.log(`Success to find and update about ${savedRes._id}. ${JSON.stringify(movie)}`);
+              },
+              err => {
+                console.log(`Fail to find and update about ${savedRes._id}. ${err} ${err.stack}`);
+              }
+            )
+            .catch(err => {
+              console.log('[Move.findOneAndUpdate] ERROR HANDLER : ', err);
+            });
+        },
+        err => {
+          console.log(`Fail to save. ${err} ${err.stack}`);
+        }
+      )
+      .catch(err => {
+        console.log(`[thor.save] ERROR HANDLER : ${err}`);
+      });
+    },
     //
     //
     // // Money를 EmbeddedDocument가 아닌 Document로 해도 되지만 별도의 db 파일이 생성 된다. 따라서 내부적으로만 사용 할 객체의 경우 EmbeddedDocument가 맞다.
@@ -130,9 +138,8 @@ connect(uri)
     //   console.log('ERROR HANDLER : ', err.toString());
     // });
 
-  },
-  function(err) {
-    console.error('Fail to connect nedb.', err);
+  err => {
+    console.error('Fail to connect to nedb.', err);
   }
 )
 .catch(ex => {
