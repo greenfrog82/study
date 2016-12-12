@@ -32,6 +32,46 @@ _promise(100, 100)
 
 ```
 
+## 예외처리
+
+Promise를 사용할 때, Promise의 executor에서 에러를 throw하는 경우 catch handler가 존재할 때, reject handler가 존재하는 경우와 그렇지 않은 경우 어떻게 동작하게 될까?
+우선, reject handler가 존재하는 경우 Promise의 executor에서 에러를 throw하게 되면 catch handler가 에러를 잡아서 처리하지 않고 reject handler가 에러를 잡아서 처리한다.
+
+```javascript
+new Promise((resolve, reject) => {
+  throw new Error("I'm Error.");
+}).then(
+  param => {
+    console.log('Success to execute Promise!');
+  },
+  err => {
+    console.log(`Fail to execute Promise! ${err.stack}`);
+  }
+).catch(
+  err => {
+    console.log(`ERROR HANDLER : ${err.stack}`);
+  }
+);
+```
+
+하지만, reject handler가 존재하지 않는 경우에는 catch handler가 에러를 잡아서 처리한다.
+
+```javascript
+new Promise((resolve, reject) => {
+  throw new Error("I'm Error.");
+}).then(
+  param => {
+    console.log('Success to execute Promise!');
+  }
+).catch(
+  err => {
+    console.log(`ERROR HANDLER : ${err.stack}`);
+  }
+);
+```
+
+[example_13](./src/example_13.js)
+
 ## [주의] Promise는 Thread가 아니다!!
 
 [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)는 비동기 처리를 가독성있게 코딩하 수 있도록 도와주는 패턴이지 Thread가 아니다. 다시 말해서 CPU를 동작시키지 않는 IO처리를 비동기로 처리할 때 가독성 있게 비동기 코드를 짜도록 도와주는 도구인것이다.
