@@ -6,7 +6,8 @@ const os = require('os');
 const connect = require('camo').connect;
 const Document = require('camo').Document;
 const EmbeddedDocument = require('camo').EmbeddedDocument;
-const Movie = require('./schema');
+// Using anonymous class ..
+const Movie = require('./schema').Movie;
 
 let database;
 // const uri = 'nedb:///Users/scott/data/animals';

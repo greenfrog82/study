@@ -4,7 +4,9 @@
 
 const Document = require('camo').Document;
 
-module.exports = class Movie extends Document {
+//module.exports = class Movie extends Document {
+// Using anonymous class ..
+exports.Movie = class extends Document {
     constructor() {
         super();
 
