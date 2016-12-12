@@ -13,7 +13,7 @@ exports.Movie = class extends Document {
         this.title = String;
         this.rating = {
             type: String,
-            choices: ['G', 'PG', 'PG-13', 'R']
+            choices: ['15', '19', 'ALL']
         };
         this.releaseDate = Date;
         this.hasCreditCookie = Boolean;
