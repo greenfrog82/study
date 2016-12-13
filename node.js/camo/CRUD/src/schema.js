@@ -10,6 +10,7 @@ exports.Movie = class extends Document {
     constructor() {
         super();
 
+        // 스키마 정의 방법 1.
         // this.title = String;
         // this.rating = {
         //     type: String,
@@ -18,6 +19,7 @@ exports.Movie = class extends Document {
         // this.releaseDate = Date;
         // this.hasCreditCookie = Boolean;
 
+        // 스키마 정의 방법 2.
         this.schema({
           title: String,
           rating: {
@@ -32,18 +34,4 @@ exports.Movie = class extends Document {
     static collectionName() {
         return 'movies';
     }
-};
-
-exports.AuthModel = class extends Document {
-  constructor() {
-    super();
-    this.schema({
-      username: { type:String, default: 'admin'},
-      password: String
-    });
-  }
-
-  static collectionName() {
-    return 'auth';
-  }
 };
