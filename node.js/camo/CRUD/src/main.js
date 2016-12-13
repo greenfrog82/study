@@ -15,6 +15,8 @@ const deleteByTitle = require('./util').deleteByTitle;
 const deleteAll = require('./util').deleteAll;
 const readAllByTitle = require('./util').readAllByTitle;
 
+const AuthModel = require('./schema').AuthModel;
+
 // const uri = 'nedb:///Users/scott/data/animals';
 // const uri = `nedb:///${os.homedir()}/pidotech/license/repository.db`;
 // const uri = 'nedb://c:/users/greenfrog/nedb-repo';  // drive를 작성하기 위해t서는 nedb:// 여기까지만, 대부분 리눅스 기준이라 /users가 붙어서 nedb:/// 이렇게 3개로 보이는거임 ... @.@
@@ -23,6 +25,18 @@ const uri = 'nedb://./db';
 connect(uri).then(
   db => {
     console.log('Success to connect into nedb.');
+
+    const password = 'password';
+    AuthModel.create({
+      username: 'admin',
+      password: password
+    }).save().then(
+      savedDoc => {
+        console.log('savedDoc :', savedDoc);
+      }
+    ).catch(err => {
+      console.error(err.stack);
+    });
     // _create();
     // _update();
     // _updateThereIsNo();

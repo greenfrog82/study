@@ -23,7 +23,11 @@ exports.create = (movie) => {
 exports.readByTitle = (title) => {
   Movie.findOne({title: title}).then(
     foundMovie => {
-      console.log(`[READ BY TITLE] Success to read by ${foundMovie.title}. ${JSON.stringify(foundMovie)}`);
+      if(!foundMovie) {
+        console.log(`[READ BY TITLE] There is no movie which you find.`);
+      } else {
+        console.log(`[READ BY TITLE] Success to read by ${foundMovie.title}. ${JSON.stringify(foundMovie)}`);
+      }
     }
   ).catch(err => {
     console.log('[READ BY TITLE] ERROR HANDLER : ', err);
