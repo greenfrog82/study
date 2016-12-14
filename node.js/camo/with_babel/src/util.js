@@ -2,20 +2,20 @@
 /*jslint node: true */
 'use strict';
 
-const Movie = require('./schema').Movie;
+import {Movie} from './schema';
 
 // Create
-exports.create = (movie) => {
+export function create(movie) {
   Movie.create(movie).save().then(
     savedRes => {
       console.log(`[CREATE] Success to save successfully. ${JSON.stringify(savedRes)}`);
     }).catch(err => {
       console.log(`[CREATE] ERROR HANDLER : ${err}`);
     });
-};
+}
 
 // Read by title
-exports.readByTitle = (title) => {
+export function readByTitle(title) {
   Movie.findOne({title: title}).then(
     foundMovie => {
       if(foundMovie) {
@@ -26,10 +26,10 @@ exports.readByTitle = (title) => {
     }).catch(err => {
       console.log('[READ BY TITLE] ERROR HANDLER : ', err);
     });
-};
+}
 
 // Read all
-exports.readAll = () => {
+export function readAll() {
   Movie.find({}).then(
     foundMovies => {
       console.log('[READ ALL] Success to read all.');
@@ -44,10 +44,10 @@ exports.readAll = () => {
     }).catch(err => {
       console.log('[READ ALL] ERROR HANDLER : ', err);
     });
-};
+}
 
 // Read all by title
-exports.readAllByTitle = (title) => {
+export function readAllByTitle(title) {
   Movie.find({title: title}).then(
     foundMovies => {
       console.log('[READ ALL BY TITLE] Success to read all.');
@@ -62,10 +62,10 @@ exports.readAllByTitle = (title) => {
     }).catch(err => {
       console.log('[READ ALL BY TITLE] ERROR HANDLER : ', err);
     });
-};
+}
 
 // Update
-exports.updateByTitle = (title, rating) => {
+export function updateByTitle(title, rating) {
   Movie.findOneAndUpdate({title: title}, {rating: rating}).then(
     foundMovie => {
       if(foundMovie) {
@@ -76,24 +76,24 @@ exports.updateByTitle = (title, rating) => {
     }).catch(err => {
       console.log('[UPDATE BY TITLE] ERROR HANDLER : ', err);
     });
-};
+}
 
 // Delete by title
-exports.deleteByTitle = (title) => {
+export function deleteByTitle(title) {
   Movie.deleteOne({title:title}).then(
     count => {
       console.log(`[DELETE BY TITLE] Success to delete by title. ${count}`);
     }).catch(err => {
       console.log('[DELETE BY TITLE] ERROR HANDLER : ', err);
     });
-};
+}
 
 // Delete all
-exports.deleteAll = () => {
+export function deleteAll() {
   Movie.deleteMany({}).then(
     count => {
       console.log(`[DELETE BY TITLE] Success to delete all. ${count}`);
     }).catch(err => {
       console.log('[DELETE BY TITLE] ERROR HANDLER : ', err);
     });
-};
+}

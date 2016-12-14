@@ -2,11 +2,9 @@
 /*jslint node: true */
 'use strict';
 
-const Document = require('camo').Document;
+import {Document} from 'camo';
 
-//module.exports = class Movie extends Document {
-// Using anonymous class ..
-exports.Movie = class extends Document {
+export class Movie extends Document {
     constructor() {
         super();
 
@@ -34,4 +32,4 @@ exports.Movie = class extends Document {
     static collectionName() {
         return 'movies';
     }
-};
+}

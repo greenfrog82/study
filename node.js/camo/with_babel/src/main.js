@@ -2,18 +2,8 @@
 /*jslint node: true */
 'use strict';
 
-const os = require('os');
-const connect = require('camo').connect;
-const Document = require('camo').Document;
-const EmbeddedDocument = require('camo').EmbeddedDocument;
-// Using anonymous class ..
-const create = require('./util').create;
-const updateByTitle = require('./util').updateByTitle;
-const readByTitle = require('./util').readByTitle;
-const readAll = require('./util').readAll;
-const deleteByTitle = require('./util').deleteByTitle;
-const deleteAll = require('./util').deleteAll;
-const readAllByTitle = require('./util').readAllByTitle;
+import {connect} from 'camo';
+import {create, updateByTitle, readByTitle, readAll, deleteByTitle, deleteAll, readAllByTitle} from './util';
 
 // const uri = 'nedb:///Users/scott/data/animals';
 // const uri = `nedb:///${os.homedir()}/pidotech/license/repository.db`;
@@ -23,7 +13,7 @@ const uri = 'nedb://./db';
 connect(uri).then(
   db => {
     console.log('Success to connect into nedb.');
-    // _create();
+    _create();
     // _update();
     // _updateThereIsNo();
     // _readByTitle();
