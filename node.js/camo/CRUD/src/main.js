@@ -14,6 +14,7 @@ const readAll = require('./util').readAll;
 const deleteByTitle = require('./util').deleteByTitle;
 const deleteAll = require('./util').deleteAll;
 const readAllByTitle = require('./util').readAllByTitle;
+const readAndDelete = require('./util').readAndDelete;
 
 // const uri = 'nedb:///Users/scott/data/animals';
 // const uri = `nedb:///${os.homedir()}/pidotech/license/repository.db`;
@@ -33,6 +34,7 @@ connect(uri).then(
     // _deleteByTitle();
     //  _deleteThereIsNoTitle();
     // _deleteAll();
+    _readAndDelete();
   },
   err => {
     console.error('Fail to connect to nedb.', err);
@@ -100,4 +102,8 @@ function _deleteThereIsNoTitle() {
 
 function _deleteAll() {
   deleteAll();
+}
+
+function _readAndDelete() {
+  readAndDelete('뽀로로');
 }

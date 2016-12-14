@@ -97,3 +97,14 @@ exports.deleteAll = () => {
       console.log('[DELETE BY TITLE] ERROR HANDLER : ', err);
     });
 };
+
+// Read and Delete by title
+exports.readAndDelete = (title) => {
+  Movie.findOneAndDelete({title:title}).then(
+    movie => {
+      console.log('[READ AND DELETE] ', movie);
+    }
+  ).catch(err => {
+    console.log('[READ AND DELETE] ERROR HANDLER : ', err);
+  });
+};
