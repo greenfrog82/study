@@ -105,5 +105,5 @@ function _deleteAll() {
 }
 
 function _readAndDelete() {
-  readAndDelete('뽀로로');
+  readAndDelete('토르');
 }
