@@ -73,9 +73,9 @@ INNER ERROR HANDLER : Error: Unsupported type: function String() { [native code]
 
 그런데, 내부 객체를 생성할 때 [Document](https://github.com/scottwrobinson/camo#declaring-your-document) 또는 [EmbeddedDocument](https://github.com/scottwrobinson/camo#embedded-documents) 클래스 중 무엇을 사용해야할까?
 
-[Document](https://github.com/scottwrobinson/camo#declaring-your-document)의 경우 별도의 db를 구성하는 클래스로서 이를 통해 내부객체를 생성할 수 없고 해당 db의 [Document](https://github.com/scottwrobinson/camo#declaring-your-document)를 참조만 할 수 있다.
+[Document](https://github.com/scottwrobinson/camo#declaring-your-document)의 경우 별도의 db를 구성하는 클래스로서 이를 통해서는 내부객체를 생성할 수 없고 해당 db의 [Document](https://github.com/scottwrobinson/camo#declaring-your-document)를 참조만 할 수 있다.
 
-다음과 같이 내부객체를 User [Document](https://github.com/scottwrobinson/camo#declaring-your-document)로 정의하자.
+다음과 같이 내부객체를 User [Document](https://github.com/scottwrobinson/camo#declaring-your-document)를 통해서 정의하자.
 
 ```javascript
 class User extends Document {
@@ -171,7 +171,7 @@ user.save().then(
 결국, 처음으로 돌아가서 mongoose에서 처럼 내부객체의 정의하기 위해서는 [EmbeddedDocument](https://github.com/scottwrobinson/camo#embedded-documents) 를 사용해야한다. 이를 사용하는 방법은 다음과 같으며, 의도했던데로 잘 동작한다.
 
 ```javascript
-class _User extends EmbeddedDocument {
+class User extends EmbeddedDocument {
   constructor() {
     super();
     this.schema({
@@ -179,18 +179,14 @@ class _User extends EmbeddedDocument {
       age: Number
     });
   }
-
-  static collectionName() {
-    return 'user';
-  }
 }
 
-class _Game extends Document {
+class Game extends Document {
     constructor() {
       super();
       this.schema({
         title: String,
-        user: _User
+        user: User
       });
     }
 
@@ -219,4 +215,6 @@ fifa.save().then(
 ## 참조
 
 * [Camo](https://github.com/scottwrobinson/camo)
-* [Example](./src/main.js)
+* 예제코드
+  * [Document 예제코드](./src/ex_document.js)
+  * [EmbddedDocument 예제코드](./src/ex_embeddedDocument.js)
