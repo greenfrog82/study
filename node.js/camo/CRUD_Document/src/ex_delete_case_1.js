@@ -9,13 +9,12 @@ const User = require('./lib/schema').User;
 
 connect(() => {
   Filter.findOne().then(readFilter => {
+    console.log('1. Success to read the filter.', readFilter);
     readFilter.users.splice(0, 1);
-    readFilter.save().then(savedFilter => {
-
-    }).catch(err => {
-      console.error(`[FILTER][SAVE][ERROR HANDLER] ${err.stack}`);
-    });
+    return readFilter.save();
+  }).then(savedFilter => {
+    console.log('2. Success to save the filter.', savedFilter);
   }).catch(err => {
-    console.error(`[FILTER][READ][ERROR HANDLER] ${err.stack}`);
+    console.error(`[ERROR HANDLER] ${err.stack}`);
   });
 });

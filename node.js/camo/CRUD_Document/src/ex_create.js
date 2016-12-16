@@ -8,28 +8,21 @@ const Filter = require('./lib/schema').Filter;
 const User = require('./lib/schema').User;
 
 connect(() => {
-  const user = User.create({key: 'f'});
+  const user = User.create({key: 'a'});
   user.save().then(savedUser => {
-    console.log('Success to save the user.', savedUser);
+    console.log('1. Success to save the user.', savedUser);
+    return Filter.findOne();
+  }).then(foundFilter => {
+    if(!foundFilter) {
+      foundFilter = Filter.create();
+    }
+    console.log('2. Success to read the filter.', foundFilter);
+    foundFilter.users.push(user);
 
-    Filter.findOne().then(foundFilter => {
-      if(!foundFilter) {
-        foundFilter = Filter.create();
-      }
-
-      console.log('Success to read the filter.', foundFilter);
-
-      foundFilter.users.push(user);
-
-      foundFilter.save().then(savedFilter => {
-          console.log('Success to save the filter.', savedFilter);
-      }).catch(err => {
-        console.error(`[FILTER][SAVE][ERROR HANDLER] ${err.stack}`);
-      });
-    }).catch(err => {
-      console.error(`[FILTER][READ][ERROR HANDLER] ${err.stack}`);
-    });
+    return foundFilter.save();
+  }).then(savedFilter => {
+    console.log('3. Success to save the filter.', savedFilter);
   }).catch(err => {
-    console.error(`[USER][ERROR HANDLER] ${err.stack}`);
+    console.error(`[ERROR HANDLER] ${err.stack}`);
   });
 });

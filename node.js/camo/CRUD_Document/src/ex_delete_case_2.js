@@ -9,13 +9,11 @@ const User = require('./lib/schema').User;
 
 connect(() => {
   User.deleteOne({key: 'a'}).then(count => {
-    console.log('Success to delete the user.', count);
-    Filter.findOne().then(readFilter => {
-      console.log('Success to read the filter.', readFilter);
-    }).catch(err => {
-      console.error(`[FILTER][READ][ERROR HANDLER] ${err.stack}`);
-    });
+    console.log('1. Success to delete the user.', count);
+    return Filter.findOne();
+  }).then(readFilter => {
+    console.log('2. Success to read the filter.', readFilter);
   }).catch(err => {
-    console.error(`[USER][DELETE][ERROR HANDLER] ${err.stack}`);
+    console.error(`[ERROR HANDLER] ${err.stack}`);
   });
 });

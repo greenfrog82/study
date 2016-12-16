@@ -38,30 +38,24 @@ class Filter extends Document {
 
 다음과 같이 **반드시** 참조가 되는 User를 먼저 생성하고  DB에 저장을 해주어야한다. 참조라는것은 DB에 저장 된 Document를 참조하는 것이기 때문이다. User가 저장이 됐으면, User를 참조하는 Filter를 생성 또는 읽어서 참조를 시켜주면 된다.
 
+[ex_create.js](./src/ex_create.js)
 ```javascript
-const user = User.create({key: 'b'});
+const user = User.create({key: 'a'});
 user.save().then(savedUser => {
-  console.log('Success to save the user.', savedUser);
+  console.log('1. Success to save the user.', savedUser);
+  return Filter.findOne();
+}).then(foundFilter => {
+  if(!foundFilter) {
+    foundFilter = Filter.create();
+  }
+  console.log('2. Success to read the filter.', foundFilter);
+  foundFilter.users.push(user);
 
-  Filter.findOne().then(foundFilter => {
-    if(!foundFilter) {
-      foundFilter = Filter.create();
-    }
-
-    console.log('Success to read the filter.', foundFilter);
-
-    foundFilter.users.push(user);
-
-    foundFilter.save().then(savedFilter => {
-        console.log('Success to save the filter.', savedFilter);
-    }).catch(err => {
-      console.error(`[FILTER][SAVE][ERROR HANDLER] ${err.stack}`);
-    });
-  }).catch(err => {
-    console.error(`[FILTER][READ][ERROR HANDLER] ${err.stack}`);
-  });
+  return foundFilter.save();
+}).then(savedFilter => {
+  console.log('3. Success to save the filter.', savedFilter);
 }).catch(err => {
-  console.error(`[USER][ERROR HANDLER] ${err.stack}`);
+  console.error(`[ERROR HANDLER] ${err.stack}`);
 });
 ```
 
@@ -100,6 +94,7 @@ filters.db파일이 위와 같이 저장 된 상태에서 정상적인 절차를
 
 읽기는 다음코드를 통해 수행하면된다. 결과로는 앞서 보여주었던 filter.db의 내용이 그대로 출력되는 것이 아니라, 다시 말해서 users속성에 "users":["JEYLoO7UdQMUp8MG"] 값이 출력되는 것이 아닌 참조되는 User Document의 값이 출력된다.
 
+[ex_read.js](./src/ex_read.js)
 ```javascript
 Filter.findOne().then(readFilter => {
   console.log(readFilter);
@@ -119,16 +114,16 @@ Filter.findOne().then(readFilter => {
 
 ### 참조하고 있는 Filter Document에서 User Document의 참조만 삭제하고자하는 경우
 
+[ex_delete_case_1.js](./src/ex_delete_case_1.js)
 ```javascript
 Filter.findOne().then(readFilter => {
+  console.log('1. Success to read the filter.', readFilter);
   readFilter.users.splice(0, 1);
-  readFilter.save().then(savedFilter => {
-
-  }).catch(err => {
-    console.error(`[FILTER][SAVE][ERROR HANDLER] ${err.stack}`);
-  });
+  return readFilter.save();
+}).then(savedFilter => {
+  console.log('2. Success to save the filter.', savedFilter);
 }).catch(err => {
-  console.error(`[FILTER][READ][ERROR HANDLER] ${err.stack}`);
+  console.error(`[ERROR HANDLER] ${err.stack}`);
 });
 ```
 
@@ -137,16 +132,15 @@ Filter.findOne().then(readFilter => {
 
 ### 참조되고 있는 User Document만 삭제하는 경우
 
+[ex_delete_case_2.js](./src/ex_delete_case_2.js)
 ```javascript
 User.deleteOne({key: 'a'}).then(count => {
-  console.log('Success to delete the user.', count);
-  Filter.findOne().then(readFilter => {
-    console.log('Success to read the filter.', readFilter);
-  }).catch(err => {
-    console.error(`[FILTER][READ][ERROR HANDLER] ${err.stack}`);
-  });
+  console.log('1. Success to delete the user.', count);
+  return Filter.findOne();
+}).then(readFilter => {
+  console.log('2. Success to read the filter.', readFilter);
 }).catch(err => {
-  console.error(`[USER][DELETE][ERROR HANDLER] ${err.stack}`);
+  console.error(`[ERROR HANDLER] ${err.stack}`);
 });
 ```
 
@@ -176,11 +170,27 @@ _Filter {
 
 따라서, **참조되고 있는 User Document를 삭제하는 경우에는 이를 참조하고 있는 모든 Document에서 해당 참조를 모두 삭제해주어야한다**.
 
+다음은 위 문제를 옳바르게 해결한 예제이다.
+
+[ex_delete_case_2_solver.js](./src/ex_delete_case_2_solver.js)
+```javascript
+const targetKey = 'a';
+Filter.findOne().then(readFilter => {
+  console.log('1. Success to read the filter.', readFilter);
+  if(!remove(readFilter.users, targetKey)) {
+    throw Error('There is no targetKey.', targetKey);
+  }
+  return readFilter.save();
+}).then((savedFilter) => {
+  console.log('2. Success to save the filter.', savedFilter);
+  return User.deleteOne({key: targetKey});
+}).then((count) => {
+  console.log('3. Success to delete the user.', count);
+}).catch(err => {
+  console.error(`[ERROR HANDLER] ${err.stack}`);
+});
+```
+
 ## 참조
 
 * [Camo](https://github.com/scottwrobinson/camo)
-* Example
-  * [Create](./src/ex_create.js)
-  * [Read](./src/ex_read.js)
-  * [Update](./src/ex_update.js)
-  * [Delete](./src/ex_delete.js)

@@ -1,3 +1,7 @@
+/* jshint -W097 */
+/*jslint node: true */
+'use strict';
+
 const Document = require('camo').Document;
 const EmbeddedDocument = require('camo').EmbeddedDocument;
 
