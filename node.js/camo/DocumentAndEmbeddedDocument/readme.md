@@ -30,9 +30,6 @@ class Game extends Document {
         }
       });
     }
-    static collectionName() {
-        return 'game';
-    }
 }
 ```
 
@@ -47,16 +44,14 @@ const fifa = Game.create({
   }
 });
 
-fifa.save().then(
-  savedDoc => {
-    console.log('Success to save document to DB.', savedDoc);
-  }
-).catch(err => {
-  console.error(`INNER ERROR HANDLER : ${err.stack}`);
+fifa.save().then(savedDoc => {
+  console.log('Success to save document to DB.', savedDoc);
+}).catch(err => {
+  console.error(`ERROR HANDLER : ${err.stack}`);
 });
 ```
 ```
-INNER ERROR HANDLER : Error: Unsupported type: function String() { [native code] }
+ERROR HANDLER : Error: Unsupported type: function String() { [native code] }
     at isType (D:\develop\study\node.js\camo\EmbeddedDocument\node_modules\camo\lib\validate.js:79:15)
     at isValidType (D:\develop\study\node.js\camo\EmbeddedDocument\node_modules\camo\lib\validate.js:121:12)
     at D:\develop\study\node.js\camo\EmbeddedDocument\node_modules\camo\lib\base-document.js:178:18
@@ -86,10 +81,6 @@ class User extends Document {
       age: Number
     });
   }
-
-  static collectionName() {
-    return 'user';
-  }
 }
 
 class Game extends Document {
@@ -99,10 +90,6 @@ class Game extends Document {
         title: String,
         user: User
       });
-    }
-
-    static collectionName() {
-      return 'game';
     }
 }
 ```
@@ -118,12 +105,10 @@ const fifa = Game.create({
   }
 });
 
-fifa.save().then(
-  savedDoc => {
-    console.log('Success to save document to DB.', savedDoc);
-  }
-).catch(err => {
-  console.error(`INNER ERROR HANDLER : ${err.stack}`);
+fifa.save().then(savedDoc => {
+  console.log('Success to save document to DB.', savedDoc);
+}).catch(err => {
+  console.error(`ERROR HANDLER : ${err.stack}`);
 });
 ```
 그러면 다음과 같은 오류 메시지가 발생한다.
@@ -131,7 +116,7 @@ fifa.save().then(
 ```
 오류!!
 
-INNER ERROR HANDLER : ValidationError: Value assigned to game.user should be _User, got object
+ERROR HANDLER : ValidationError: Value assigned to game.user should be _User, got object
     at D:\develop\study\node.js\camo\EmbeddedDocument\node_modules\camo\lib\base-document.js:196:23
     at Array.forEach (native)
     at _Game.validate (D:\develop\study\node.js\camo\EmbeddedDocument\node_modules\camo\lib\base-document.js:160:30)
@@ -144,32 +129,30 @@ INNER ERROR HANDLER : ValidationError: Value assigned to game.user should be _Us
 
 앞서 설명한바와 같이 [Document](https://github.com/scottwrobinson/camo#declaring-your-document 는 별도의 db의 [Document](https://github.com/scottwrobinson/camo#declaring-your-document 를 나타내므로 이를 통해 내부객체를 표현할 수 없기 때문에 발생하는 문제이다. 즉, [Document](https://github.com/scottwrobinson/camo#declaring-your-document 를 사용하면 외부 db의 특정 [Document](https://github.com/scottwrobinson/camo#declaring-your-document 를 참조하기 위해서만 사용가능하다. 옳바른 사용은 다음과 같다.
 
+[Document 예제코드](./src/ex_document.js)
 ```javascript
 const user = User.create({
   name: 'greenfrog',
   age: 35
 });
 
-user.save().then(
-  savedUser => {
-    const fifa = Game.create({
-      title: 'FIFA',
-      user: savedUser
-    });
+user.save().then(savedUser => {
+  const fifa = Game.create({
+    title: 'FIFA',
+    user: savedUser
+  });
 
-    fifa.save().then(
-      savedDoc => {
-        console.log('Success to save document to DB.', savedDoc);
-      }
-    ).catch(err => {
-      console.error(`INNER ERROR HANDLER : ${err.stack}`);
-    });
-  }
-);
+  return fifa.save();
+}).then(savedDoc => {
+  console.log('Success to save document to DB.', savedDoc);
+}).catch(err => {
+  console.error(`ERROR HANDLER : ${err.stack}`);
+});
 ```
 
 결국, 처음으로 돌아가서 mongoose에서 처럼 내부객체의 정의하기 위해서는 [EmbeddedDocument](https://github.com/scottwrobinson/camo#embedded-documents) 를 사용해야한다. 이를 사용하는 방법은 다음과 같으며, 의도했던데로 잘 동작한다.
 
+[EmbddedDocument 예제코드](./src/ex_embeddedDocument.js)
 ```javascript
 class User extends EmbeddedDocument {
   constructor() {
@@ -189,10 +172,6 @@ class Game extends Document {
         user: User
       });
     }
-
-    static collectionName() {
-      return 'game';
-    }
 }
 
 const fifa = Game.create({
@@ -203,11 +182,9 @@ const fifa = Game.create({
   }
 });
 
-fifa.save().then(
-  savedDoc => {
-    console.log('Success to save document to DB.', savedDoc);
-  }
-).catch(err => {
+fifa.save().then(savedDoc => {
+  console.log('Success to save document to DB.', savedDoc);
+}).catch(err => {
   console.error(`INNER ERROR HANDLER : ${err.stack}`);
 });
 ```
@@ -215,6 +192,3 @@ fifa.save().then(
 ## 참조
 
 * [Camo](https://github.com/scottwrobinson/camo)
-* 예제코드
-  * [Document 예제코드](./src/ex_document.js)
-  * [EmbddedDocument 예제코드](./src/ex_embeddedDocument.js)

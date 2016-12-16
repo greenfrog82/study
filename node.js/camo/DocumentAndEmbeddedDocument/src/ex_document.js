@@ -15,10 +15,6 @@ class User extends Document {
       age: Number
     });
   }
-
-  static collectionName() {
-    return 'user';
-  }
 }
 
 class Game extends Document {
@@ -29,40 +25,26 @@ class Game extends Document {
         user: User
       });
     }
-
-    static collectionName() {
-      return 'game';
-    }
 }
 
 const uri = 'nedb://./db';
 
-connect(uri).then(
-  db => {
-    console.log('Success to connect into nedb.');
+connect(uri).then(db => {
+  console.log('Success to connect into nedb.');
 
-    const user = User.create({
-      name: 'greenfrog',
-      age: 35
-    });
-
-    user.save().then(
-      savedUser => {
-        const fifa = Game.create({
-          title: 'FIFA',
-          user: savedUser
-        });
-
-        fifa.save().then(
-          savedDoc => {
-            console.log('Success to save document to DB.', savedDoc);
-          }
-        ).catch(err => {
-          console.error(`INNER ERROR HANDLER : ${err.stack}`);
-        });
-      }
-    );
-  }
-).catch(err => {
+  const user = User.create({
+    name: 'greenfrog',
+    age: 35
+  });
+  return user.save();
+}).then(savedUser => {
+  const fifa = Game.create({
+    title: 'FIFA',
+    user: savedUser
+  });
+  return fifa.save();
+}).then(savedGame => {
+  console.log('Success to save document to DB.', savedGame);
+}).catch(err => {
   console.error(`ERROR HANDLER : ${err.stack}`);
 });

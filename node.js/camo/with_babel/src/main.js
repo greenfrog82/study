@@ -23,9 +23,6 @@ connect(uri).then(
     // _deleteByTitle();
     //  _deleteThereIsNoTitle();
     // _deleteAll();
-  },
-  err => {
-    console.error('Fail to connect to nedb.', err);
   }
 ).catch(ex => {
   console.error(`ERROR HANDLER : ${ex.toString()}`);
