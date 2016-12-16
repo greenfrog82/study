@@ -106,6 +106,25 @@ Movie.deleteMany({}).then(
   });
 ```
 
+### 특정값을 읽어서 처리한 후 삭제하기
+
+findOneAndDelete 메소드를 통해 처리해보려고 했지만, 이 기능이 내가 생각한것 처럼 특정 값을 반환해주지 않아 아래와 같이 관련 기능을 작성하였다.
+
+```javascript
+Movie.findOne({title:title}).then(foundMovie => {
+  if(foundMovie) {
+    console.log('[READ AND DELETE] Success to find movie. So try to delete this.', foundMovie.title);
+    return foundMovie.delete();
+  }
+  console.log('[READ AND DELETE] There is no movie.');
+  return 0;
+}).then(count => {
+  console.log('Success to delete found movie.', count);
+}).catch(err => {
+  console.error('ERROR HANDLER : ', err);
+});
+```
+
 ## 주의
 
 * **검색 시**
