@@ -1,8 +1,11 @@
 # package folder
 node_modules
 
-# distribution folder
+# build & distribution folder
 dist
+bin
+debug
+release
 
 # log
 *.log
@@ -12,3 +15,5 @@ dist
 
 # db
 *.db
+
+
