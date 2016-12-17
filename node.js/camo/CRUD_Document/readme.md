@@ -105,6 +105,55 @@ Filter.findOne().then(readFilter => {
 
 ## Udpate
 
+수정의 경우 참조된 User Document를 수정하면 참조하고 있는 Filter Document에 반영이 될 것이지만, 참조하고 있는 Filter Document에서 참조 된 User Document의 속성값을 변경하고 저장하면 어떻게 되는지 확인해보자.
+
+[ex_update.js](./src/ex_update.js)
+```javascript
+Filter.findOne().then(foundFilter => {
+  console.log('1. Success to read the filter.', foundFilter);
+  foundFilter.users[0].key = 'greenfrog';
+  return foundFilter.save();
+}).then(savedFilter => {
+  console.log('2. Success to save the filter.', savedFilter);
+  return User.findOne({key: savedFilter.users[0].key});
+}).then(readUser => {
+  console.log('3. Success to read the user.', readUser);
+}).catch(err => {
+  console.error(`[ERROR HANDLER] ${err.stack}`);
+});
+```
+
+위 코드를 실행해보면, 다음과 같은 오류가 발생한다.
+
+```
+[ERROR HANDLER] ValidationError: Value assigned to filters.users should be [_User], got [[object Object],[object Object],[object Object],]
+    at D:\develop\study\node.js\camo\CRUD_Document\node_modules\camo\lib\base-document.js:196:23
+    at Array.forEach (native)
+    at _Filter.validate (D:\develop\study\node.js\camo\CRUD_Document\node_modules\camo\lib\base-document.js:160:30)
+    at D:\develop\study\node.js\camo\CRUD_Document\node_modules\camo\lib\document.js:68:18
+```
+
+따라서, 참조하고 있는 Filter Document에서 참조 된 User Document를 수정하는 것은 옳은 방법이 아니고, 참조 된 User Document를 수정해주어야한다. 위 코드를 옳바르게 수정하면 다음과 같다.
+
+```javascript
+Filter.findOne().then(foundFilter => {
+  console.log(`1. Success to read the filter. ${foundFilter._id}`);
+  return User.findOne({key:foundFilter.users[0].key});
+}).then(foundUser => {
+  console.log(`2. Success to read the user. ${foundUser._id} : ${foundUser.key}`);
+  foundUser.key = 'greenfrog';
+  return foundUser.save();
+}).then(savedUser => {
+  console.log(`3. Success to save the user. ${savedUser._id} : ${savedUser.key}`);
+  return Filter.findOne();
+}).then(foundFilter => {
+  console.log(`4. Success to read the filter. ${foundFilter._id}`);
+  console.log(`Result : ${foundFilter.users[0].key}`);
+}).catch(err => {
+  console.error(`[ERROR HANDLER] ${err.stack}`);
+});
+```
+
 ## Delete
 
 삭제는 다음과 같은 경우를 고려해서 수행해야한다.
