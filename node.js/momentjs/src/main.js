@@ -4,8 +4,10 @@
 
 const moment = require('moment');
 
-const birth = new Date('2016.12.01');
+const birth = new Date('2016.12.01')
 const now = Date.now();
+
+console.log(moment(birth).format('YYYY.MM.DD hh:mm:ss'));
 
 // http://stackoverflow.com/questions/25150570/get-hours-difference-between-two-dates-in-moment-js
 
@@ -57,4 +59,4 @@ function getDuration(beginDate, endDate) {
   };
 }
 
-console.log(getDuration(birth, now));
+// console.log(getDuration(birth, now));
