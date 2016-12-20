@@ -27,7 +27,7 @@ exports.getElapse = (beginDate, endDate) => {
 + return
   - 두 날짜 사이의 Date객체 배열
 ------------------------------------------------------ */
-exports.getDaysOfElapse = (beginDate, endDate) => {
+exports.getDaysByElapse = (beginDate, endDate) => {
   const dates = [];
 
   const currDate = moment(beginDate).startOf('day');
@@ -40,16 +40,28 @@ exports.getDaysOfElapse = (beginDate, endDate) => {
 };
 
 /* ---------------------------------------------------
-시작 날짜와 마지막 날짜의 시간과 두 날짜(시작, 마지막) 사이의 날짜와 시간 목록 반환
-(http://stackoverflow.com/questions/23795522/how-to-enumerate-dates-between-two-dates-in-moment)
+분과 초를 제외한, 시작 날짜와 마지막 날짜의 경과 시간과 사이의 경과 시간을 반환
 
 + parameter(s)
   - beginDate : Date 시작날짜
   - endDate   : Date 끝 날짜
 + return
-  - {
-    date: Date,
-    
-  }
+  분과 초를 제외한, 시작 날짜와 마지막 날짜의 경과 시간과 사이의 경과 시간을 반환
 ------------------------------------------------------ */
-exports.getElapseTimeAndDateList
+exports.getStartEndTimeAndGapElapseTime = (beginDate, endDate) => {
+  const beginStartOfDay = moment(beginDate).startOf('day');
+  const endStartOfDay = moment(endDate).startOf('day');
+
+  const diff = moment(endStartOfDay).diff(moment(beginStartOfDay));
+  const duration = moment.duration(diff);
+
+  // const hour24s = (duration.days() - 1) * 24; // 시작 날짜와 끝 날짜의 사이 시간
+  const beginHour = 24 - moment(beginDate).hour();
+  const endHour = moment(endDate).hour();
+
+  return {
+    begin: beginHour,
+    end: endHour,
+    gap: (duration.days() - 1) * 24
+  };
+};

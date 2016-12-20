@@ -53,7 +53,7 @@ exports.getDaysOfElapse = (beginDate, endDate) => {
   return dates;
 };
 ```
-[ex_getDaysOfElpase.js](./src/ex_getDaysOfElpase.js)
+[ex_getDaysByElpase.js](./src/ex_getDaysByElpase.js)
 ```javascript
 const mdf = require('moment-duration-format');
 const getDaysOfElapse = require('./lib/dateHelper').getDaysOfElapse;
@@ -64,11 +64,51 @@ const end = new Date('2016-12-10 12:00:00');
 console.log(getDaysOfElapse(begin, end));
 ```
 
-## 시작 날짜와 마지막 날짜의 시간과 두 날짜(시작, 마지막) 사이의 날짜와 시간 출력하기
+## 분과 초를 제외한, 시작 날짜와 마지막 날짜의 경과시간과 사이의 경과 시간 출력하기
 
+```javascript
+/* ---------------------------------------------------
+분과 초를 제외한, 시작 날짜와 마지막 날짜의 시간과 경과 시간을 반환
 
++ parameter(s)
+  - beginDate : Date 시작날짜
+  - endDate   : Date 끝 날짜
++ return
+  분과 초를 제외한, 시작 날짜와 마지막 날짜의 시간과 경과 시간을 반환
+------------------------------------------------------ */
+exports.getStartEndTimeAndGapElapseTime = (beginDate, endDate) => {
+  const beginStartOfDay = moment(beginDate).startOf('day');
+  const endStartOfDay = moment(endDate).startOf('day');
 
+  const diff = moment(endStartOfDay).diff(moment(beginStartOfDay));
+  const duration = moment.duration(diff);
 
+  // const hour24s = (duration.days() - 1) * 24; // 시작 날짜와 끝 날짜의 사이 시간
+  const beginHour = moment(beginDate).hour();
+  const endHour = moment(endDate).hour();
+
+  function getHour(hour) {
+    return (hour)? hour: 24;
+  }
+
+  return {
+    begin: getHour(beginHour),
+    end: getHour(endHour),
+    gap: (duration.days() - 1) * 24
+  };
+};
+```
+[ex_getDaysByElpase.js](./src/ex_getDaysByElpase.js)
+```javascript
+const moment = require('moment');
+const getStartEndTimeAndGapElapseTime = require('./lib/dateHelper').getStartEndTimeAndGapElapseTime;
+
+const begin = new Date('2016-12-01 12:00:00');
+const end = new Date('2016-12-10 12:00:00');
+
+const result = getStartEndTimeAndGapElapseTime(begin, end);
+console.log(result);
+```
 # 참조
 
 * [MDN - Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
