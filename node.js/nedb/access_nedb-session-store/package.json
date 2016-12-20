@@ -1,0 +1,15 @@
+{
+  "name": "access_nedb-session-store",
+  "version": "1.0.0",
+  "description": "Node.js를 통한 간단한 예제 코드 또는 파일럿 코드를 작성할 목적으로 만든 미니 프로젝트 템플릿.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nedb": "^1.8.0"
+  }
+}

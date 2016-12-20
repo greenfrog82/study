@@ -4,10 +4,35 @@
 
 const moment = require('moment');
 
-const birth = new Date('2016.12.01')
-const now = Date.now();
+const begin = new Date('2016-12-01 12:13:02');
+const end = new Date('2016-12-03 12:00:00');
 
-console.log(moment(birth).format('YYYY.MM.DD hh:mm:ss'));
+const diff = moment(end).diff(moment(begin));
+const duration = moment.duration(diff);
+
+const hour24s = (duration.days() - 1) * 24; // 시작 날짜와 끝 날짜의 사이 시간
+const beginHour = moment(begin).minute();
+console.log(beginHour);
+
+// http://stackoverflow.com/questions/23795522/how-to-enumerate-dates-between-two-dates-in-moment
+var enumerateDaysBetweenDates = function(startDate, endDate) {
+    var dates = [];
+
+    var currDate = startDate.clone().startOf('day');
+    var lastDate = endDate.clone().startOf('day');
+
+    while(currDate.add('days', 1).diff(lastDate) < 0) {
+        console.log(currDate.toDate());
+        dates.push(currDate.clone().toDate());
+    }
+
+    return dates;
+};
+
+console.log(enumerateDaysBetweenDates(moment(begin), moment(end)));
+
+
+// console.log(duration.days());
 
 // http://stackoverflow.com/questions/25150570/get-hours-difference-between-two-dates-in-moment-js
 
