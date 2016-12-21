@@ -2,27 +2,18 @@
 /*jslint node: true */
 'use strict';
 
-// const DataStore = require('nedb');
-// const db = new DataStore({ filename: './../data/session_store.db'});
-//
-// db.loadDatabase(err => {
-//   if(err) {
-//     console.error(err.stack);
-//     return;
-//   }
-//   console.log(db);
-// });
+const path = require('path');
+const DataStore = require('nedb');
 
+const db = new DataStore({ filename: path.join(__dirname, '../data/session_store.db')});
 
-var obj = { a: 'test' };
-var copy = Object.assign({}, obj);
+db.loadDatabase(err => {
+  if(err) {
+    console.error(err.stack);
+    return;
+  }
 
-copy.a = 'a';
-console.log(copy); // { a: 100 }
-console.log(obj); // { a: 1 }
-
-var str = "Apple, Banana, Kiwi";
-var res = str.substr(7, 6);
-
-console.log('str : ', str);
-console.log('res : ', res);
+  db.find({'session.key': 'greenfrog'}, function (err, docs) {
+    console.log(docs);
+  });
+});
