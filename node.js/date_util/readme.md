@@ -84,16 +84,12 @@ exports.getStartEndTimeAndGapElapseTime = (beginDate, endDate) => {
   const duration = moment.duration(diff);
 
   // const hour24s = (duration.days() - 1) * 24; // 시작 날짜와 끝 날짜의 사이 시간
-  const beginHour = moment(beginDate).hour();
+  const beginHour = 24 - moment(beginDate).hour();
   const endHour = moment(endDate).hour();
 
-  function getHour(hour) {
-    return (hour)? hour: 24;
-  }
-
   return {
-    begin: getHour(beginHour),
-    end: getHour(endHour),
+    begin: beginHour,
+    end: endHour,
     gap: (duration.days() - 1) * 24
   };
 };
