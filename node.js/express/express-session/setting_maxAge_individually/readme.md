@@ -1,6 +1,6 @@
 # express-session에서 각 사용자별 maxAge 설정하기
 
-어제 커밋했던 [nedb-session-store를 통해 저장 된 세션 정보 액세스하기]('./../../../nedb/access_nedb-session-store')에 다음과 같은 내용이 있었다.
+지난번 커밋했던 [nedb-session-store를 통해 저장 된 세션 정보 액세스하기]('./../../../nedb/access_nedb-session-store')에 다음과 같은 내용이 있었다.
 
 ```
 Node.js를 통해 서버를 개발하면서 서버의 특정 자원을 소비하고 있는 클라이언트가 알 수 없는 오류로 인해 죽어버렸을 때, 이러한 클라이언트를 확인하기 위해서 세션을 사용하였다.
