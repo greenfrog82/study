@@ -11,11 +11,14 @@ Node.js를 통해 서버를 개발하면서 서버의 특정 자원을 소비하
 이때, 서버에는 기본적으로 다음과 같이 세션의 만료시간을 계산할 때 사용하는 [maxAge](https://github.com/expressjs/session#cookiemaxage)라는 속성에 값이 설정되어있다.
 
 ```javascript
+const DEFFAULT_MAXAGE = 60000;
+const RESOURCE_MAXAGE = 30000;
+
 app.use(session({
     secret: '@#!@)($)*@#$)(#@$)(!@$*)',
     cookie: {
       httpOnly: true,
-      maxAge: 60000,
+      maxAge: DEFFAULT_MAXAGE,
       secure: false
     },
     // create new redis store.
@@ -26,10 +29,36 @@ app.use(session({
 ```
 
 예를들어, 서버의 특정 자원을 소비하는 클라이언트의 경우 이미 설정되어 있는 [maxAge](https://github.com/expressjs/session#cookiemaxage)값과 다른값을 설정해줘야한다면 어떻게 해야할까?
-특정 클라이언트가 서버의 자원을 획득하거나, 로그인하는 시점에 다음과 같이 [maxAge](https://github.com/expressjs/session#cookiemaxage)값을 다시 설정해주면된다.
+특정 클라이언트가 서버의 자원을 획득했을 때, 다음과 같이 이를 구분할 수 있는  플래그를 셋팅해준다.
 
 ```javascript
-req.session.cookie.maxAge = 30000;
+app.get('/resource', (req, res) => {
+  // 클라이언트에서 자원 획득
+  req.session.isResource = true;
+  res.end(`${req.originalUrl} - session : ${JSON.stringify(req.session)}`);
+});
+
+app.delete('/resource', (req, res) => {
+  // 클라이언트에서 자원 반납
+  req.session.isResource = false;
+  res.end(`${req.originalUrl} - session : ${JSON.stringify(req.session)}`);
+});
+```
+
+그리고 세션 설정 이후 미들웨어에서 다음과 같이 [maxAge](https://github.com/expressjs/session#cookiemaxage)값을 다시 설정해주면된다.
+
+```javascript
+app.use((req, res, next) => {
+  // key값을 'greenfrog'로 갖는 연결의 경우 maxAge를 30분으로 설정한다.
+  // maxAge의 기본값이 1시간이었으므로 30분으로 수정되는 경우 세션의 값이 수정되었으므로
+  // 세션의 만료시간이 초기화된다.
+  console.log('session.maxAge :', req.session.cookie.maxAge);
+  if(!req.session.cookie) {
+    return next();
+  }
+  req.session.cookie.maxAge = (req.session.isResource)? RESOURCE_MAXAGE: DEFFAULT_MAXAGE;
+  next();
+});
 ```
 
 ## 참조
