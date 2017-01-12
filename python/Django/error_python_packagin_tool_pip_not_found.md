@@ -3,6 +3,8 @@
 ## 개발 환경
 Ubuntu 14.04
 PyCharm 2016.3.2
+Python 3.4
+Django 1.10.5
 
 ## 문제
 
