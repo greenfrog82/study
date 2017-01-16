@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FlaskServerForAngularTutorial.iml" filepath="$PROJECT_DIR$/.idea/FlaskServerForAngularTutorial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tutorialspoint.iml" filepath="$PROJECT_DIR$/.idea/tutorialspoint.iml" />
     </modules>
   </component>
 </project>
