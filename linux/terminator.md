@@ -59,4 +59,5 @@
 
 * [[Linux] Ubuntu Gnome 터미널 추천 - Terminator](http://programmingsummaries.tistory.com/361)
 * [Terminator](https://gnometerminator.blogspot.kr/)
+*
 
