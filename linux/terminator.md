@@ -7,7 +7,7 @@
 
 > Features:
 >
-> * Arrange terminals in a grid
+>* Arrange terminals in a grid
  * Tabs
  * Drag and drop re-ordering of terminals
  * Lots of keyboard shortcuts
@@ -30,7 +30,8 @@
 
 아직 다음 설정 내용의 의미는 정확히 모른다. 관련 내용은 회사에 적은한 후 차차 찾아서 적도록 하고 일단 지금은 font설정만 내가 사용하고 있는 [D2Coding](https://github.com/naver/d2codingfont)으로 변경해서 사용하고 있다. 
 
->[global_config]
+```
+[global_config]
   tab_position = bottom
   handle_size = 0
   focus = system
@@ -54,6 +55,7 @@
       parent = ""
       size = 1000, 600
 [plugins]
+```
 
 ## 참조
 
