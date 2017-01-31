@@ -2,6 +2,14 @@
 
 ## 기본 세팅
 
+### [Auto-Open Markdown Preview](https://marketplace.visualstudio.com/items?itemName=hnw.vscode-auto-open-markdown-preview)
+
+Open Markdown preview automatically when opening a Markdown file
+
+### [Vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)
+
+Vim emulation for Visual Studio Code
+
 ## 테마
 
 ### [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons) 
