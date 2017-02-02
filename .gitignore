@@ -12,3 +12,7 @@ release
 
 # bakcup
 *.bak
+
+# vscode
+.vscode
+__pycache__
