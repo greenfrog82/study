@@ -16,3 +16,10 @@ release
 # vscode
 .vscode
 __pycache__
+
+# pycharm
+.idea
+
+# vim
+*.swo
+*.swp

@@ -19,6 +19,8 @@
 
 * Ctrl + Alt + T : 바탕화면에서 터미널 실행
 * Ctrl + Shift + T : 터미널내에서 새탭으로 터미널을 실행
+* Ctrl + Page Down : 터미널내에서 다음 탭으로 이동
+* Ctrl + Page Up : 터미널내에서 이전 탭으로 이동
 * Ctrl + Shift + N : 터미널내에서 화면이 분할 되었을 때, 다음 분할 화면으로 이동
 * Ctrl + Shift + P : 터미널내에서 화면이 분할 되었을 때, 이전 분할 화면으로 이동
 * Ctrl + Shift + W : 터미널내에서 실행된 터미널을 종료
