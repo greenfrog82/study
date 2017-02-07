@@ -54,15 +54,16 @@ $ git log --pretty=format:'%h %an %ad : %s'
 $ git log --graph --oneline --decorate
 ```
 
-![git log --graph --oneline --decorate](get_log_graph_pretty=online_decorate.png)
+![git log --graph --oneline --decorate](git_log_graph_pretty=online_decorate.png)
+
 
 다음과 같이 --oneline을 pretty=oneline으로 사용할 수도 있다.
 
 ```
 $git log --graph --decorate --pretty=oneline
 ```
+![git log --graph --decorate pretty=oneline](git_log_graph_online_decorate.png)
 
-![git log --graph --decorate pretty=oneline](get_log_graph_online_decoreate.png)
 
 이 둘의 차이점은 커밋 해쉬값이 full name, short name으로 출력하느냐이다. 
 
@@ -91,6 +92,6 @@ $ git log -S googleapis
 
 ## 참조
 
-[How can I show the name of branch in 'git log'](http://stackoverflow.com/questions/1841405/how-can-i-show-the-name-of-branches-in-git-log)
-[git-log -Show commit logs](https://git-scm.com/docs/git-log)
-[커밋 히스토리 조회](https://mylko72.gitbooks.io/git/content/history.html)
+* [How can I show the name of branch in 'git log'](http://stackoverflow.com/questions/1841405/how-can-i-show-the-name-of-branches-in-git-log)
+* [git-log -Show commit logs](https://git-scm.com/docs/git-log)
+* [커밋 히스토리 조회](https://mylko72.gitbooks.io/git/content/history.html)
