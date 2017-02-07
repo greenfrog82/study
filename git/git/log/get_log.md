@@ -18,7 +18,7 @@ $ git log
 $ git log -p -2
 ```
 
-![git log -p -n](./git_log_p_n.png)
+![git log -p -n](./git_log_p_2.png)
 
 ### git log --stat
 
@@ -84,6 +84,10 @@ $ git log -S googleapis
 위 결과를 확인하기 위해 해당 커밋의 diff를 보면 다음과 같다. 
 
 ![confirm result of git log -S googleapis](git_log_S_confirm.png)
+
+## 주의 
+
+위에 설명한 모든 명령에서 git log 다음에 origin 또는 upstream등과 같이 remote repository의 이름을 넣으면 remote repository에 대한 커밋로그를 보여준다.
 
 ## 참조
 
