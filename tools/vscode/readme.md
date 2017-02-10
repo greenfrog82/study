@@ -29,6 +29,12 @@ Linting, Debugging (multi-threaded, remote), Intellisense, code formatting, refa
 
 ## Node.js 개발환경
 
+## Git 
+
+### Show Markdown preview 
+
+Ctrl + K + V
+
 
 
 
