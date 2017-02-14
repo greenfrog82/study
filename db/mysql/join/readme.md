@@ -7,16 +7,18 @@ SQL을 사용하다 보면 여러 테이블들의 데이터를 조합해야하�
 이에 대해서 공부하기 위해서 다음 두 개의 테이블을 사용한다. 
 
 **Poeple Table**
+
 ![people_table](./table_1.png)
 
 **Property Table**
+
 ![property table](./table_2.png)
 
 ## JOIN의 종류
 
 SQL의 JOIN은 다음 그림과 같이 7개의 종류가 존재한다. 
 
-![Visual_SQL_JOIN_V2.png](./Visual_SQL_JOIN_V2.png)
+![Visual_SQL_JOIN_V2.png](./Visual_SQL_JOINS_V2.png)
 
 **주의**
 * INNER JOIN == JOIN
