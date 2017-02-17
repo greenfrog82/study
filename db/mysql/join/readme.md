@@ -83,6 +83,41 @@ ON PEOPLE.pid = PROPERTY.pid;
 결과를 보면 PROPERTY 테이블의 모든 데이터가 출력되었고, PEOPLE 테이블의 경우 pid가 1, 2, 3이 존재하는데 PROPERTY 테이블에 존재하지 않는 2를 제외한 모든 데이터가 출력되었으며
 PROPERTY 테이블에 존재하는 pid 4에 대해서는 데이터가 존재하지 않으므로 NULL이 출력된 것을 알 수 있다. 
 
+## LEFT JOIN, RIGTH JOIN (기준테이블의 데이터만 출력하게 하기)
+
+이전에 LEFT JOIN과 RIGHT JOIN을 했을 때, JOIN 되는 테이블에 데이터가 건 없건 기준 테이블의 모든 데이터가
+출력되었었다. 
+
+이번에는 오직 기준 테이블에 있는 데이터만 출력되게 해보자. LEFT JOIN과 RIGHT JOIN은 기준 테이블만 변경하면 되므로 LEFT JOIN으로만 설명을 하기로 한다. 
+
+기준 테이블에만 존재하는 데이터를 출력하는 방법은 다음과 같이 JOIN되는 테이블의 KEY가 NULL인 데이터를 찾아주면 된다. 
+
+```sql
+SELECT
+	*
+FROM PEOPLE LEFT JOIN PROPERTY
+ON PEOPLE.pid = PROPERTY.pid
+WHERE PROPERTY.pid IS NULL 
+```
+
+![result of left join only](./left_join_only.png)
+
+결과를 보면 PEOPLE 테이블과 PROPERTY 테이블의 교집합이 되는 원소들을 제외하고 오직 PEOPLE 테이블이 가지고 있는 데이터만 출력된 것을 확인할 수 있다. 
+
+RIGTH JOIN을 통해 기준 테이블이 가지고 있는 데이터만 출력하고자 하면 위 sql문에서 LEFT JOIN을 RIGHT JOIN으로 변경하고 WHERE절을 PROPERTY에서 PEOPLE로 고치면 된다.
+
+수정된 sql문과 결과는 다음과 같다. 
+
+```sql
+SELECT
+	*
+FROM PEOPLE RIGHT JOIN PROPERTY
+ON PEOPLE.pid = PROPERTY.pid
+WHERE PEOPLE.pid IS NULL 
+```
+
+![result of right join only](./right_join_only.png)
+
 ## 참조
 
 * [Mysql Join 해부(Left, Right, Outer, Inner Join)](http://rapapa.net/?p=311)
