@@ -23,6 +23,18 @@ $ tar -zcvf <file name.tar.gz> <folder name>
 $ tar -zxvf <file name.tar.gz> <folder name>
 ```
 
+## tar.bz 압축하기
+
+```
+$ tar -cjvf <file name.tar.bz2> <folder name>
+```
+
+## tar.bz 압축 풀기 
+
+```
+$ tr -xjvf <file name.tar.bz2>
+```
+
 ## 참고
 
 * [리눅스에서 압축하기, 압축풀기 (tar)](http://ngee.tistory.com/215#recentEntries)
