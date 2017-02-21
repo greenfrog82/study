@@ -76,5 +76,11 @@ $ git diff --staged or --cached <file name>(optional)
 $ git diff HEAD
 ```
 
+다시 sample_1.txt와 sample_2.txt를 복원한 후 다시 수정해서 sample_1.txt는 스테이징 시키고 sample_2.txt는 작업 디렉토리에 유지하자.
+
+다음은 git status 명령으로 각각의 파일의 상태를 확인한 모습이다. sample_1.txt는 스테이징 되었고, sample_2.txt는 작업 디렉토리에 존재한다. 
+
+![git_status](./git_status.png)
+
 
 
