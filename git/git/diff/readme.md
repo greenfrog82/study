@@ -82,5 +82,16 @@ $ git diff HEAD
 
 ![git_status](./git_status.png)
 
+이 상태에서 다음 명령을 실행해보자.
 
+```
+$ git diff HEAD
+```
 
+결과는 다음과 같이 스테이징 된 sample_1.txt와 작업 디렉토리에 존재하는 sample_2.txt 모두 비교된 것을 확인할 수 있다. 
+
+![git diff head](./git_diff_head.png)
+
+## 참조
+
+* [Git, 분산버전 관리 시스템 - 차이점 살펴보기](https://mylko72.gitbooks.io/git/content/commit/diff.html)
