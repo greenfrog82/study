@@ -14,6 +14,14 @@ PyCharm에서 현재 선택 된 파일의 표시하는 화면으로 이동하는
 
 **Ctrl + 1**
 
+### Toggling between line and column selection modes
+
+**Shift + Alt + Insert**
+
+위 단축키를 사용하면 column 선택 모드로 변경된다. 변경 된 후 Shift키를 누른상태에서 방향키를 이용하여 선택하고자 하는 영역을 선택한다.
+
+
 ## 참조
 
 * [Create Empty Files](https://www.jetbrains.com/help/pycharm/2016.3/creating-empty-files.html)
+* [Selecting Text in the Editor](https://www.jetbrains.com/help/pycharm/2016.3/selecting-text-in-the-editor.html#d997191e358)

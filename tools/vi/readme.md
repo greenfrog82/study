@@ -44,7 +44,25 @@
 * Ctrl + v - 컬럼 선택하기
 * Shift + v + g - 전체 선택하기(단, 반드시 문서의 첫 줄에서 사용해야한다.)
 
+## Undo / Redo
+
+* u - 모든 편집 영역에 대한 Undo 처리 수행
+* U - 현재 편집 중인 줄에 대한 Undo 처리 수행
+* Ctrl + r - 모든 편집 영역에 대한 Redo 처리 수행
+
+## Column Mode
+
+1. Column Mode를 설정하고자 하는 행으로 이동한다. 
+2. Ctrl + v를 눌러 Column Mode로 진입한다. 
+3. 화살표를 이용해서 편집하고자 하는 행을 선택한다. 
+4. Shift + i를 눌러 편집 모드로 진입한다. 
+5. 편집하고자 하는 내용을 작성한다. 이때, 주의해야할 것은 선택한 모든 행에 내용이 작성되지 않는다는 것이다. 일단, 신경쓰지 말고 내용을 작성하자.
+6. esc 키를 두 번 누르면 앞서 편집했던 내용이 선택했던 행에 모두 반영된다.
+
 ## 참조
 
 * [vi 기본 사용법](http://soooprmx.com/wp/archives/2777)
 * [Vim Vi 블록 선택, 복사, 붙이기, 칼럼 영역 선택하기; Select Copy Paste](http://mwultong.blogspot.com/2006/11/vim-vi-select-copy-paste.html)
+* [vi 편집기에서 세로 모드 (column mode) 로 문자열 입력](http://starblood.tistory.com/entry/vi-%ED%8E%B8%EC%A7%91%EA%B8%B0%EC%97%90%EC%84%9C-%EC%84%B8%EB%A1%9C-%EB%AA%A8%EB%93%9C-column-mode-%EB%A1%9C-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%9E%85%EB%A0%A5)
+o
+
