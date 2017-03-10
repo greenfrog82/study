@@ -57,6 +57,8 @@ The key's randomart image is:
 +-----------------+
 ```
 
+다음 내용은 좀 더 확인 후 다시 작성하기로 ..
+~~
 ## Adding your SSH key to ssh-agent
 
 ssh-agent는 SSH key를 관리해주는 프로그램인데 자세한 내용은 다음 기회에 정리하기로 하고, 다음 절차를 따라 ssh-agent에 앞서 생성한 SSH key를 추가해주도록 하자. 
@@ -74,7 +76,7 @@ echo Agent pid 10885;
 ```
 $ ssd-add <SSH key path>
 ```
-
+~~
 
 ## Adding a new SSH key to your GitHub account
 
