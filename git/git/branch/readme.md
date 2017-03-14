@@ -116,6 +116,22 @@ $ git branch -m FEATURE-TEST-2 feature-test-2
 
 ![git branch -m FEATURE-TEST-2 feature-test-2](./git_branch_m_feature_test_2.png)
 
+현재 브랜치의 이름을 바꿀 때는 다음 명령을 사용한다. 
+
+```
+$ git branch -m <branch name>
+```
+
+현재 브랜치인 hotfix 브랜치의 이름을 FEATURE-TEST-1으로 변경해보자.
+
+```
+$ git branch -m FEATURE-TEST-1
+```
+
+[출력 결과]
+
+![git branch -m FEATURE-TEST-1](./git_branch_new_name.png)
+
 
 ## 참고
 
