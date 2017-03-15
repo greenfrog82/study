@@ -1,1 +1,2 @@
-# Why are my commit linked 
+# Why are my commits linked to the wrong user?
+
