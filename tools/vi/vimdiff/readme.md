@@ -20,7 +20,7 @@ greenfrogui-MacBook-Pro:vimdiff greenfrog$ vimdiff source_1 source_2
 
 위 명령을 사용하면 다음과 같이 vimdiff가 실행된다.
 
-![vimdiff source_1 source_2]()
+![vimdiff source_1 source_2](vimdiff_source_1 source_2.png)
 
 ## 명령어
 
