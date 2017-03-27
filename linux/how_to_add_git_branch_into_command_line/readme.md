@@ -26,6 +26,40 @@ export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
 ## Ubuntu
 
+.bashrc 파일을 열어서 force_color_prompt의 주석을 제거한다. prompt에 color를 적용하는 코드인데,
+특별히 건들지 않았다면 최초 주석 처리되어 있을 것이다. 
+
+```bash
+# uncomment for a colored prompt, if the terminal has the capability; turned    
+# off by default to not distract the user: the focus in a terminal window       
+# should be on the output of commands, not on the prompt                        
+force_color_prompt=yes    
+```
+
+이후 다음 코드를 찾은 후 윗 줄에 다음 함수를 추가한다. 
+
+```bash
+if ["$color_prompt" = yes]' then
+```
+
+```bash
+parse_git_branch() {                                                            
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'          
+}   
+```
+
+위 함수를 추가한 후 앞서 찾았던 if문과 else문을 다음과 같이 수정한다. 
+
+```bash
+
+if [ "$color_prompt" = yes ]; then                                              
+ 
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;31m\]$(pars
+e_git_branch)\[\033[00m\]\$ '
+else                                                                            
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '      
+fi
+```
 
 ## 참조
 
