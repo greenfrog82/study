@@ -65,7 +65,93 @@ ubuntu                   latest              0ef2e08ed3fa        5 weeks ago    
 
 ## Image 실행하기
 
+docker의 이미지는 용도에 따라서 실행하는 방법이 다양하다. 여기서는 간단한 내용만 살펴보자.
 
+* 쉘 커맨드로 실행하기
+* Background로 실행하기
+* 다른 Container와 link해서 실행하기
+* Volume을 이용해서 Host의 데이터 공유하기
+
+### 쉘 커맨드로 실행하기
+
+#### 명령
+
+다음 명령은 container와 terminal을 통해서 interaction을 할 수 있는 실행방법으로 위 명령을 통해 Image를 실행시키면 Image의 /bin/bash 실행과 함께 container의 terminal이 실행된다.
+
+참고로 --name 옵션은 실행 된 Container를 구분하기 쉽게 하기 위한것으로 필수 옵션은 아니다. 따라서, 다음 설명부터는 빼고 설명하도록 한다.
+
+```
+$ docker run -it --name <container name> <image name> /bin/bash
+```
+
+위 명령을 통해 ubuntu Image를 실행시켜보자.
+
+#### 실행 결과
+
+```bash
+greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker run -it --name ubuntu_test_by_greenfrog ubuntu /bin/bash
+root@a235cb9f8dba:/# ls -a
+.  ..  .dockerenv  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@a235cb9f8dba:/# exit
+```
+
+### Background로 실행하기
+
+#### 명령
+
+다음 명령을 사용하면 container를 background로 실행시킬 수 있으며, docker로 실행하는 거의 대부분의 image들은 다음 명령을 통해 실행 될 것이다.
+
+```
+$ docker run -d <image name>
+```
+
+위 명령을 통해 redis image를 실행시켜보자.
+
+#### 실행 결과
+
+```bash
+greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker run --name redis_test_by_greenfrog -d redis
+759136ef29b4166b2119b6795a5662738dc20c7cc426df6c96e25169522ddc66
+
+greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+759136ef29b4        redis               "docker-entrypoint..."   7 days ago          Up 37 seconds       6379/tcp            redis_test_by_greenfrog
+```
+
+### 다른 container와 link하여 실행하기
+
+#### 명령
+
+다음 명령을 사용하면 다른 container와 link를 할 수 있는데 link를 한다는 것은 네트워크를 통해 다른 container가 제공하는 서비스를 이용하는 것을 이야기한다.
+예를들어, 앞서 background로 실행시켜 놓은 redis에 접근하여 데이터에 액세스 하기 위해서는 클라이언트 프로그램이 필요한데, 이를 호스트 컴퓨터에 설치할 수 도 있겠지만, 그렇게 하지 않고 또 다른 redis image를 실행시킬 때 이미 background로 실행시켜 놓은 redis와 link 시킨 후 해당 container에서 redis에 액세스하는 방법을 사용할 수 있다.
+
+다음 명령을 통해 기존 container와 link된 container를 생성할 수 있다.
+
+```
+$ docker run --link <target container name or id>:<host name> <image name> /bin/bash
+```
+
+위 명령을 통해 redis-cli를 실행하여 redis에 데이터를 쓰고 읽어보자.
+
+#### 실행 결과
+
+```bash
+greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker run -it --name g_redis_client --link redis_test_by_greenfrog:redis redis /bin/bash
+root@59fc71375a97:/data# redis-cli -h redis -p 6379
+redis:6379> set "test" 100
+OK
+redis:6379> get "test"
+"100"
+```
+
+#### Volume을 이용해서 Host의 데이터 공유하기
+
+volume을 이용하면 host의 데이터를 실시간으로 공유할 수 있다. 이 기능은 container에서 돌아가고 있는 DB이 데이터를 host로 백업하거나, 소프트웨어를 개발하는 경우 소스코드는 개발툴이 접근할 수 있는 host에 두고 이를 개발환경이 존재하는 container와 공유하는 방법으로 활용할 수 있다.
+
+다음 명령을 통해 volume을 사용할 수 있다.
+
+```
+$
 ## Container 삭제하기
 
 
