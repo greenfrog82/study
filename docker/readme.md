@@ -151,11 +151,103 @@ volume을 이용하면 host의 데이터를 실시간으로 공유할 수 있다
 다음 명령을 통해 volume을 사용할 수 있다.
 
 ```
-$
+$ docker run -w <working path of container> -v <path of host>:<working path of container>
+```
+
+위 명령에서 -w 옵션은 해당 컨테이너의 working directory를 지정하는 것인데, 리눅스 파일 시스템의 어떤 경로든 가능하며 만약 지정한 경로가 존재하지 않으면 생성해준다.
+-v 옵션이 바로 volume을 지정하는 옵션인데, <path of host>는 container와 공유할 경로를 입력하면 되며, <working path of container>는 앞서 지정한 working directory를 container에서 접근하기 위한 경로를 지정하는 것인데 -w로 지정했던 경로와 같은 경로를 지정해주면된다.
+
+예를들어, host의 'node_test'라는 경로에 다음과 같은 파일들이 존재한다고 하자.
+
+```bash
+greenfrog@greenfrogui-MacBook-Pro ~/develop/docker_temp/node_test $ ll
+total 8
+drwxr-xr-x   4 greenfrog  staff   136  4  7 23:43 .
+drwxr-xr-x   5 greenfrog  staff   170  4  7 23:28 ..
+-rw-r--r--@  1 greenfrog  staff    70  4  7 23:41 example.js
+drwxr-xr-x  46 greenfrog  staff  1564  4  7 23:43 node_modules
+```
+
+위 경로를 volume을 통해 container와 연결해보자.
+
+```bash
+greenfrog@greenfrogui-MacBook-Pro ~/develop/docker_temp/node_test $ docker run -it -w /app -v "$(pwd)":/app node /bin/bash
+```
+
+위 명령을 수행한 후 container에서 /app 경로에 가보면 host와 동일한 파일들이 존재하는 것을 확인 할 수 있으며, host에서 해당 경로의 파일들을 수정하면 container에 바로 반영이 되며 반대의 경우도 마찬가지이다.
+
+이를 통해 개발 툴과 소스는 host에 두고 개발환경은 docker에 구축한다거나, mysql과 같은 container의 데이터를 host로 백업하는 등으로 응용이 가능하다.
+
+## 실행 중인 container 중지하기
+
+다음 명령을 통해 현재 실행 중인 container를 중지시킬 수 있다.
+
+```bash
+docker stop <container id> or <container name>
+```
+
+## 중지 된 container 다시 시작 시키기
+
+다음 명령을 통해 중지 된 container를 다시 시작 시킬 수 있다.
+
+```bash
+docker start <container id> or <container name>
+```
+
+## 실행 중인 container 재시작하기
+
+다음 명령을 통해 현재 실행 중인 container를 재시작 시킬 수 있는데, stop 명령 후 start 명령을 하는 것과 같은 효과이다.
+
+```bash
+docker restart <container id> or <container name>
+```
+
 ## Container 삭제하기
 
+#### 기본적인 방법
 
+container를 삭제하는 가장 기본적인 방법은 다음 명령을 사용하는 것이다.
+-v 옵션은 현재 docker가 관리중이냐 volume도 함꼐 삭제하는데, 단 다른 container가 참조하고 있지 않는 volume이어야한다.  
 
+```bash
+$ docker rm -v <container id> or <container name>
+```
+
+위 명령을 사용할떄 주의할 점은 반드시 container가 종료된 상태여야한다는 것이다. 만약, 현재 실행 중인 상태의 container를 삭제하려고 하면 다음과 같은 메시지가 출력되고 삭제는 되지 않는다.
+
+```
+Error response from daemon: You cannot remove a running container cb51fb423f6e322a7481a696de0b583c89768dbb8cf827a3d927e7587b20379d. Stop the container before attempting removal or use -f
+```
+
+단, 위 메시지에 나온 것과 같이 -f 옵션을 사용하면 실행 중인 container 역시 삭제 가능하다.
+
+#### 현재 실행 중인 모든 container 삭제하기
+
+다음 명령을 통해 현재 실행 중인 모든 container를 삭제할 수 있다.
+실행 중인 container를 삭제해야하기 떄문에 -f 옵션을 사용했으며, 현재 실행 중인 모든 container의 아이디들을 얻기 위해 sub-command에서 ps -q 옵션을 사용하였다.
+ps는 현재 실행 중인 container 만을 출력하고, -q 옵션은 해당 container의 id만을 출력해준다.
+
+```bash
+docker rm -vf $(docker ps -q)
+```
+
+#### 현재 종료 된 모든 container 삭제하기
+
+다음 명령을 통해 현재 종료 된 모든 container를 삭제할 수 있다.
+sub-command를 통해 종료 된 모든 container의 id를 추출해 낸 후 rm 명령을 통해 삭제한다. sub-command에서 종료 된 container를 찾기 위해서 -f 옵션을 통해 status가 exited인 상태의 container만을 필터링했다.
+
+```bash
+docker rm -v $(docker ps -aq -f status=exited)
+```
+
+#### 현재 실행 중이거나 종료 된 모든 container 삭제하기
+
+다음 명령을 통해 모든 container를 삭제할 수 있다.
+sub-command를 통해 모든 container의 id를 검색한 후 rm 명령을 통해 삭제하였다.
+
+```bash
+docker rm -vf $(docker ps -aq)
+```
 
 ## 참조
 
