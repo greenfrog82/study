@@ -1,17 +1,32 @@
+# def sample_decorator(func):
+#     def wrapper(*args, **kwargs):
+#         print 'Begin decorator'
+#         func()
+#         print 'End decorator'
+#     return wrapper
+#
+# @sample_decorator
+# def test_func():
+#     """This is a test function for decorator."""
+#     print 'tester'
+#
+# print test_func.__name__
+# print test_func.__doc__
+
 from functools import wraps
 
 def sample_decorator(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print func.__name__ + ' was called'
-        return func(*args, **kwargs)
+        print 'Begin decorator'
+        func()
+        print 'End decorator'
     return wrapper
 
 @sample_decorator
-def test():
-    """This is test function for decorator."""
+def test_func():
+    """This is a test function for decorator."""
     print 'tester'
 
-print test.__name__
-print test.__doc__
-test()
+print test_func.__name__
+print test_func.__doc__
