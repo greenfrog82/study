@@ -12,6 +12,10 @@
 * $ - 현재 줄의 끝지점으로 이동
 * gg - 파일의 맨 첫줄로 이동
 * G - 파일의 맨 끝으로 이동
+* Ctrl + b - Page Up
+* Ctrl + f - Page Down
+* Ctrl + u - Page Half Up
+* Ctrl + d - Page Half Down
 
 ## 입력
 
@@ -23,7 +27,7 @@
 ## 삭제
 
 * x - 커서가 위치한 곳의 한글자를 지운다.
-* d + h - 커서가 위치한 곳에서 한칸 앞쪽의 한글자를 지운다. 
+* d + h - 커서가 위치한 곳에서 한칸 앞쪽의 한글자를 지운다.
 * d + j - 현재줄을 포함하여 다음 줄까지 2줄을 지우게 된다.
 * d + d - 현재 줄을 지운다.
 
@@ -32,12 +36,12 @@
 아래 설명은 명령 모드에서 이루어져야한다.
 
 1. 'v'문자를 통해서 visual mode로 진입한다. (블록 모드)
-2. 이 상태에서 복사하고자 하는 범위를 지정한다. 
+2. 이 상태에서 복사하고자 하는 범위를 지정한다.
 3. 'y'문자를 통해서 복사를 수행한다.
-4. 복사 된 내용을 붙여넣을 장소로 이동한다. 
+4. 복사 된 내용을 붙여넣을 장소로 이동한다.
 5. 'p'문자를 통해서 붙여넣기를 수행한다.
 
-## 선택하기 
+## 선택하기
 
 * v - 글자 단위 선택하기
 * V - 줄 단위 선택하기
@@ -52,10 +56,10 @@
 
 ## Column Mode
 
-1. Column Mode를 설정하고자 하는 행으로 이동한다. 
-2. Ctrl + v를 눌러 Column Mode로 진입한다. 
-3. 화살표를 이용해서 편집하고자 하는 행을 선택한다. 
-4. Shift + i를 눌러 편집 모드로 진입한다. 
+1. Column Mode를 설정하고자 하는 행으로 이동한다.
+2. Ctrl + v를 눌러 Column Mode로 진입한다.
+3. 화살표를 이용해서 편집하고자 하는 행을 선택한다.
+4. Shift + i를 눌러 편집 모드로 진입한다.
 5. 편집하고자 하는 내용을 작성한다. 이때, 주의해야할 것은 선택한 모든 행에 내용이 작성되지 않는다는 것이다. 일단, 신경쓰지 말고 내용을 작성하자.
 6. esc 키를 두 번 누르면 앞서 편집했던 내용이 선택했던 행에 모두 반영된다.
 
@@ -65,4 +69,4 @@
 * [Vim Vi 블록 선택, 복사, 붙이기, 칼럼 영역 선택하기; Select Copy Paste](http://mwultong.blogspot.com/2006/11/vim-vi-select-copy-paste.html)
 * [vi 편집기에서 세로 모드 (column mode) 로 문자열 입력](http://starblood.tistory.com/entry/vi-%ED%8E%B8%EC%A7%91%EA%B8%B0%EC%97%90%EC%84%9C-%EC%84%B8%EB%A1%9C-%EB%AA%A8%EB%93%9C-column-mode-%EB%A1%9C-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%9E%85%EB%A0%A5)
 o
-
+* [All the right moves](http://vim.wikia.com/wiki/All_the_right_moves)
