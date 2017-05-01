@@ -46,7 +46,8 @@
 * v - 글자 단위 선택하기
 * V - 줄 단위 선택하기
 * Ctrl + v - 컬럼 선택하기
-* Shift + v + g - 전체 선택하기(단, 반드시 문서의 첫 줄에서 사용해야한다.)
+* Shift + v + g - 현재 커서의 줄부터 마지막 줄까지 모두 선택하기
+* ggVG - 문서의 모든 내용 선택하기
 
 ## Undo / Redo
 
@@ -68,5 +69,5 @@
 * [vi 기본 사용법](http://soooprmx.com/wp/archives/2777)
 * [Vim Vi 블록 선택, 복사, 붙이기, 칼럼 영역 선택하기; Select Copy Paste](http://mwultong.blogspot.com/2006/11/vim-vi-select-copy-paste.html)
 * [vi 편집기에서 세로 모드 (column mode) 로 문자열 입력](http://starblood.tistory.com/entry/vi-%ED%8E%B8%EC%A7%91%EA%B8%B0%EC%97%90%EC%84%9C-%EC%84%B8%EB%A1%9C-%EB%AA%A8%EB%93%9C-column-mode-%EB%A1%9C-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%9E%85%EB%A0%A5)
-o
 * [All the right moves](http://vim.wikia.com/wiki/All_the_right_moves)
+* [Fast Select All](http://dailyvim.blogspot.kr/2007/11/fast-select-all.html)
