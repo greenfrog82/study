@@ -17,7 +17,7 @@ value attribute의 경우 <input> tag의 값을 명시하는데, 이 값은 <inp
  <title>Example</title>
 </head>
 <body>
-  <form method='get'>
+  <form method='post'>
     <input type='text' name='txt' value='default value'/><br />
     <input type='password' name='pw' value='test' /><br />
     <input type='button' value='click' /><br />
