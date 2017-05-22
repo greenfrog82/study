@@ -16,6 +16,7 @@
 * Ctrl + f - Page Down
 * Ctrl + u - Page Half Up
 * Ctrl + d - Page Half Down
+* :n - n번째 줄로 이동한다.
 
 ## 입력
 
