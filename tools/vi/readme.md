@@ -64,6 +64,25 @@
 5. 편집하고자 하는 내용을 작성한다. 이때, 주의해야할 것은 선택한 모든 행에 내용이 작성되지 않는다는 것이다. 일단, 신경쓰지 말고 내용을 작성하자.
 6. esc 키를 두 번 누르면 앞서 편집했던 내용이 선택했던 행에 모두 반영된다.
 
+## Replace
+
+**옵션**
+
+* 'i' 옵션을 주지 않는 한 기본 옵션으로 대소문자를 구분하여 변경한다.
+* 'g' 옵션은 검색되는 모든 대상에 대해서 변경을 수행하겠다는 것으로, 이 옵션을 주지 않으면 검색되는 첫번째 대상에 대해서만 변경을 수행한다.
+* 'c' 옵션은 변경을 수행할 때 사용자에게 확인을 받는 절차를 거친다.
+* 's' 옵션은 현재 줄을 대상으로 검색 및 변경을 수행한다.
+* '%s' 옵션은 문서 전체에 대해서 검색 및 변경을 수행한다.
+
+**예제**
+
+* s/foo/bar/g - 현재 있는 줄의 모든 foo를 bar로 변경한다.  
+* %s/foo/bar/g - 문서 전체에서 모든 foo를 bar로 변경한다.
+* %s/foo/bar/gc - 문서 전체에서 모든 foo를 bar로 변경하기 전 확인 절차를 거친다.
+* %s/\<foo\>/bar/gc - 문서 전체에 대해서 foo와 완전히 일치되는 경우에만 bar로 변경한다.
+* %s/foo/bar/gci or %s/foo\c/bar/g - 문서 전체에 대해서 foo를 대소문자 구분없이 검색한 후 변경하기 전 확인 절차를 거친다.
+* %s/foo/bar/gcI or %s/foo\C/bar/g - 문서 전체에 대해서 foo를 대소문자 구분하여 검색한 후 변경하기 전 확인 절차를 거친다.
+
 ## 참조
 
 * [vi 기본 사용법](http://soooprmx.com/wp/archives/2777)
@@ -71,3 +90,4 @@
 * [vi 편집기에서 세로 모드 (column mode) 로 문자열 입력](http://starblood.tistory.com/entry/vi-%ED%8E%B8%EC%A7%91%EA%B8%B0%EC%97%90%EC%84%9C-%EC%84%B8%EB%A1%9C-%EB%AA%A8%EB%93%9C-column-mode-%EB%A1%9C-%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%9E%85%EB%A0%A5)
 * [All the right moves](http://vim.wikia.com/wiki/All_the_right_moves)
 * [Fast Select All](http://dailyvim.blogspot.kr/2007/11/fast-select-all.html)
+* [Search and replace](http://vim.wikia.com/wiki/Search_and_replace)
