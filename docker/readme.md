@@ -43,14 +43,14 @@ Status: Downloaded newer image for vcatechnology/linux-mint:latest
 
 #### 명령
 
-```
+```bash
 $ docker images
 ```
 
 #### 실행 결과
 
 ```bash
-greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker images
+$ docker images
 REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
 mysql                    latest              9546ca122d3a        6 days ago          407 MB
 identidock               latest              ef26e9689836        9 days ago          698 MB
@@ -61,6 +61,121 @@ redis                    latest              83d6014ac5c8        2 weeks ago    
 debian                   wheezy              69e388a5985c        2 weeks ago         85.3 MB
 debian                   latest              8cedef9d7368        2 weeks ago         123 MB
 ubuntu                   latest              0ef2e08ed3fa        5 weeks ago         130 MB
+```
+
+## Image 삭제하기
+
+docker의 Image를 삭제하는 다음 세가지 방법에 대해서 설명한다.
+
+* 특정 이미지 삭제하기
+* 모든 이미지 삭제하기
+* 특정 이미지를 제외하고 모든 이미지 삭제하기
+
+### 특정 이미지 삭제하기
+
+#### 명령
+
+```bash
+$ docker rmi <image name> or <image id>
+```
+
+#### 실행 결과
+
+```bash
+$ docker rmi ubuntu:14.04
+Untagged: ubuntu:14.04
+Untagged: ubuntu@sha256:b2a55128abd84a99436157c2fc759cf0a525c273722460e6f8f9630747dfe7e8
+Deleted: sha256:2ff3b426bbaafba63cae165e8f6a4955a24a53cdf6d25cce00353e97cda3df71
+Deleted: sha256:674ac1ba904977cbee239556b7e9ec92addb590d0ed9689bcf9c4a8afd967927
+Deleted: sha256:b4fb204519c474988eb7f16b97f9ce6e2fb0f6deb273d64a01b9eec8f3096921
+Deleted: sha256:d264f10c88539212472e700e8abbd78ec2c73b02c59587bc76c22963b4214628
+Deleted: sha256:e6b73004f2f4cc27ec61a3593512c3d1e0dad911e509ceef8526764f4f6aac62
+Deleted: sha256:a8e78858b03ba02c3df71d555f90057f890495aabc86e7a39396c68c87ed5ff2
+```
+
+### 모든 이미지 삭제하기
+
+#### 명령
+
+```bash
+$ docker rmi $(docker images -q)
+```
+
+#### 실행 결과
+
+```bash
+greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker rmi $(docker images -q)
+Untagged: expressreactboilerplate_node_env:latest
+Deleted: sha256:f992161d0f0cfc602471cc373047410dafb3a9d26a6ab38150a85d104c441dfc
+Deleted: sha256:6989c20caf5357b7ee8d343cce4f116f5584bff36792e13f65fedf883c8e93c2
+Deleted: sha256:374d81f3cccb533159cd3e644fad6d25c0f9c66999a0fc5ffc07d0db81a5f603
+Deleted: sha256:df67650b359f834b970b6b366ebafc09b293af270093c3b369ca96ef9331b6d1
+Deleted: sha256:7da632c9f80014c8131c9a17e2fce12fae75f950d6d14c7eeac80e8c073e1404
+Deleted: sha256:ef7b9ba5482ce437a24c5213f9fed18b911220c8762b11f587d1d248c2927a8e
+Deleted: sha256:51aaa8daa8dd9f07270733d54cd717b16e18889d605139787fe2bc1961375db4
+Untagged: node:latest
+Untagged: node@sha256:bcc6e5b186531da2a5812ee21cdfaf91ad8a0c664d44bb211c95f62631e53237
+Deleted: sha256:e3cef93a567c137f3fb203ba50de6e43ad5b1985d531794e10220c41faaa9511
+Deleted: sha256:aab2d730ab13c27e4b28de2a8513dee720641faa62ec49bd6c079c6f21a20c0b
+Deleted: sha256:3c587b93b0270c54400a6e3fa1e614654cfa01d5471763f1e1ebbafe1b230110
+Deleted: sha256:e22f545cb08c1a0ef4506441eab8a97a45e0f913e4db4f30b252faefbd753ceb
+Deleted: sha256:6ecdd7c3fc1ca09ea98ce20de6786a51a7dc8f9ecf64a320ac270789015db3c8
+Deleted: sha256:b8b6df6e52e797b462ec8424368959905d33693449f5c37a701075944d7cbc61
+Deleted: sha256:2ecb867048da2f6e2740814c177ca71c959ab2c91acaefbe827149302b20076f
+Deleted: sha256:763ac6a64f068afd061160ff77b7ab41f61aba49b554bfe39ca033fcbf4f2d3c
+Untagged: redis:latest
+Untagged: redis@sha256:1b358a2b0dc2629af3ed75737e2f07e5b3408eabf76a8fa99606ec0c276a93f8
+Deleted: sha256:83d6014ac5c8193fa43dd16b161f0e524141800f10cff44d7bad3b637991cf16
+Deleted: sha256:d4613856dfbc5837b729db3d7db8d2544887a02bc408ea6254080b2965dd70e4
+Deleted: sha256:a937b8afc266125a1ae2fdc6b210d64940a67e08c1ed19df2ada0dc3fb357696
+Deleted: sha256:d8a3e6d9b51ad166a12c68baad672170d41af5b65a6b2fc6c968123839fe8459
+Deleted: sha256:d0bbfdd4373d2667b3d87c78f360a1084baa4d16d40f62d4ce36f311717ff942
+Deleted: sha256:9da8c9846dc0ba7b2bfeea4e3118442d8ce25189176e890e9b52785cc69f1822
+Deleted: sha256:0f5b5fb060920c1a29c6f6887feb0d810fd307644756df58ed671d34a0e5fc39
+Deleted: sha256:5d6cbe0dbcf9a675e86aa0fbedf7ed8756d557c7468d6a7c64bde7fa9e029636
+```
+
+### 특정 이미지를 제외하고 모든 이미지 삭제하기
+
+#### 명령
+
+```bash
+$ docker rmi $(docker images -q | grep ^[^<image id>])
+```
+
+#### 실행 결과
+
+```bash
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+node                latest              6c792d919591        7 days ago          666 MB
+ubuntu              16.04               ebcd9d4fca80        7 days ago          118 MB
+mysql               latest              e799c7f9ae9c        13 days ago         407 MB
+$ docker rmi $(docker images -q | grep ^[^6c])
+Untagged: ubuntu:16.04
+Untagged: ubuntu@sha256:382452f82a8bbd34443b2c727650af46aced0f94a44463c62a9848133ecb1aa8
+Deleted: sha256:ebcd9d4fca80e9e8afc525d8a38e7c56825dfb4a220ed77156f9fb13b14d4ab7
+Deleted: sha256:ef5b99eed7c2ed19ef39f72ac19bb66e16ed6c0868053daae60306a73858fbd4
+Deleted: sha256:257e51479af1e9d2e0c9b958e68f6b992329904df24d81efa191cef515a9bf8b
+Deleted: sha256:6e1d2d371500e2fe6df75f5755d0b9f2a3b69a42fe88100d514212bbba7ad23f
+Deleted: sha256:afa9e7a5e3f3b006942d128c562a3273947c7ab50cdac33fea7213890072a5b6
+Deleted: sha256:2df9b8def18a090592bf1cbd1079e1ac2274435c53f027ee5ce0a8faaa5d6d4b
+Untagged: mysql:latest
+Untagged: mysql@sha256:2f4b1900c0ee53f344564db8d85733bd8d70b0a78cd00e6d92dc107224fc84a5
+Deleted: sha256:e799c7f9ae9cd01c2e78e26952767b96aef59a5e62f02305610448da47f8ca6b
+Deleted: sha256:58876001b0c678675f58541cbd1f514ebdaac635da49a70c2d2168b6784f7ee8
+Deleted: sha256:801e53b66e953dd4a4ea3bccce4fbdbe0fa5334065fb4c2a8e5b3a1c8e19cbc4
+Deleted: sha256:bf5392d6855851dc449c8d62abce834c3e513c2515c4472e7fcf5c4bb253e641
+Deleted: sha256:a47e14b81e4c40fa89c078dc6851aab95a1a505e6358afdba065150a53345875
+Deleted: sha256:61c7c052dda6f7b2f8d123af9d2ccec7cbe2cd95add91687bb95adb0bb3c3502
+Deleted: sha256:f441186a7f06991389303e4034c24abd131aa9a46c02a76df2f6f1d2022e93cd
+Deleted: sha256:31afe1e3e87c20e365f7d019c747f4af2463726daef5183cf8ee47f692272526
+Deleted: sha256:ba779192baede4aadd009c269406b5e8fd885c653ce19719316bf40cc66a6cf3
+Deleted: sha256:2302bd8bbdd530199aa432c357a4da9eab2621c3ba4c4dacb4ea0f4afecbcae7
+Deleted: sha256:00771f8e1e12bdfc9d47bc52a78e3f5ce5306a1caa5dd6237731cff9ca106040
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+node                latest              6c792d919591        7 days ago          666 MB
 ```
 
 ## Image 실행하기

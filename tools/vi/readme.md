@@ -92,3 +92,4 @@
 * [All the right moves](http://vim.wikia.com/wiki/All_the_right_moves)
 * [Fast Select All](http://dailyvim.blogspot.kr/2007/11/fast-select-all.html)
 * [Search and replace](http://vim.wikia.com/wiki/Search_and_replace)
+* [VIM Editor Commands](http://www.radford.edu/~mhtay/CPSC120/VIM_Editor_Commands.htm)
