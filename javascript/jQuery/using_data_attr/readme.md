@@ -2,8 +2,6 @@
 
 HTML5의 Custom Data Attributes를 이용하면 HTML에 특정 데이터 쓰고나 읽을 수 있다.
 
-예를들어, 각각 HTML Tag가 상태값을 가지고 있어야하는 경우에 Custom Data Attribute를 사용하면 좀 더 간단하고 가독성 있는 코드를 작성할 수 있다.
-
 다음과같은 시나리오를 생각해보자. Table의 각각의 행에는 checkbox와 button이 있다. 'flip' 버튼을 누르는 경우 checkbox의 button은 hide 시키고 'flip'버튼을 다시 누르면 hide 됐던 버튼을 다시 show 시킨다고하자. 이런 경우 css의 display: none 속성을 확인하는 방법도 있겠지만 Custom Data Attributes를 활용하면 좀 더 간단하고 가독성 있는 코드를 작성할 수 있다.
 
 ![senario_ui](./senario_ui.png)
@@ -97,11 +95,10 @@ jQuery의 data method를 사용하면 Custom Data Attributes를 쉽게 읽고 �
 
 다음은 jQuery data method의 내용 중 일부를 발췌한 내용인데 jQuery 1.4.3버전부터 HTML5의 Custom Data Attributes의 데이터를 자동으로 읽어들여서 jQuery의 data object로 관리한다고 되며, 1.6버전에서는 W3C의 HTML5 명세를 준수하도록 변경되었다고 나와있다.
 
-```
-HTML5 data-* Attributes
-
-As of jQuery 1.4.3 HTML 5 data- attributes will be automatically pulled in to jQuery's data object. The treatment of attributes with embedded dashes was changed in jQuery 1.6 to conform to the W3C HTML5 specification.
-````
+>HTML5 data-* Attributes
+>
+As of jQuery 1.4.3 HTML 5 data- attributes will be automatically pulled in to jQuery's data object.
+The treatment of attributes with embedded dashes was changed in jQuery 1.6 to conform to the W3C HTML5 specification.
 
 jQuery의 data method를 통해서 데이터를 읽고 쓰는 방법은 다음과 같다.
 
@@ -117,7 +114,7 @@ jQuery의 data method를 통해서 데이터를 읽고 쓰는 방법은 다음�
 
 data method에서 key는 Custom Data Attributes의 data- prefix를 제외한 부분을 이야기하며 value는 실제 JavaScript의 데이터타입에 해당하는 값을 이야기한다.
 
-예를들어, 위 예제에서 data-visible이라는 Custom Data Attributes를 정의하고 값으로 'true'를 주었는데 이를 읽기 위해서는 다음과 같이해야한다.
+예를들어, 위 예제에서 data-visible이라는 Custom Data Attributes를 정의하고 값으로 'true'를 주었는데 이를 읽기 위해서는 다음과 같이 하면된다.
 
 ```javascript
 .data('visible');
@@ -128,14 +125,10 @@ data method에서 key는 Custom Data Attributes의 data- prefix를 제외한 부
 읽기를 했으니 이제 data-visible이라는 Custom Data Attributes에 false라는 값을 써보자. 다음과 같이하면 된다.
 
 ```javascript
-
-읽기를 했으니 이제 data-visible이라는 Custom Data Attributes에 false라는 값을 써보자. 다음과 같이하면 된다.
-
-```javascript
 .data('visible', false);
 ```
 
-쓰기를 할 때 역시 'false'라는 문자열을 넘길 필요없이 JavaScript의 데이터형을 넘기면 된다.
+쓰기를 할 때 역시 'false'라는 문자열을 넘길 필요없이 JavaScript의 데이터형을 그래도 넘기면 된다. 아주 편리하다.
 
 ## 참조
 
