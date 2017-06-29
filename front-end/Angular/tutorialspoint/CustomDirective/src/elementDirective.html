@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Element Directive</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+    <script>
+        const mainApp = angular.module('mainApp', []);
+
+        mainApp.directive('student', function() {
+            var directive = {};
+            directive.restrict = 'EA';
+            directive.template = "Student: <b>{{student.name}}</b>, Roll No: <b>{{student.rollno}}</b>";
+            directive.scope = {
+                student: "=name"
+            }
+            directive.compile = function(element, attributes) {
+                console.log('compile');
+
+                element.css('border', '1px solid #cccccc');
+
+//                return function($scope, element, attributes) {
+//                    element.html("Student: <b>" + $scope.student.name + "</b>, Roll No: <b>" + $scope.student.rollno + "</b>");
+//                    element.css('background-color', "#ff00ff");
+//                };
+
+                 var linkFunction = function($scope, element, attributes) {
+                     console.log('link');
+                  element.html("Student: <b>"+$scope.student.name +"</b> , Roll No: <b>"+$scope.student.rollno+"</b><br/>");
+                  element.css("background-color", "#ff00ff");
+               }
+               return linkFunction;
+            }
+
+            return directive;
+        });
+
+        mainApp.directive("w3TestDirective", function() {
+            return {
+                restrict : "M",
+                replace : true,
+                template : "<h1>Made by a directive!</h1>"
+            };
+        });
+
+        mainApp.controller('StudentController', function($scope) {
+           $scope.Mahesh = {};
+           $scope.Mahesh.name = "Mahesh Parashar";
+           $scope.Mahesh.rollno  = 1;
+
+           $scope.Piyush = {};
+           $scope.Piyush.name = "Piyush Parashar";
+           $scope.Piyush.rollno  = 2;
+        });
+    </script>
+</head>
+<body ng-app="mainApp" ng-controller="StudentController">
+    <!-- directive: w3-test-directive -->
+    <student name="Mahesh"></student><br />
+    <student name="Piyush"></student>
+</body>
+</html>

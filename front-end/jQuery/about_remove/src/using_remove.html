@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>using remove</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+  <div>
+    <p><strong>foo</strong></p>
+  </div>
+  <button>Call remove() on above paragraph</button>
+<script>
+  $("button").click(function() {
+    $("p").remove();
+  });
+</script>
+</body>
+</html>
