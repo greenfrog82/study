@@ -26,6 +26,9 @@ event.stopDefault() 메소드는 특정 이벤트의 기본 동작을 하지 않
 </html>
 ```
 
+event.cancelable 프로퍼티를 통해서 특정 이벤트의 기본 동작을 하지 않도록 하는 것이 가능한지 확인 할 수 있다.
+먄약, event.cancelable 프로퍼티의 호출 결과가 false라면 event.preventDefault() 메소드를 호출한다 하더라도 특정 이벤트의 기본 동작을 취소할 수 없다.  
+
 ## 참조
 
 * [Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
