@@ -7,7 +7,7 @@
 
 따라서, AngularJS version 1에서 Controller를 상속하는 방법을 찾아보았다.
 
-Controller를 상속하기 위해서는 $controller 서비스를 사용하는데 이 서비스를 사용하면 다른 controller를 상속받고자 하는 controller에 Injection함으로써 상속이 이루어지도록 할 수 있다.
+Controller를 상속하기 위해서는 **$controller 서비스**를 사용하는데 이 서비스를 사용하면 **다른 controller를 상속받고자 하는 controller에 Injection함으로써 상속이 이루어지도록 할 수 있다.**
 
 다음은 관련 예제인데, 각각의 controller는 자신을 소개하는 역할을 하고 있는데 baseCtrl는 이름만을 소개하지만, derivedCtrl는 이름과 함께 직업도 소개하도록 확장되었다.
 
@@ -30,9 +30,7 @@ Controller를 상속하기 위해서는 $controller 서비스를 사용하는데
         });
 
         app.controller('drivedCtrl', function($scope, $controller) {
-          var baseCtrl = $controller('baseCtrl', {$scope: $scope});
-          console.log('baseCtrl : ', baseCtrl);
-          console.log('baseCtrl.name : ', baseCtrl.name);
+          $controller('baseCtrl', {$scope: $scope});
 
           $scope.job = 'full stack programmer';
           $scope.introduce = function() {
