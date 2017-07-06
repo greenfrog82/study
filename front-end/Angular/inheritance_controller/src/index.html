@@ -7,30 +7,63 @@
     <script>
         var app = angular.module("app", []);
 
-        app.controller('baseCtrl', function($scope) {
-          $scope.name = 'greenfrog'
-
-          $scope.introduce = function() {
-            return 'My name is ' + $scope.name;
+        app.service('r_logic', function(scope) {
+          scope.init = function() {
+            console.log('base');
           }
         });
 
-        app.controller('drivedCtrl', function($scope, $controller) {
-          var baseCtrl = $controller('baseCtrl', {$scope: $scope});
-          console.log('baseCtrl : ', baseCtrl);
-          console.log('baseCtrl.name : ', baseCtrl.name);
+        app.controller('baseCtrl', function($scope, $timeout) {
+          console.log('base', $timeout);
 
-          $scope.job = 'full stack programmer';
-          $scope.introduce = function() {
-            return 'My name is ' + $scope.name + ' and job is ' + $scope.job;
+          $scope.init = function() {
+            console.log('base init', $scope.value);
           }
+
+          // $scope.init();
+          // $scope.name = 'greenfrog'
+          //
+          // $scope.introduce = function() {
+          //   perform();
+          //   console.log('baseCtrl');
+          //   return 'My name is ' + $scope.name;
+          // }
+          //
+          // function perform() {
+          //   console.log('base controller');
+          //   $scope._perform();
+          // }
+          //
+          // $scope._perform = function() {
+          //   console.log('inner perform');
+          // }
+        });
+
+        app.controller('drivedCtrl', function($scope, $controller) {
+          $scope.value = 100;
+          console.log('1. drived');
+          $controller('baseCtrl', {$scope: $scope});
+          console.log('2. drived');
+
+          $scope.init = function() {
+            console.log('drived init');
+          }
+          //
+          // $scope.job = 'full stack programmer';
+          // // $scope.introduce = function() {
+          // //   console.log('drivedCtrl');
+          // //   return 'My name is ' + $scope.name + ' and job is ' + $scope.job;
+          // // }
+          // $scope._perform = function() {
+          //   console.log('drived inner perform');
+          // }
         });
     </script>
 </head>
 <body>
-    <div ng-controller='baseCtrl'>
+    <!-- <div ng-controller='baseCtrl'>
       Base Controller : {{ introduce() }}
-    </div>
+    </div> -->
     <div ng-controller='drivedCtrl'>
       Drived Controller : {{ introduce() }}
     </div>
