@@ -10,4 +10,6 @@ def print_parameter(arg1, arg2, *args, **kwargs):
 
 # print_parameter(1, 2, 3, 4, name='greenfrog', job='developer')
 
-print_parameter(arg1=1, arg2=2, 3, 4, name='greenfrog', job='developer')
+# print_parameter(arg1=1, arg2=2, 3, 4, name='greenfrog', job='developer')
+
+print_parameter(1, 2, name='greenforg', job='developer')
