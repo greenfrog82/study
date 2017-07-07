@@ -4,8 +4,8 @@ def echo_parameters(**kwargs):
 
 echo_parameters(name='greenfrog', passion='development', language='python')
 
-echo_parameters(param = {
-    'name': 'greenfrog,
+echo_parameters({
+    'name': 'greenfrog',
     'passion': 'development',
     'language': 'python'
 })
