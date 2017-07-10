@@ -50,6 +50,41 @@ Controller를 상속하기 위해서는 **$controller 서비스**를 사용하�
 </html>
 ```
 
+### Update
+
+위 방법을 통해 기존에 있던 controller를 확장하려고 헀는데 한가지 문제가 생겼다.
+다음과 같이 baseCtrl에 내부적으로 초기화 함수가 있다. 이 초기화 함수는 controller가 생성되는 시점에 호출되어 서버에 ajax call을 하고 controller에서 필요한 데이터를 초기화한다. (예제가 아주 간단한데 문제를 간단하게 하기 위함이다.)
+
+```javascript
+app.controller('baseCtrl', function($scope) {
+  function init() {
+    console.log('api/base를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.');
+  }
+  init();
+});
+```
+
+위 baseCtrl를 $controller 서비스를 통해서 확장해보자. 우선, 확장을 해보려고 다음과 같이 코드를 작성해보았다.
+
+```javascript
+app.controller('drivedCtrl', function($scope, $controller) {
+  $controller('baseCtrl', {$scope: $scope});
+
+  function init() {
+    console.log('api/derived를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.');
+  }
+  init();
+});
+```
+
+위 코드의 실행결과는 다음과 같은데, 어찌보면 당연한 결과이다. $conroller는 $injector를 통해 첫번째 인자로 전달 된 controller를 인스턴스화 하기 때문에 baseCtrl가 인스턴스화 되면서 baseCtrl에 정의되었던 init 함수가 호출되고 이후에 drivedCtrl에서 다시 정의한 init 함수가 호출되었기 때문이다.
+
+```
+api/base를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.
+api/derived를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.
+```
+
+
 ## 참조
 
 * [use case for $controller service in angularjs](https://stackoverflow.com/questions/27866620/use-case-for-controller-service-in-angularjs)

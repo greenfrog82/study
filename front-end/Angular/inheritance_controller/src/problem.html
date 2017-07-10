@@ -8,20 +8,19 @@
         var app = angular.module("app", []);
 
         app.controller('baseCtrl', function($scope) {
-          $scope.name = 'greenfrog'
-
-          $scope.introduce = function() {
-            return 'My name is ' + $scope.name;
+          function init() {
+            console.log('api/base를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.');
           }
+          init();
         });
 
         app.controller('drivedCtrl', function($scope, $controller) {
           $controller('baseCtrl', {$scope: $scope});
 
-          $scope.job = 'full stack programmer';
-          $scope.introduce = function() {
-            return 'My name is ' + $scope.name + ' and job is ' + $scope.job;
+          function init() {
+            console.log('api/derived를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.');
           }
+          init();
         });
     </script>
 </head>
