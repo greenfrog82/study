@@ -62,9 +62,9 @@ SET SQL_SAFE_UPDATES=1
 
 ## TRUNCATE TABLE <TABLE NAME> 명령 사용하기
 
-**SQL_SAFE_UPDATES** 설정을 다시 **ON**으로 설정되어있다 하더라도 **TRUNCATE TABLE <TABLE NAME>** 명령을 사용하면 에러 없이 테이블의 모든 데이터를 삭제할 수 있다.
+**SQL_SAFE_UPDATES** 설정을 다시 **ON**으로 설정되어있다 하더라도 **TRUNCATE TABLE <TABLE NAME>**명령을 사용하면 에러 없이 테이블의 모든 데이터를 삭제할 수 있다.
 
-다음은 **SQL_SAFE_UPDATES** 설정이 **ON** 상태일 떄 **TRUNCATE TABLE <TABLE NAME>** 명령을 통해 에러 없이 모든 데이터를 삭제하고 있다.
+다음은 **SQL_SAFE_UPDATES** 설정이 **ON** 상태일 떄 **TRUNCATE TABLE <TABLE NAME>**명령을 통해 에러 없이 모든 데이터를 삭제하고 있다.
 
 ```sql
 mysql> select * from professor;
