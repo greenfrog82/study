@@ -102,6 +102,57 @@ mysql> select * from professor;
 Empty set (0.00 sec)
 ```
 
+**TRUNCATE** 명령을 사용하는 경우 **ERROR 1175**가 발생하지 않는 이유는 **SQL_SAFE_UPDATES** 옵션의 경우 **UPDATE**와 **DELETE** 쿼리에만 영향을 주기 때문이다.
+
+## Foreign Key를 통해 삭제하는 경우
+
+앞서 **SQL_SAFE_UPDATES** 옵션이 **ON**인 경우 WHERE절에 KEY 컬럼의 값을 명시해야함을 언급하였다. 그리고 Primary Key의 경우는 잘 동작하는것을 확인하였는데, Foreign Key의 경우는 어떨까?
+
+우선 다음 쿼리를 통해서 class table을 생성하자. class table은 professor table을 foreign key를 통해서 참조한다.
+
+```sql
+create table class (
+	id int not null auto_increment,
+  name varchar(20) not null,
+  professor_id int not null,
+
+  primary key(id),
+  foreign key(professor_id)
+	 references professor(_id)
+);
+```
+
+그리고 다음 명령을 통해 class table에 데이터를 채운 후 professor_id(foreign key)를 통해 삭제를 해보자.
+
+```sql
+mysql> insert into class (name, professor_id) values ('python', 1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into class (name, professor_id) values ('javascript', 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from class;
++----+------------+--------------+
+| id | name       | professor_id |
++----+------------+--------------+
+|  3 | python     |            1 |
+|  4 | javascript |            2 |
++----+------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from class where professor_id = 1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from class;
++----+------------+--------------+
+| id | name       | professor_id |
++----+------------+--------------+
+|  4 | javascript |            2 |
++----+------------+--------------+
+1 row in set (0.00 sec)
+```
+
+위 결과를 보면 foreign key를 통한 삭제는 정상적으로 동작하는 것을 알 수 있다.
 
 
 ## 참조
