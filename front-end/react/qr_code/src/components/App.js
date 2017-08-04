@@ -1,10 +1,14 @@
-import React from 'react';
+// import React from 'react';
+//
+// class App extends React.Component {
+//     render(){
+//         return (
+//                 <h1>Hello React Skeleton</h1>
+//         );
+//     }
+// }
+// export default App;
 
-class App extends React.Component {
-    render(){
-        return (
-                <h1>Hello React Skeleton</h1>
-        );
-    }
+export default function perform() {
+  return 'perform'
 }
-export default App;
