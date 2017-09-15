@@ -34,6 +34,9 @@ WORKDIR mod_wsgi-4.5.17
 RUN ./configure
 RUN make
 RUN make install
+RUN make clean
+
+COPY ./config/apache2.conf /etc/apache2/
 
 WORKDIR /develop
 
