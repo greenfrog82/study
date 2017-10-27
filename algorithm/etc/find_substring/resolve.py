@@ -1,37 +1,36 @@
 def perform(codes):    
-    def do_count(codes):
-        sub_str_cnt = 0
-        base_cnt = 0
-        base_cnt_ = 0    
-        encount_zero = False
+    cur = codes[0]    
+    idx = 1
+    res = 0
+    cnt = base_cnt = 1
 
-        for code in codes:
-            if '1' == code:
-                if encount_zero:                    
-                    base_cnt = 1
-                    base_cnt_ = 0
-                    encount_zero = False
-                else:
-                    base_cnt += 1
+    def calc_res(base_cnt, cnt, res):
+        if base_cnt >= cnt:
+            if 0 >= cnt:
+                res += base_cnt
             else:
-                encount_zero = True
-                if 1 < base_cnt:
-                    base_cnt_ = base_cnt
-                if 0 < base_cnt:
-                    base_cnt -= 1
-                    if 0 == base_cnt:
-                        encount_zero = False
-                        sub_str_cnt += 1
-                        if 1 < base_cnt_:
-                            sub_str_cnt += base_cnt_ - 1                        
+                res += base_cnt - cnt
+        
+        return res
 
-        if 0 < base_cnt and encount_zero:
-            sub_str_cnt += 1
+    while idx < len(codes):        
+        if cur == codes[idx]:
+            cnt += 1
+            base_cnt = cnt
+        else:
+            cnt -= 1
 
-        return sub_str_cnt
+            if idx + 1 >= len(codes):
+                res = calc_res(base_cnt, cnt, res)
 
-    res = do_count(codes)
-    codes = codes[::-1]    
-    res += do_count(codes)
+            elif idx + 1 < len(codes) and cur == codes[idx + 1]:
+                res = calc_res(base_cnt, cnt, res)
+
+                cnt = 0
+                    
+                cur = codes[idx]
+                idx -= 1
+
+        idx += 1
 
     return res
