@@ -9,4 +9,4 @@ services:
       - 8080:8080
       - 80:80
     volumes:
-      - $PWD/src:/develop
+      - ./src:/develop

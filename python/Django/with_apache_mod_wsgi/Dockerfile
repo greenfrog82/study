@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:17.10
 
 # To install library
 RUN apt-get update && apt-get upgrade -y
@@ -24,19 +24,19 @@ RUN apt-get install -y \
 # To install pip library
 RUN pip install --upgrade pip
 RUN pip install Django==1.11.5 \
-    MySQL-python==1.2.5
+    MySQL-python==1.2.5 \
+    mod_wsgi==4.5.20
 
-WORKDIR /tmp
-COPY ./lib .
+# To install mod_wsgi 4.5.17 using source
+# COPY ./lib/mod_wsgi-4.5.17.tar.gz /tmp
+# WORKDIR /tmp
+# RUN tar xvzf mod_wsgi-4.5.17.tar.gz
+# WORKDIR ./mod_wsgi-4.5.17
+# RUN ./configure
+# RUN make
+# RUN make install
+# RUN make clean
 
-RUN tar xvzf mod_wsgi-4.5.17.tar.gz
-WORKDIR mod_wsgi-4.5.17
-RUN ./configure
-RUN make
-RUN make install
-RUN make clean
-
-COPY ./config/apache2.conf /etc/apache2/
-
+# COPY ./config/apache2.conf /etc/apache2/
 WORKDIR /develop
 
