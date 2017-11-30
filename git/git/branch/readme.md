@@ -82,7 +82,11 @@ $ git checkout -b hotfix
 
 ## 특정 브랜치 삭제하기
 
-이제 필요없는 브랜치를 삭제해보자. 다음 명령을 통해 필요없는 브랜치를 삭제할 수 있다. 
+브랜치를 삭제하는 경우는 Loacal Repository와 Remote Repository로 나눠서 생각할 수 있다.
+
+### Loacal Repository의 브랜치 삭제하기
+
+다음 명령을 통해 Local Repository의 필요없는 브랜치를 삭제할 수 있다. 
 
 ```
 $ git branch -d <branch name>
@@ -97,6 +101,20 @@ $ git branch -d FEATURE-TEST-1
 [출력 결과]
 
 ![git branch -d FEATURE-TEST-1](./git_branch_d_feature_test_1.png)
+
+### Remote Repository의 브랜치 삭제하기
+
+다음 명령을 통해 Remote Repository의 필요없는 브랜치를 삭제할 수 있다.
+
+```
+$ git push origin --delete <branch name>
+```
+
+또는 위 명령을 다음과 같이 줄여서 사용할 수 있다.
+
+```
+$ git push origin :<branch name>
+```
 
 ## 브랜치 이름 변경하기
 
@@ -136,7 +154,7 @@ $ git branch -m FEATURE-TEST-1
 ## 참고
 
 * [브랜치 생성과 체크아웃](https://mylko72.gitbooks.io/git/content/branch/checkout.html)
-
+* [How to delete a git branch locally and remotly](http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely)
 
 
  

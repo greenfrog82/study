@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script>
+    function perform(obj) {
+      console.log(obj);
+    }
+  </script>
+</head>
+<body>
+  <div>
+    <ul onclick='perform(this)'>
+      <li onclick='perform(this)'>
+        <button onclick='perform(this)'>click_A</button>
+        <button onclick='perform(this)'>click_B</button>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

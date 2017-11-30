@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+        var app = angular.module("app", []);
+
+        app.controller('baseCtrl', function($scope) {
+          $scope.name = 'greenfrog'
+
+          $scope.introduce = function() {
+            return 'My name is ' + $scope.name;
+          }
+        });
+
+        app.controller('drivedCtrl', function($scope, $controller) {
+          $controller('baseCtrl', {$scope: $scope});
+
+          $scope.job = 'full stack programmer';
+          $scope.introduce = function() {
+            return 'My name is ' + $scope.name + ' and job is ' + $scope.job;
+          }
+        });
+    </script>
+</head>
+<body>
+    <div ng-controller='baseCtrl'>
+      Base Controller : {{ introduce() }}
+    </div>
+    <div ng-controller='drivedCtrl'>
+      Drived Controller : {{ introduce() }}
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+version: "3"
+services:
+  celery_sdy:
+    build: ./
+    image: celery_sdy:0.0.1
+    stdin_open: true
+    tty: true
+    ports: 
+      - 7777:7777
+    volumes:
+      - ./:/develop
+    working_dir: /develop

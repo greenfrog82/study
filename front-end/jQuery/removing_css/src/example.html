@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data</title>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function() {
+    $('#btn_flip').click(function() {
+      var isApply = $('#btn_flip').data('apply');
+      if(isApply) {
+        $('#target').css('background-color', '');
+        $('#btn_flip').attr('value', 'Applying background color');
+      } else {
+        $('#target').css('background-color', 'red');
+        $('#btn_flip').attr('value', 'Removing background color');
+      }
+      $('#btn_flip').data('apply', !isApply);
+    });
+
+    $('#btn_multi_css').click(function() {
+      var isApply = $('#btn_multi_css').data('apply');
+      if(isApply) {
+        $('#target_2').css({
+          'background-color': '',
+          'border-style': ''
+        });
+        $('#btn_multi_css').attr('value', 'Applying multi css');
+      } else {
+        $('#target_2').css({
+          'background-color': 'red',
+          'border-style': 'solid'
+        });
+        $('#btn_multi_css').attr('value', 'Removing multi css');
+      }
+      $('#btn_multi_css').data('apply', !isApply);
+    });
+  });
+</script>
+</head>
+<body>
+  <input type='button' id='btn_flip' value='Removing background color' data-apply='true'/>
+  <p><div id='target' style='width:100px; height:100px; background-color:red'></div></p>
+
+  <input type='button' id='btn_multi_css' value='Removing multi css' data-apply='true'/>
+  <p><div id='target_2' style='width:100px; height:100px; background-color:red; border-style:solid'></div></p>
+</body>
+</html>

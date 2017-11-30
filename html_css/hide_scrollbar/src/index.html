@@ -1,0 +1,30 @@
+<html>
+<head>
+  <title>Multi class</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+      $(document).ready(function() {
+        for(var i=0; i<100; i++) {
+          $('body').append('<br />' + i);
+        }
+
+        var initial_overflow = $('body').css('overflow');
+
+        $('#btn_change').click(function() {
+          if('hidden' != $('body').css('overflow')) {
+            $('body').css('overflow', 'hidden');
+            $('#btn_change').attr('value', initial_overflow);
+          } else {
+            $('body').css('overflow', initial_overflow);
+            $('#btn_change').attr('value', 'hidden');
+          }
+        });
+      });
+  </script>
+</head>
+<body>
+  <div>
+    <input id='btn_change' type='button' value='hidden' />
+  </div>
+</body>
+</html>

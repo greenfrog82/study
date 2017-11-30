@@ -27,6 +27,8 @@
 * Ctrl + Shift + Q : 현재 터미널을 종료(탭포함)
 * Ctrl + Shift + E : 터미널내에서 화면 수직 분할
 * Ctrl + Shift + O : 터미널내에서 화면을 수평 분할
+* Super + g : 터미널내 분리 된 모든 창을 그룹핑해서 입력을 동시에 작성 (Group mode)
+* Super + Shift + g : Group mode 해제
 
 ## 설정
 
@@ -63,5 +65,5 @@
 
 * [[Linux] Ubuntu Gnome 터미널 추천 - Terminator](http://programmingsummaries.tistory.com/361)
 * [Terminator](https://gnometerminator.blogspot.kr/)
-*
+* [Terminator 0.97 – A Terminal Emulator to Manage Multiple Terminal Windows on Linux](https://www.tecmint.com/terminator-a-linux-terminal-emulator-to-manage-multiple-terminal-windows/)
 

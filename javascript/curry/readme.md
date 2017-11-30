@@ -10,16 +10,12 @@ function logger(prefix, msg) {
 }
 
 function curry(fn) {
-  const arity = fn.length;
-  return (function resolver() {
-    const memory = Array.prototype.slice.call(arguments);
-    return function() {
-      const local = memory.slice();
-      Array.prototype.push.apply(local, arguments);
-      const next = local.length >= arity? fn: resolver;
-      return next.apply(null, local);
-    };
-  }());
+  return function() {
+      let args = Array.prototype.slice.apply(arguments);
+      return function() {
+        return fn.apply(null, args.concat(Array.prototype.slice.apply(arguments)));
+      }
+  };
 }
 
 const curriedLogger = curry(logger);
@@ -44,3 +40,4 @@ infoLogger('This is logger for info.');
 * [[개발] Currying in JavaScript](https://medium.com/@jinro4/%EA%B0%9C%EB%B0%9C-currying-in-javascript-e7ccdd7862e0#.pozmls8av)
 * [JavaScript 특징의 이해 - JS의 중심 Function 살펴보기(2)](http://blog.nundefined.com/22)
 * [(번역)자바스크립트에서의 커링](http://shiren.github.io/2015-08-03-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%97%90%EC%84%9C%EC%9D%98-%EC%BB%A4%EB%A7%81/)
+* [JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do)

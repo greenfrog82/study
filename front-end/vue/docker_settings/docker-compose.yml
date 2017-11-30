@@ -1,0 +1,12 @@
+version: "3"
+services:
+  vuejs:
+    build: ./
+    image: vue_js:1.0.0
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/develop
+    working_dir: /develop

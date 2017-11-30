@@ -1,0 +1,8 @@
+[DEBUG][2017-08-21] test_1
+[DEBUG][2017-08-22] test_2
+[INFO][2017-08-23] test_3
+[WARN][2017-09-01] test_4
+[INFO][2017-09-02] test_5
+[INFO][2017-09-03] test_6
+[ERR][2017-09-29] test_7
+[ERR][2017-09-30] test_8

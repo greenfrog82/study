@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+        var app = angular.module("app", []);
+
+        app.controller('baseCtrl', function($scope) {
+          function init() {
+            console.log('api/base를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.');
+          }
+          init();
+        });
+
+        app.controller('drivedCtrl', function($scope, $controller) {
+          $controller('baseCtrl', {$scope: $scope});
+
+          function init() {
+            console.log('api/derived를 호출하여 필요한 데이터를 가져오고 $scope에 데이터를 채운다.');
+          }
+          init();
+        });
+    </script>
+</head>
+<body>
+    <div ng-controller='drivedCtrl'>
+    </div>
+</body>
+</html>

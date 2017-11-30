@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script>
+    function perform() {
+      event.preventDefault();
+      console.log(event.cancelable);
+      console.log('preventDefault method is called.');
+    }
+  </script>
+</head>
+<body>
+  <input type='checkbox' onclick='perform()'/> Click
+</body>
+</html>

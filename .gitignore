@@ -23,3 +23,8 @@ __pycache__
 # vim
 *.swo
 *.swp
+
+.DS_Store
+
+# python
+*.pyc
