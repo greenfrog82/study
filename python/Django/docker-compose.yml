@@ -1,11 +1,12 @@
 version: "3"
 services:
-  django_dev:
+  django_in_amw:
     build: ./
-    image: django_dev_sample:1.0.0
+    image: django_dev:1.0.0
     stdin_open: true
     tty: true
     ports:
       - 8080:8080
+      - 80:80
     volumes:
-      - $PWD:/develop
+      - ./:/develop
