@@ -3,6 +3,7 @@
 ## 기본 세팅
 
 ### [Auto-Open Markdown Preview](https://marketplace.visualstudio.com/items?itemName=hnw.vscode-auto-open-markdown-preview)
+### [XML Tools for Visual Studio Code](https://github.com/DotJoshJohnson/vscode-xml)
 
 Open Markdown preview automatically when opening a Markdown file
 
