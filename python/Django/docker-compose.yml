@@ -1,6 +1,6 @@
 version: "3"
 services:
-  django_in_amw:
+  django_dev:
     build: ./
     image: django_dev:1.0.0
     stdin_open: true
