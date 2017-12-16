@@ -4,12 +4,10 @@ from __future__ import unicode_literals
 from django.test import TestCase
 from manage_settings.settings import *
 
-
-# Create your tests here.
 class ManageMultipleSettings(TestCase):
     def setUp(self):
         pass
 
-    def test_code(self):
+    def test_develper_1(self):
         self.assertTrue(DEBUG)
-        self.assertEquals(ALLOWED_HOSTS[0], 'django.cdnetworks.com')
+        self.assertEquals(ALLOWED_HOSTS[0], 'django-dev-1.cdnetworks.com')
