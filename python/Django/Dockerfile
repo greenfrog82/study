@@ -25,4 +25,5 @@ RUN apt-get install -y \
 RUN pip install --upgrade pip
 RUN pip install Django==1.11.5 \
     MySQL-python==1.2.5 \
-    mod_wsgi==4.5.20
+    mod_wsgi==4.5.20 \
+    pip==2.0.0
