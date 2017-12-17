@@ -70,8 +70,10 @@ else:
 
 # How to manage security settings
 
+보안과 관련 된 설정들의 경우 VCS에서 관리하지 않는것이 안전하다. 따라서 이러한 설정은 settings.py에서 따로 분리되어 VCS에서는 추적하지 않도록해야한다. 
+결국 분리 된 보안관련 설정파일은 팀원들이 분산해서 파일을 가기있기 때문에 팀내 개발자들의 PC에서 관리되게 될 것이다. 
 
-
+보안관련 설정파일을 Import하는 방식은 앞서 settings.py 
 ## Reference
 
 * [Django Best Practice: Settings file for multiple environments](https://medium.com/@ayarshabeer/django-best-practice-settings-file-for-multiple-environments-6d71c6966ee2)

@@ -11,3 +11,5 @@ class ManageMultipleSettings(TestCase):
     def test_develper_1(self):
         self.assertTrue(DEBUG)
         self.assertEquals(ALLOWED_HOSTS[0], 'django-dev-1.cdnetworks.com')
+        self.assertEquals(ID, 'development')
+        self.assertEquals(PW, '4321')
