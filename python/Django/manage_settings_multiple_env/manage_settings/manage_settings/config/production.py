@@ -10,16 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-from uuid import getnode
+#from uuid import getnode
+#
+#mac_addr = getnode()
+#
+#if 2485378154498 == mac_addr:
+#    from manage_settings.sec_config.development import *
+#elif 3485378154498 == mac_addr:
+#    pass
+#else:
+#    from manage_settings.sec_config.production import *
+#
 
-mac_addr = getnode()
-
-if 2485378154498 == mac_addr:
-    from manage_settings.sec_config.development import *
-elif 3485378154498 == mac_addr:
-    pass
-else:
-    from manage_settings.sec_config.production import *
+from manage_settings.sec_config.production import *
 
 import os
 

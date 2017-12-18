@@ -71,9 +71,14 @@ else:
 # How to manage security settings
 
 보안과 관련 된 설정들의 경우 VCS에서 관리하지 않는것이 안전하다. 따라서 이러한 설정은 settings.py에서 따로 분리되어 VCS에서는 추적하지 않도록해야한다. 
-결국 분리 된 보안관련 설정파일은 팀원들이 분산해서 파일을 가기있기 때문에 팀내 개발자들의 PC에서 관리되게 될 것이다. 
+비록 보안 관련 설정파일들이 VCS에서 관리되지는 않지만, 팀원들이 같은 설정의 파일들을 분산해서 각자 개발 PC에 보관하고 있기 때문에 해당 데이터의 유실을 걱정할 필요는 없다. 
 
-보안관련 설정파일을 Import하는 방식은 앞서 settings.py 
+보안관련 설정파일을 관리하는 방법은 설정파일을 관리하는 방법과 동일하다. 다음 그림을 보자.
+운영환경에서 사용 될 보안관련 설정파일을 작성하고 개발환경에서 사용 될 보안관련 설정파일은 운영환경 보안관련 설정파일을 import 한 후 필요한 내용을 override하거나 추가한다. 또한 개발자별로 관리 될 필요가 있는 보안관련 설정파일의 경우 역시 개발환경에서 사용 될 보안고나련 설정파일을 import 한 후 필요한 내용을 override하거나 추가하면 된다. 
+이렇게 작성 된 보안관련 설정파일은 각각 설정 파일에서 import해서 사용하면 된다.
+
+![pic managing_sec_settings](managing_sec_settings.png)
+
 ## Reference
 
 * [Django Best Practice: Settings file for multiple environments](https://medium.com/@ayarshabeer/django-best-practice-settings-file-for-multiple-environments-6d71c6966ee2)
