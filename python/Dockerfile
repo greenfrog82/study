@@ -13,6 +13,9 @@ RUN apt-get install -y \
     curl \
     mysql-client
 
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
 # To install apache and mod-wsgi
 RUN apt-get install -y \
     apache2 \
@@ -26,4 +29,7 @@ RUN pip install --upgrade pip
 RUN pip install Django==1.11.5 \
     MySQL-python==1.2.5 \
     mod_wsgi==4.5.20 \
-    pip==2.0.0
+    grpcio \
+    grpcio-tools
+ 
+    
