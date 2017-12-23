@@ -7,6 +7,7 @@ Docker Container에서 동작 중인 Django application이 Host PC에 설치되�
 
 * Ubuntu Linux version 14.04
 * Mac macOS High Sierra 10.13.1 (17B1003)
+    * Docker for mac 
     * Docker CE 17.09.1-ce-mac42 (21090)
     * MySQL ver 14.14 Distrib 5.7.20, for Linux (x86_64) using  EditLine wrapper
     
@@ -64,16 +65,19 @@ host mode를 사용하는 경우 Docker Container는 Host PC의 Network Stack을
 
 ## Mac 
 
+Mac에서 Docker를 사용할 때는 나는 Docker For Mac을 사용하고 있다. Docker For Mac의 경우 Hypervisor를 통해 리눅스 커널 가상머신을 올리고 그 위헤서 Docker Container가 동작하는 구조이기 때문에 앞서 Linux에서 사용한 방법을 통해 Host PC에 설치 된 MySQL Server에 접속할 수 없다. 
+
+이를 해결하는 방법은 [Networking features in Docker for Mac](https://docs.docker.com/docker-for-mac/networking/) 사이트에 다음과 같이 소개되어 있다.
+
+>I WANT TO CONNECT FROM A CONTAINER TO A SERVICE ON THE HOST
+The Mac has a changing IP address (or none if you have no network access). From 17.06 onwards our recommendation is to connect to the special Mac-only DNS name docker.for.mac.localhost which will resolve to the internal IP address used by the host.
+
+결국 해결 방법은 다음과 같다.
+
 ```python
-DATABASES = {
-    'default': {
-        'NAME': 'household_account',
-        'ENGINE':'django.db.backends.mysql',
-        'USER':'root',
-        'PASSWORD':'1234',
-        'HOST':'docker.for.mac.localhost',
-        'PORT':'3306'
-    }
+'HOST':'docker.for.mac.localhost'
+```
+
 ## Reference
 
 * [From inside of a Docker container, how do I connect to the localhost of the machine?](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach)
