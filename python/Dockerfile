@@ -11,7 +11,9 @@ RUN apt-get install -y \
 RUN apt-get install -y \
     vim \
     curl \
-    mysql-client
+    mysql-client \ 
+    net-tools \
+    iputils-ping 
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs

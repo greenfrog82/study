@@ -5,6 +5,7 @@ services:
     image: django_dev:1.0.0
     stdin_open: true
     tty: true
+    #network_mode: "host"
     ports:
       - 8080:8080
       - 80:80
