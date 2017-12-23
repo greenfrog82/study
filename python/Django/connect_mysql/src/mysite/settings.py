@@ -80,10 +80,12 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
     'default': {
-        'NAME': 'django_orm',
+        'NAME': 'household_account',
         'ENGINE':'django.db.backends.mysql',
         'USER':'root',
-        'HOST':'172.17.42.1',
+        'PASSWORD':'1234',
+        # 'HOST':'172.17.42.1',
+        'HOST':'docker.for.mac.localhost',
         'PORT':'3306'
     }
 }
