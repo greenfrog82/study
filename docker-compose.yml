@@ -1,8 +1,8 @@
 version: "3"
 services:
-  django_dev:
+  dev:
     build: ./
-    image: django_dev:1.0.0
+    image: dev:1.0.0
     stdin_open: true
     tty: true
     #network_mode: "host"
