@@ -89,7 +89,8 @@ print result
 * **l**ist : 소스 코드를 출력하고 현재 실행 지점을 화살표로 표시한다.
 * **w**here : 콜스택을 출력한다.
 * **s**tep : step into (특정 함수의 내부도 진입)
-* **j**ump lineno : lineno로 지정한 line으로 이동한다. 하지만 이동한 만큼의 코드들은 실행이 되지 않는다.
+* **j**ump lineno : lineno로 지정한 line으로 이동한다. **하지만 이동한 만큼의 코드들은 실행이 되지 않는다**.
+* **b**reak lineno : lineno로 지정한 line에 break point를 지정한다. 이때 반드시 소스코드가 있는 lineno를 지정해줘야한다.
 
 
 ## 참고
