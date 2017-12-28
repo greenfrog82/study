@@ -5,9 +5,12 @@ services:
     image: dev:1.0.0
     stdin_open: true
     tty: true
+    environment:
+      - PATH=$PATH:/usr/local/go/bin
     #network_mode: "host"
-    ports:
-      - 8080:8080
-      - 80:80
+    #ports:
+    #  - 8080:8080
+    #  - 80:80
     volumes:
       - ./:/develop
+    working_dir: /develop

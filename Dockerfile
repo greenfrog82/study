@@ -13,25 +13,30 @@ RUN apt-get install -y \
     curl \
     mysql-client \ 
     net-tools \
-    iputils-ping 
+    iputils-ping \
+	wget
 
+# To install node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
+# To install go-lang
+RUN wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz -O go-dist.tar.gz
+RUN tar -C /usr/local -xzf go-dist.tar.gz
+
 # To install apache and mod-wsgi
-RUN apt-get install -y \
-    apache2 \
-    apache2-doc \
-    apache2-utils \
-    apache2-dev \ 
-    libapache2-mod-wsgi
+#RUN apt-get install -y \
+#    apache2 \
+#    apache2-doc \
+#    apache2-utils \
+#    apache2-dev \ 
+#    libapache2-mod-wsgi
 
 # To install pip library
 RUN pip install --upgrade pip
 RUN pip install Django==1.11.5 \
     MySQL-python==1.2.5 \
-    mod_wsgi==4.5.20 \
+#    mod_wsgi==4.5.20 \
     grpcio \
     grpcio-tools
- 
-    
+
