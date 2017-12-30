@@ -24,7 +24,7 @@ ubuntu                      16.04               ccc7a11d65b1        3 months ago
 <none> 이미지가 한두개 일때는 문제가 되지 않지만 관리를 소홀히하는 사이 위와 같이 여러개가 생성되어 있으면 지우는 것도 일이다. 
 이러한 경우 다음 명령을 통해 한꺼번에 정리를 할 수 있다. 
 
-> $ docker rmi $(docker images | grep none | tr -s " " | cut -d " " -f3)
+> $ docker rmi $(docker images -qf "dangling=true")
 
 다음은 위 명령을 통해 앞서 확인했던 <none> 이미지들을 한번에 삭제한것이다. 
 
@@ -40,20 +40,17 @@ Deleted: sha256:f54faf9d5f51221a45f5c0b4bb0394bccfc13d26c673065860e0fc38d4e5cd8b
 Deleted: sha256:4459a7b8456acfc0b328e5a239f1cab19b2d075f11da8fc6ae25537c1caa277d
 ```
 
-이 명령의 경우 ~/.bash_profile (리눅스의 경우 ~/.bashrc) 파일에 alias로 작성해서 사용하면 편리하다. 
-
-```sh
-alias dk_rmi_none='sudo docker rmi $(sudo docker images | grep none | tr -s " " | cut -d " " -f3)
-```
-
 ## Deleting specific containers 
 
 Container 목록을 중 특정 상태 또는 특정 제목등이 들어가는 Container들을 삭제할 때 하나하나 지우는 것은 역시 번거로운 작업이 될 것이다. 
 이러한 경우 다음 명령을 통해 삭제하고자 하는 Container들을 모두 검색해서 한번에 삭제할 수 있다.
 
-> $ docker rm $(docker ps -a | grep <keyword> | tr -s " " | cut -d " " -f1)
+> $ docker rm $(docker ps -qf "<key>=<value>")
 
-위 명령에서 <keyword>에 삭제하고자하는 Container의 이름 또는 상태등을 입력해주면 된다. 
+위 명령에서 <key>에 해당하는 항목은 다음 link의 Table을 참조하자. 
+
+[ps/filter](https://docs.docker.com/engine/reference/commandline/ps/#filtering)
+
 예를들어 다음 Container 목록에서 Exited 상태의 Container를 위 명령을 통해 한번에 삭제해보자. 
 
 ```bash
@@ -73,10 +70,8 @@ cf1a3932c263        2110d45dff5f        "/bin/sh -c 'apt-g..."   3 weeks ago    
 dcc326bbd976        2110d45dff5f        "/bin/sh -c 'apt-g..."   3 weeks ago         Exited (100) 3 weeks ago                                                elegant_poitras
 ```
 
-다음과 같이 <keyword>에 Exited를 입력하고 명령을 실행하였다. 
-
 ```bash
-greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker rm $(docker ps -a | grep Exited | tr -s " " | cut -d " " -f1)
+greenfrog@greenfrogui-MacBook-Pro ~/develop/study (master) $ docker rm $(docker ps -qf "status=exited")
 c962054c1e3a
 5e379e8b8b25
 49883bae8dcb
@@ -93,11 +88,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 47e2a33809ef        django_dev:1.0.0    "/bin/bash"         3 hours ago         Up 3 hours          0.0.0.0:80->80/tcp, 0.0.0.0:8080->8080/tcp   django_django_in_amw_1
 ```
 
-이 명령 역시 ~/.bash_profile (리눅스의 경우 ~/.bashrc) 파일에 작성해서 사용하면 편리하다. 
-하지만 이 명령의 경우 <keyword>에 대한 parameter를 전달받아야 하므로 함수로 작성해서 사용하도록 하자.
+## Reference
 
-```sh
-dk_rm() {
-    docker rm $(sudo docker ps -a | grep "$1" | tr -s " " | cut -d " " -f1)
-}
-```
+* [image/filter](https://docs.docker.com/engine/reference/commandline/images/#filtering)
+* [ps/filter](https://docs.docker.com/engine/reference/commandline/ps/#filtering)
