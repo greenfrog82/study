@@ -119,7 +119,7 @@ Generator를 사용하지 사용하지 않는 경우 일반화된 함수에서�
 따라서, Generator를 잘 활용하면 프로그램의 공간적 성능을 향상시키는데 도움이 많이 될 것이다. 
 
 
-## 참조
+## Reference
 
 * [Generators](https://www.learnpython.org/en/Generators)
 * [The Python yield keyword explained](https://pythontips.com/2013/09/29/the-python-yield-keyword-explained/)
