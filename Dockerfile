@@ -1,13 +1,9 @@
 FROM ubuntu:17.10
 
-# To install library
+# To update apt-get and os
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y \
-    python-dev \
-    python-pip \
-    libmysqlclient-dev
 
-# To install usefull tools.
+# To install usefull tools
 RUN apt-get install -y \
     vim \
     curl \
@@ -16,9 +12,18 @@ RUN apt-get install -y \
     iputils-ping \
 	wget
 
+# To install python library
+RUN apt-get install -y \
+    python-dev \
+    python-pip \
+    libmysqlclient-dev
+
 # To install node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
+
+# To install vue.js
+RUN npm install --global vue-cli
 
 # To install go-lang
 RUN wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz -O go-dist.tar.gz
