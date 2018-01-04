@@ -39,7 +39,7 @@ def run():
   for idx in range(0, 30):
       futures.append(pool.submit(do_request, str(idx)))
 
-  sleep(3)
+#   sleep(3)
 
   for future in futures:
       msg = future.result()

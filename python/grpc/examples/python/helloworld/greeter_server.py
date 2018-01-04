@@ -15,6 +15,7 @@
 """The Python implementation of the GRPC helloworld.Greeter server."""
 
 from concurrent import futures
+import threading
 import time
 
 import grpc
@@ -29,6 +30,11 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
 
   def SayHello(self, request, context):
     time.sleep(3)    
+    # for i in range(1000):
+    #       for j in range(100000):
+    #             res = i + j
+    #              threading.currentThread()
+
     return helloworld_pb2.HelloReply(message='Hello, %s!' % request.name)
 
 
