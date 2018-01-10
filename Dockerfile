@@ -10,7 +10,7 @@ RUN apt-get install -y \
     mysql-client \ 
     net-tools \
     iputils-ping \
-	wget
+    wget
 
 # To install python library
 RUN apt-get install -y \
@@ -28,6 +28,9 @@ RUN npm install --global vue-cli
 # To install go-lang
 RUN wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz -O go-dist.tar.gz
 RUN tar -C /usr/local -xzf go-dist.tar.gz
+
+# To install JAVA
+RUN apt-get install openjdk-9-jdk
 
 # To install apache and mod-wsgi
 #RUN apt-get install -y \
