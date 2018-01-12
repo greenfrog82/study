@@ -22,8 +22,10 @@ RUN apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
-# To install vue.js
-RUN npm install --global vue-cli
+# To install node.js modules globally
+RUN npm install -g \
+    vue-cli \
+    newman
 
 # To install go-lang
 RUN wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz -O go-dist.tar.gz
