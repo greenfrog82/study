@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    var options = '';
+    for(var i=0; i<80000; i++) {
+        options += '<option value="'+i+'">'+i+'</option>'
+    }   
+    $("select").append(options); 
+
+    $("button").click(function() {
+        console.log('test');
+        var select = $("select");
+        var options = $("option", select);
+        if(options) {
+            options.remove();
+        }
+    });
+});
+</script>
+</head>
+<body>
+    <button>Clear</button>
+    <select>
+
+    </select>
+</body>
+</html>
