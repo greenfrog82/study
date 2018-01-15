@@ -80,10 +80,84 @@ $ django-admin runserver 0:<PORT>
 
 Apache 또는 nginx와 같이 WSGI를 지원하는 웹서버와 Django web applicaiton을 연동하기 위한 정보가 담겨있다. 
 
+## Setting Database
 
+django-admin을 통해 프로젝트를 생성하면 SQLite를 통해 기본 DB 설정을 만들어 놓는다. 
+이 설정은 settings.py에서 찾을 수 있으며, 다음과 같다. 
 
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
 
+일반적으로 공부목적이나 간단한 Web Application을 개발할 때 사용하면 좋을 것 같지만, 대부분은 공부목적으로라도 MySQL과 같은 데이터베이스를 설치해두고 이와 관련된 클라이언트 툴들도 자신의 Local PC에 설정해둘것이기 것이다. 
+나의 경우 MySQL을 사용하고 있으므로 다음 링크에 MySQL 서버를 설정하는 내용을 정리해두었다. 
 
+[How to access mysql on host from Django application on docker container](https://github.com/greenfrog82/study/tree/master/python/Django/connect_mysql)
+
+데이터베이스 설정을 맞추었으면 다음 명령을 통해 Django Applicaiton을 실행시키기 위한 Django의 기본 ORM과 데이터베이스를 동기화하도록 한다.
+여기서 Django ORM, 데이터베이스 동기화 등이 생소할 수 있다. 이에 대해서 나중에 자세히 알아보도록 하고 여기까지가 데이터베이스에 대한 기본 설정이므로 따라해보자.
+
+```sh
+$ ./manage.py migrate
+```
+
+위 명령을 수행하면 다음과 같은 내용들이 출력되는데 Django가 제공하는 기능을 위한 ORM과 DB의 스키마가 sync된다. 
+
+```sh
+./manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying sessions.0001_initial... OK
+```
+
+다음은 위 명령을 수행한 후 MySQL에서 djang_sdy 데이터베이스에 생성된 테이블들이다. 
+
+![db_django_table.png](./db_django_table.png)
+ 
+## Run server with the django development server
+
+Django development server는 Django를 통해 개발된 Web Applicaiton을 테스트하기 위한 경량화된 Web Server이다. 이를 통해 지금까지 셋팅한 Django Web Applicaion을 기동해보자. 
+
+다음 명령을 실행한다. 
+
+```sh
+$ ./manage.py runserver 0:8080
+```
+
+다음은 위 명령을 실행한 결과이다. 
+서버가 정상적으로 기동되어 8080 포트를 Listen하고 있는것을 알 수 있다. 
+
+```sh
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 13, 2018 - 05:08:56
+Django version 1.11.5, using settings 'study_django.settings'
+Starting development server at http://0:8080/
+Quit the server with CONTROL-C.
+```
+
+웹브라우저를 통해 접속했을 때 다음 화면이 나오면 성공!
+
+![runserver.png](./runserver.png)
 
 ## Reference
 

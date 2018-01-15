@@ -32,15 +32,15 @@ RUN wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz -O go-
 RUN tar -C /usr/local -xzf go-dist.tar.gz
 
 # To install JAVA
-RUN apt-get install openjdk-9-jdk
+RUN apt-get install -y openjdk-9-jdk
 
 # To install apache and mod-wsgi
-#RUN apt-get install -y \
-#    apache2 \
-#    apache2-doc \
-#    apache2-utils \
-#    apache2-dev \ 
-#    libapache2-mod-wsgi
+RUN apt-get install -y \
+    apache2 \
+    apache2-doc \
+    apache2-utils \
+    apache2-dev \ 
+    libapache2-mod-wsgi
 
 # To install pip library
 RUN pip install --upgrade pip
