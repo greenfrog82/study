@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <button v-on:click=this.clear>Clear</button>
+    <button @click=clear>Clear</button>
     <select>
-      <option v-for="item in generatedItems" :value="item">{{ item }}</option>
+      <option v-for="item in items" :value="item">{{ item }}</option>
     </select>
     <!-- <select>
       <optison
@@ -19,7 +19,7 @@ export default {
   name: 'app',
   data() {
     return {
-      items: []
+      items: []      
     }
   },
   methods: {
@@ -29,13 +29,23 @@ export default {
     }
   },
   computed: {
-    generatedItems() {
-      console.log('generatedItem');
-      for(var i=0; i<80000; i++) {
-        this.items.push(i);
-      }
-      return this.items;
+    // generatedItems() {
+      // console.log('generatedItem');
+      // for(var i=0; i<10; i++) {
+      //   this.idx = i
+      //   this.items.push(i);
+      // }
+      // return this.items;
+    // }
+  },
+  created: function() {
+    console.log('created');
+    for(var i=0; i<80000; i++) {      
+      this.items.push(i);
     }
+  },
+  mounted: function() {
+    console.log('mounted');
   }
 }
 </script>

@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Title of the document</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="./node_modules/jquery/dist/jquery.js"></script>
 <script>
+    
 $(document).ready(function(){
     var options = '';
     for(var i=0; i<80000; i++) {
@@ -12,15 +14,43 @@ $(document).ready(function(){
     }   
     $("select").append(options); 
 
-    $("button").click(function() {
-        console.log('test');
+    $("button").click(function() {       
         var select = $("select");
-        var options = $("option", select);
-        if(options) {
-            options.remove();
-        }
+        // The following code will solve this problem well.
+        select.empty('option');
+
+        
+        // var options = $("option", select); // When this line called, Uncaught RangeError occure.
+        // if(options) {
+        //     options.remove();
+        // }
     });
 });
+
+// ---------------------------------------------------------
+// !function
+// !function(a) {
+//     console.log(a);
+// }(100);
+
+// ---------------------------------------------------------
+// jQuery init function test
+
+// var r = function() {
+//     return r.fn.init();
+// }
+
+// r.fn = r.prototype = {
+//     name: 'greenfrog'
+// }
+
+// r.fn.init = function() {
+//     // console.log(this);
+//     return this;
+// }
+
+// console.log(r());
+
 </script>
 </head>
 <body>
