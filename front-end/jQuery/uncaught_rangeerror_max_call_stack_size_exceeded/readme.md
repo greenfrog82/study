@@ -30,20 +30,21 @@ $("button").click(function() {
 var options = $("option", select);
 ```
 
+해당 코드는 앞서 찾은 select element의 모든 option child elements를 찾는 코드인데, child elements마다 jQuery instance를 생성하여 Stack에 저장한다.
+따라서 8만개의 jQuery instance를 메모리에 올릴 수 없기 때문에 발생하는 이슈이다.
 
-
-해당 코드는 앞서 찾은 <select> 태그의 모든 <option> child elements를 찾는 코드인데, child elements 마다 jQuery instance를 생성하여 Stack에 저장한다.
-따라서 8만개의 jQuery instance를 메모리에 올릴 수 없기 때문에 발생하는 이슈.
-
-이 문제를 해결하기 위해서는 <select>태그의 모든 <option>의 jQuery instance를 얻어오는 것이 아니라, <select>태그에 대한 jQuery instance에서 모든 child elements를 바로 삭제해주면 된다. 
+이 문제를 해결하기 위해서는 select element의 모든 option element의 jQuery instance를 얻어오는 것이 아니라, select element에 대한 jQuery instance에서 모든 child elements를 바로 삭제해주면 된다. 
 다음과 같이 처리하면 memory 이슈 없이 잘 삭제되는것을 확인할 수 있다. 
 
 ```javascript
-// Removing option tags
-$("button").click(function() {
-    $("select").empty('option');
+$("button").click(function() {       
+    var select = $("select");
+    // The following code will solve this problem well.
+    select.empty('option');
+
     // var options = $("option", select); // When this line called, Uncaught RangeError occure.
     // if(options) {
     //     options.remove();
     // }
 });
+```
