@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+<link rel="stylesheet" href="./lib/chosen.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./lib/chosen.jquery.js"></script>
+<script>
+    
+$(document).ready(function(){
+    var options = '';
+    for(var i=0; i<80000; i++) {
+        options += '<option value="'+i+'">'+i+'</option>'        
+    }   
+    var selector = $(".chosen-select")
+    selector.append(options); 
+    var _chosen = $(".chosen-select").chosen();
+
+    $("button").click(function() {               
+        selector.empty('option');
+        _chosen.trigger('chosen:updated');  
+    });
+});
+
+</script>
+</head>
+<body>
+    <button>Clear</button>
+    <select class="chosen-select">
+    </select>
+</body>
+</html>
