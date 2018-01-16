@@ -9,24 +9,30 @@
 <script>
     
 $(document).ready(function(){
-    var options = '';
-    for(var i=0; i<80000; i++) {
-        options += '<option value="'+i+'">'+i+'</option>'        
-    }   
-    var selector = $(".chosen-select")
-    selector.append(options); 
-    var _chosen = $(".chosen-select").chosen();
+    
+    var selector = $(".chosen-select")    
+    var _chosen = $(".chosen-select").chosen({ width:'200px' });
 
-    $("button").click(function() {               
+    $("#generator").click(function() {                       
+        var options = '';
+        for(var i=0; i<5; i++) {
+            options += '<option value="'+i+'">'+i+'</option>'        
+        }       
+        selector.append(options);        
+        _chosen.trigger('chosen:updated');
+    });
+
+    $("#clear").click(function() {
         selector.empty('option');
         _chosen.trigger('chosen:updated');  
-    });
+    });    
 });
 
 </script>
 </head>
 <body>
-    <button>Clear</button>
+    <button id='generator'>Generate</button>
+    <button id='clear'>Clear</button>
     <select class="chosen-select">
     </select>
 </body>
