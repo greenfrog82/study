@@ -11,13 +11,15 @@
 $(document).ready(function(){
     
     var selector = $(".chosen-select")    
-    var _chosen = $(".chosen-select").chosen({ width:'200px' });
+    var _chosen = $(".chosen-select").chosen({ width:'200px', search_contains:true });
+
+    var cities = ['Seoul', 'LA', 'Wasington', 'London']
 
     $("#generator").click(function() {                       
         var options = '';
-        for(var i=0; i<5; i++) {
-            options += '<option value="'+i+'">'+i+'</option>'        
-        }       
+        cities.forEach(function(city) {
+            options += '<option value="'+city+'">'+city+'</option>'
+        });
         selector.append(options);        
         _chosen.trigger('chosen:updated');
     });
