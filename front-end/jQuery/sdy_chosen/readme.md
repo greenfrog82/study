@@ -82,6 +82,24 @@ $("button").click(function()) {
     selector.empty('option');
     _chosen.trigger('chosen:updated'); 
 }
+```
+
+## How to allow search feature starting from anywhere within word
+
+Chosen을 default로 생성하면 목록을 검색할 때 반드시 단어의 처음 문자부터 검색을 시도한다. 
+예를들어 목록에 'Seoul', 'LA', 'Wasington', 'London'와 같은 단어들이 있고 검색 차에서 'o'를 입력하면 아무것도 검색이 되지 않는다. 
+이는 Chosen의 기본 설정이다. [Option of Chosen](https://harvesthq.github.io/chosen/options)의 'search_contains'에 대한 내용을 보자. 다음과 같다.  
+
+>search_contains  
+>default:false  
+>
+>By default, Chosen’s search matches starting at the beginning of a word. Setting this option to true allows matches starting from anywhere within a word. This is especially useful for options that include a lot of special characters or phrases in ()s and []s.
+
+따라서, 단어의 중간에서도 검색을 허용하게 하기 위해서는 Chosen 객체를 생서할 때 search_contains 옵션을 true로 설정해주어야한다. 
+
+```javascript
+$(".chosen-select").chosen({ search_contains:true });
+```
 
 ## Note
 
