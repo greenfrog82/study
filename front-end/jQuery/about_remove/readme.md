@@ -1,6 +1,7 @@
-# jQuery의 remove method에 대해서
+# About remove method of jQuery
 
-jQuery의 remove method는 empty method와 한가지만 빼면 완전히 동일하다. remove method의 경우 empty method와 달리 **selector를 통해 찾은 element까지 삭제한다.**
+jQuery의 remove method는 empty method와 한가지만 빼면 완전히 동일하다.  
+remove method의 경우 empty method와 달리 **selector를 통해 찾은 element까지 삭제한다.**
 
 다음 html의 <p></p> 엘리먼트를 empty method와 remove method를 통해 삭제해보자.
 
@@ -10,7 +11,9 @@ jQuery의 remove method는 empty method와 한가지만 빼면 완전히 동일�
 </div>
 ```
 
-#### 먼저, empty method를 통해서 삭제해보자.
+## How about empty method
+
+먼저, empty method를 통해서 삭제해보자.
 
 ```javascript
 $('p').empty()
@@ -24,7 +27,9 @@ $('p').empty()
 </div>
 ```
 
-#### 이번에는 remove method를 통해서 삭제해보자.
+## How about remove method
+
+이번에는 remove method를 통해서 삭제해보자.
 
 ```javascript
 $('p').remove()
@@ -36,7 +41,7 @@ $('p').remove()
 <div></div>
 ```
 
-## 참조
+## Reference
 
 * [.remove()](https://api.jquery.com/remove/)
 * [jQuery empty() vs remove()](https://stackoverflow.com/questions/3090662/jquery-empty-vs-remove)

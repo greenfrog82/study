@@ -4,16 +4,18 @@
   <meta charset="utf-8">
   <title>using empty</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("button").click(function() {
+        $("p").empty();
+      });
+    });
+  </script>
 </head>
 <body>
   <div>
     <p><strong>foo</strong></p>
   </div>
   <button>Call empty() on above paragraph</button>
-<script>
-  $("button").click(function() {
-    $("p").empty();
-  });
-</script>
 </body>
 </html>
