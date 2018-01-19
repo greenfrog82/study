@@ -9,17 +9,18 @@
     }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("button").click(function() {
+        $("p").empty();
+      });
+    });
+  </script>
 </head>
 <body>
 <p>
   Hello, <span>Person</span> <em>and person</em>.
 </p>
 <button>Call empty() on above paragraph</button>
-<script>
-  $("button").click(function() {
-    console.log('click');
-    $("p").empty();
-  });
-</script>
 </body>
 </html>
