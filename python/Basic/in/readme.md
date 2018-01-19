@@ -1,60 +1,45 @@
-# 특정 데이터가 리스트에 존재하는지 확인하기
+# About in keyword
 
-다음과 같이 리스트가 있다고 하자. 
+**in** keyword는 list, tuple, string 타입 변수의 값에 특정 원소의 존재여부를 확인하거나 dictionary 타입 변수의 값에 특정 key의 존재여부를 확인하는데 사용한다. 
+
+## List Example
 
 ```python
 values = [1, 2, 3]
+
+print '3 in values : ', 3 in values             # True
+print '4 in values : ', 4 in values             # False
+print '3 not in values : ', 3 not in values     # False
+print '4 not in values : ', 4 not in values     # True
 ```
 
-위 리스트에서 특정 값의 존재를 loop를 돌리지 않고 확인하는 방법을 찾아보았다. 
-
-* <value> in <list> 특정 값이 리스트에 존재하는지 확인하여 Boolean값 반환
-* <value> not in <list> 특정 값이 리스트에 존재하지 않는지 확인하여 Boolean값 반환
-
-## 예제 in
+## Dictionary Example
 
 ```python
-3 in values
+values = {
+    'name': 'greenfrog',
+    'job': 'programmer',
+}
+
+print 'name in values : ', 'name' in values             # True
+print 'hobby in values : ', 'hobby' in values           # False
+print 'name not in values : ', 'name' not in values     # False 
+print 'hobby not in values : ', 'hobby' not in values   # True 
 ```
 
-**결과**
-
-```
-True
-```
-
-```python 
-4 in values
-```
-
-**결과**
-
-```
-False
-```
-
-## 예제 not in
+## String Example
 
 ```python
-3 not in values
-```
+str = 'greenfrog'
 
-**결과**
-
-```
-False
-```
-
-```python 
-4 not in values
-```
-
-**결과**
-
-```
-True
+print 'g in str : ', 'g' in str              # True
+print 'a in str : ', 'a' in str              # False
+print 'g not in str : ', 'g' not in str      # False
+print 'a not in str : ', 'a' not in str      # True
 ```
 
 ## 참조
 
 * [Fastest way to check if a value exist in a list Ask Question](http://stackoverflow.com/questions/7571635/fastest-way-to-check-if-a-value-exist-in-a-list)
+* [Use and meaning of “in” in an if statement?
+](https://stackoverflow.com/questions/19775692/use-and-meaning-of-in-in-an-if-statement)
