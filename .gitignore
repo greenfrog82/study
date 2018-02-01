@@ -8,7 +8,7 @@ debug
 release
 
 # log
-*.log
+*.log*
 
 # bakcup
 *.bak
