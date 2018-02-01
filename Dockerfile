@@ -50,5 +50,4 @@ RUN pip install \
 #    mod_wsgi==4.5.20 \
     grpcio \
     grpcio-tools \
-    ConcurrentLogHandler  
-
+    concurrent-log-handler
