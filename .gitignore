@@ -29,6 +29,8 @@ __pycache__
 # python
 *.pyc
 
-
 # java
 *.class
+
+# etc
+*.lock
