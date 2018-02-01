@@ -4,7 +4,7 @@ import pwd
 import grp
 import os
 import stat
-from cloghandler import ConcurrentRotatingFileHandler
+from concurrent_log_handler import ConcurrentRotatingFileHandler
 
 class GroupWriteRotatingFileHandler(ConcurrentRotatingFileHandler):
     def doRollover(self):
@@ -28,15 +28,36 @@ class GroupWriteRotatingFileHandler(ConcurrentRotatingFileHandler):
 
 
 def owned_file_handler(filename, mode='a', encoding=None, owner=None, maxBytes=0, backupCount=0, chmod=None):
-    import pdb; pdb.set_trace()
     uid = pwd.getpwnam(owner[0]).pw_uid
     gid = grp.getgrnam(owner[1]).gr_gid
+
+    if filename.endswith(".log"):
+        lock_file = filename[:-4]
+    else:
+        lock_file = filename
+    lock_file += ".lock"
+    lock_path, lock_name = os.path.split(lock_file)
+    # hide the file on Unix and generally from file completion
+    lock_name = ".__" + lock_name
+    lock_file = os.path.join(lock_path, lock_name)
 
     if owner:
         if not os.path.exists(filename):
             open(filename, 'a').close()
         os.chown(filename, uid, gid)
+
+        if not os.path.exists(lock_file):
+            open(lock_file, 'a').close()
+        os.chown(lock_file, uid, gid)
+
+    if chmod:
+        if not os.path.exists(filename):
+            open(filename, 'a').close()
         os.chmod(filename, chmod)
+        
+        if not os.path.exists(lock_file):
+            open(lock_file, 'a').close()
+        os.chmod(lock_file, chmod)
     #logging.handlers.RotatingFileHandler(
     #    filename, mode='a', maxBytes=0, backupCount=0, encoding=None, delay=0)
     #return logging.FileHandler(filename, mode, encoding)
