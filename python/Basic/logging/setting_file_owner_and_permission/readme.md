@@ -1,6 +1,8 @@
 # How to set file owner and permission and apply these setting to created file.
 
+로깅을 할 때, 로그파일에는 서비스의 중요한 정보들이 남을 수 있기 때문에 로그파일의 사용자와   그룹 그리고 권한등을 신중히 주어야한다. 
 
+예를들어, 로그파일의 사용자와 그룹은 해당 서비스를 쓰고 읽은 수 있는 사용자만 
 ## Reference
 
 * [Customizing handlers with dictConfig()

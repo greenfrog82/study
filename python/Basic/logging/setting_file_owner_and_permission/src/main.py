@@ -3,43 +3,29 @@ import logging.config
 import pwd
 import grp
 import os
-import stat
 
-class GroupWriteRotatingFileHandler(logging.handlers.RotatingFileHandler):
-    def doRollover(self):
-        """
-        Override base class method to make the new log file group writable.
-        """
-        # Rotate the file first.
-        logging.handlers.RotatingFileHandler.doRollover(self)
+class RotatingFileHandlerEx(logging.handlers.RotatingFileHandler):
+    def __init__(self, filename, mode='a', maxBytes=0, backupCount=0, encoding=None, delay=0, owner=None, chmod=None):
+        self.owner = owner
+        self.chmod = chmod
 
-        # Set file permission
-        rotated_file_name = '%s.1' % self.baseFilename
-        currMode = os.stat(rotated_file_name).st_mode
-        os.chmod(self.baseFilename, currMode)
+        logging.handlers.RotatingFileHandler.__init__(self, filename, mode, maxBytes, backupCount, encoding, delay)
 
-        # Set file owner
-        uid = os.stat(rotated_file_name).st_uid
-        gid = os.stat(rotated_file_name).st_gid 
-        os.chown(self.baseFilename, uid, gid)
-        
-        #os.chmod(self.baseFilename, currMode)
+    def _open(self):
+        stream = logging.handlers.RotatingFileHandler._open(self)
+            
+        if self.owner:
+            uid = pwd.getpwnam(self.owner[0]).pw_uid
+            gid = grp.getgrnam(self.owner[1]).gr_gid
 
-def owned_file_handler(filename, mode='a', encoding=None, owner=None, maxBytes=0, backupCount=0, chmod=None):
-    uid = pwd.getpwnam(owner[0]).pw_uid
-    gid = grp.getgrnam(owner[1]).gr_gid
+            os.chown(self.baseFilename, uid, gid)
 
-    if owner:
-        if not os.path.exists(filename):
-            open(filename, 'a').close()
-        os.chown(filename, uid, gid)
-        os.chmod(filename, chmod)
-    #logging.handlers.RotatingFileHandler(
-    #    filename, mode='a', maxBytes=0, backupCount=0, encoding=None, delay=0)
-    #return logging.FileHandler(filename, mode, encoding)
-    #return logging.handlers.RotatingFileHandler(filename, mode='a', maxBytes=10, backupCount=10)
-    return GroupWriteRotatingFileHandler(filename, maxBytes=maxBytes, backupCount=backupCount)
+        if self.chmod:
+            os.chmod(self.baseFilename, self.chmod)
 
+        return stream
+
+logging.handlers.RotatingFileHandlerEx = RotatingFileHandlerEx
 
 LOGGING = {
     'version': 1,
@@ -50,42 +36,27 @@ LOGGING = {
         },
     },
     'handlers': {
-        # 'file': {
-        #     # The values below are popped from this dictionary and
-        #     # used to create the handler, set the handler's level and
-        #     # its formatter.
-        #     '()': owned_file_handler,
-        #     'level': 'DEBUG',
-        #     'formatter': 'default',
-        #     # The values below are passed to the handler creator callable
-        #     # as keyword arguments.
-        #     'owner': ['www-data', 'www-data'],
-        #     'filename': 'chowntest.log',
-        #     'mode': 'w',
-        #     'encoding': 'utf-8',
-        # },
-        'file2': {
-            '()': owned_file_handler,
+        'file': {
             'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandlerEx',
             'formatter': 'default',
             'filename': 'test.log',
             'owner': ['www-data', 'www-data'],
             'chmod': 0660,
             'maxBytes': 60,
-            'backupCount': 10
+            'backupCount': 10,
+            # 'delay': True
+            'delay': False
         }
     },
     'root': {
-        'handlers': ['file2'],
+        'handlers': ['file'],
         'level': 'DEBUG',
     },
 }
 
 logging.config.dictConfig(LOGGING)
-logger = logging.getLogger('mylogger')
+logger = logging.getLogger(__name__)
 
 for idx in range(0, 10):
     logger.debug('%d > A debug message' % idx)
-
-
-#print oct(os.stat("test.log").st_mode & 0777)
