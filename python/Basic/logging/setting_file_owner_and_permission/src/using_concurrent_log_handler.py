@@ -18,16 +18,16 @@ class ConcurrentRotatingFileHandlerEx(ConcurrentRotatingFileHandler):
     def _open(self, mode=None):
         stream = ConcurrentRotatingFileHandler._open(self, mode)
 
-        if self.owner:
-            uid = pwd.getpwnam(self.owner[0]).pw_uid
-            gid = grp.getgrnam(self.owner[1]).gr_gid
-
-            os.chown(self.baseFilename, uid, gid)
-
-        if self.chmod:
-            os.chmod(self.baseFilename, self.chmod)
+        self._do_chown_and_chmod(self.baseFilename)
 
         return stream
+
+    def doRollover(self):
+        ConcurrentRotatingFileHandler.doRollover(self)
+
+        if self.use_gzip:
+            logFilename = self.baseFilename + ".1.gz"
+            self._do_chown_and_chmod(logFilename)
 
     def _open_lockfile(self):
         ConcurrentRotatingFileHandler._open_lockfile(self)
@@ -41,15 +41,19 @@ class ConcurrentRotatingFileHandlerEx(ConcurrentRotatingFileHandler):
         # hide the file on Unix and generally from file completion
         lock_name = ".__" + lock_name
         lock_file = os.path.join(lock_path, lock_name)
+
+        self._do_chown_and_chmod(lock_file)
                    
+    def _do_chown_and_chmod(self, filename):
         if self.owner:
             uid = pwd.getpwnam(self.owner[0]).pw_uid
             gid = grp.getgrnam(self.owner[1]).gr_gid
 
-            os.chown(lock_file, uid, gid)
+            os.chown(filename, uid, gid)
 
         if self.chmod:
-            os.chmod(lock_file, self.chmod)
+            os.chmod(filename, self.chmod)
+    
 
 logging.handlers.ConcurrentRotatingFileHandlerEx = ConcurrentRotatingFileHandlerEx
 
@@ -71,7 +75,7 @@ LOGGING = {
             'chmod': 0660,
             'maxBytes': 30,
             'backupCount': 10,
-            'use_gzip': True,
+            'use_gzip': False,
             'delay': True
         }
     },
