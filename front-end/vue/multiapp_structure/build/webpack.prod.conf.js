@@ -23,7 +23,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
-    path: config.build.assetsRoot,
+    path: config.build.assetsRoot,    
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
@@ -61,9 +61,26 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: config.build.index,
+      // filename: config.build.index,
+      filename: path.resolve(__dirname, '../dist/app1/index.html'),
       template: 'index.html',
       inject: true,
+      chunks: [ 'app1' ],
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/app2/index.html'),
+      template: 'index.html',
+      inject: true,
+      chunks: [ 'app2' ],
       minify: {
         removeComments: true,
         collapseWhitespace: true,
