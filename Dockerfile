@@ -44,9 +44,10 @@ RUN apt-get install -y \
 
 # To install pip library
 RUN pip install --upgrade pip
-RUN pip install Django==1.11.5 \
+RUN pip install \
+    Django==1.11.5 \
     MySQL-python==1.2.5 \
 #    mod_wsgi==4.5.20 \
     grpcio \
-    grpcio-tools
-
+    grpcio-tools \
+    concurrent-log-handler
