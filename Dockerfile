@@ -10,7 +10,8 @@ RUN apt-get install -y \
     mysql-client \ 
     net-tools \
     iputils-ping \
-    wget
+    wget \
+	tree
 
 # To install python library
 RUN apt-get install -y \
