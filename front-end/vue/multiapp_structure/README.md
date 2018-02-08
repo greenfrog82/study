@@ -1,4 +1,4 @@
-# Multi-page application structure
+# Multiple Page Application Sturcture
 
 Vue.js를 통해 Multi-page application을 개발할 때 적합한 프로젝트 구조에 대한 디자인을 정리하고 구현해보도록 한다. 
 
@@ -175,3 +175,4 @@ assertsPublicPath : '../'
 * [Multi-page applications](https://medium.com/a-beginners-guide-for-webpack-2/multi-page-applications-4ae2ebfabc37)
 * [using html-webpack-plugin to generate index.html](https://medium.com/a-beginners-guide-for-webpack-2/index-html-using-html-webpack-plugin-85eabdb73474)
 * [Common chunks](https://medium.com/a-beginners-guide-for-webpack-2/common-chunks-ba2b4335caea)
+* [Truly Multiple Entries with Webpack](https://kuzzmi.com/blog/truly-multiple-entries-with-webpack/)
