@@ -78,7 +78,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/app2/index.html'),
-      template: 'index.html',
+      template: 'index_.html',
       inject: true,
       chunks: [ 'manifest', 'vendor', 'app2' ],
       minify: {

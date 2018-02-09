@@ -105,7 +105,7 @@ output: {
 Webpack의 설정에 따라 기능을 확장하기 위한 key이다.  
 
 앞서 entry에 설정한 page의 수만큼 HtmlWebpackPlugin을 작성해주어야한다. 
-이번 글의 경우 app1과 app2 두 개의 page를 생성했으므로 당음과 같이 2개의 HtmlWebpackPlugin을 생성하였다. 
+이번 글의 경우 app1과 app2 두 개의 page를 생성했으므로 다음과 같이 2개의 HtmlWebpackPlugin을 생성하였다. 
 
 ```javascript
     // generate dist index.html with correct asset hash for caching.
@@ -150,6 +150,27 @@ Webpack의 설정에 따라 기능을 확장하기 위한 key이다.
 * chunks : template html에 삽입할 chunks들을 배열로 전달하는데, 해당 페이지에 대한 application bundle 파일(app1, app2)와 공유 리소스를 추가하였다. 공류 리소스에 대한 설명은 다음과 같다. 
     * manifest : Webpack module에 대한 코드
     * vendor : node_module을 통해 공유되는 코드 
+
+만약, template html를 page별로 따로 관리해야한다면 프로젝트의 template html 파일을 추가한 후 HtmlWebpackPlugin 플러그인의 template key를 수정해주면 된다.  
+예를들어, app2에서는 index_.html template를 사용하고 시팓고 하자 그러면 index_.html를 생성한 후 다음과 같이 template key를 수정해주면 된다. 
+
+```javascript
+new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, '../dist/app2/index.html'),
+      template: 'index_.html',
+      inject: true,
+      chunks: [ 'manifest', 'vendor', 'app2' ],
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
+```
 
 #### config/index.js
 
