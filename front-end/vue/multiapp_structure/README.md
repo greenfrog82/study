@@ -172,6 +172,20 @@ new HtmlWebpackPlugin({
     }),
 ```
 
+css쪽도 다음과 같이 filename 경로 변경해줘야한다. 
+
+```javascript
+// extract css into its own file
+    new ExtractTextPlugin({
+      filename: '[name]/' + utils.assetsPath('css/[name].[contenthash].css'),
+      // Setting the following option to `false` will not extract CSS from codesplit chunks.
+      // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 
+      // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
+      allChunks: true,
+    }),
+```
+
 #### config/index.js
 
 assertsPublicPath는 index.html파일에 각 static file의 경로를 붙여줄 때 맨 앞에 붙는 경로이다.  
@@ -190,6 +204,11 @@ assertsPublicPath : '../'
 * vue-cli의 custom tempalte를 통해 전체 프로젝트의 skeleton 구조도 만들 수 있다. 따라서 multi-page application을 위한 skeleton을 만들어 놓자.
 * HtmlWebpakcPlugin을 하나로 할 수 있는 방법 
 * webpack.optimize.CommonsChunkPlugin을 통해 공유 라이브러리 공유하기 위한 코드 작성.
+
+## Consideration
+
+* 특정 Page만 빌드해야하는 경우는 어떻게 하는가?  
+잠깐 찾아본 바로는 watch 모드가 있으므로 특정 Page만 따로 빌드할 필요는 없다고 한다. 하지만 dev-server로만 개발하고 있다면 ... 
 
 ## Reference
 
