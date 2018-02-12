@@ -7,7 +7,7 @@ Vue.js를 통해 Multi-page application을 개발할 때 적합한 프로젝트 
 다음 링크의 방법은 최초 디자인되었던 방법인데, Vue-cli가 기본적으로 생성한 개발 환경을 Customize하는 양에 비해 취하는 이득이 거의 없어서 버린 디자인이다.  
 하지만, 추후 Webpack에 대한 이해가 높아지면 재활용 할 수 있을까 해서 남겨두었다. 
 
-[Failed Idea ..](./failed_idae.md)
+[Failed Idea ..](./failed_idea.md)
 
 ```sh
 dist
