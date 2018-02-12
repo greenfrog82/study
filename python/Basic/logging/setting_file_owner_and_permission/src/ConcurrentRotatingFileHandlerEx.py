@@ -3,7 +3,6 @@ import logging.config
 import pwd
 import grp
 import os
-import stat
 from concurrent_log_handler import ConcurrentRotatingFileHandler
 
 class ConcurrentRotatingFileHandlerEx(ConcurrentRotatingFileHandler):
