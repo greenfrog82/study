@@ -84,12 +84,17 @@
 </template>
 
 <script>
+import testConsoleLog from '@lib/shared/test-console-log'
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App 2'
     }
+  },
+  created() {
+    testConsoleLog();
   }
 }
 </script>

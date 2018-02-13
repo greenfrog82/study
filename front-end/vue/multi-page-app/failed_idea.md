@@ -47,7 +47,7 @@ src
 위 명령을 통해 생성하고자하는 배포 경로의 구조는 다음과 같다. 각 Page별로 부모 경로를 만들고 하위에 해당 Page에 대한 파일들을 위치시키는 것이다.  
 manifest(webpack관련 코드)와 vendor(소스코드에 import된 node_module의 코드)의 경우 각 Page별로 공유하는 것이므로 Page 경로와 같은 레벨에 위치 시켰다. 
 
-**TODO :** 다음 구조는 vendor.js파일에 모든 Page에서 import되는 node_module 코드가 위치하는데, 이를 각 Page별로 나눌 수 있으면 좀 더 효율 적일 것이다. 
+**TODO :** 다음 구조는 vendor.js파일에 모든 Page에서 import되는 node_module 코드가 위치하는데, 이를 각 Page별로 나눌 수 있으면 좀 더 효율적일 것이다. 
 
 ```sh
 dist
@@ -83,6 +83,9 @@ dist
 
 ### Shared library directory
 
+아직 코드를 통해 테스트해보지 않았지만, 이러한 디자인으로 공유 라이브러리를 관리하는 코드들이 많고 node_modules 역시 이와 같은 디자인으로 가능하다. 
+여기에 있는 코드들은 Webpack의 CommonsChunkPlugin를 통해 별도의 .js 파일로 빌드될 것이다. 
+따라서 Browser Cache를 통해 Network Traffic을 줄일 수 있다. 
 
 ## Let's make multi-page application structure
 
@@ -168,7 +171,7 @@ Webpack의 설정에 따라 기능을 확장하기 위한 key이다.
     * vendor : node_module을 통해 공유되는 코드 
 
 만약, template html를 page별로 따로 관리해야한다면 프로젝트의 template html 파일을 추가한 후 HtmlWebpackPlugin 플러그인의 template key를 수정해주면 된다.  
-예를들어, app2에서는 index_.html template를 사용하고 시팓고 하자 그러면 index_.html를 생성한 후 다음과 같이 template key를 수정해주면 된다. 
+예를들어, app2에서는 index_.html template를 사용하여 빌드하고자 한다면 index_.html를 생성한 후 다음과 같이 template key를 수정해주면 된다. 
 
 ```javascript
 new HtmlWebpackPlugin({
