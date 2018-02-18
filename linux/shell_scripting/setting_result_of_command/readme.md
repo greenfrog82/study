@@ -34,4 +34,4 @@ echo $RES_DIR
 
 사실 앞서 사용한 문법은 command 라인 명령을 작성하면서 많이 보았을 것이다. 바로 sub command를 실행시키는 방법이다. 이와같이, 쉘 스크립트를 작성할 때 sub command를 실행시키는 방법을 통해서 변수에 출력 결과를 할당하거나 중첩 된 sub command를 실행시킬 수 있다. 
 
-
+es
