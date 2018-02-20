@@ -3,8 +3,6 @@ class Person:
 
 person = Person()
 
-import pdb; pdb.set_trace()
-
 if hasattr(person, 'name'):
     print 'Person has a name attribtue.'
 
