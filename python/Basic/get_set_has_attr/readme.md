@@ -18,6 +18,8 @@ getattr, setattr, hasattr build-in function에 대해서 알아보자.
 
 다음 예제를 보면 특정 사람의 age attribute가 없는 경우 기본값으로 0을 반환하도록 하였다. 만약 기본을 주지 않으면 예외 처리를 해주어야하는데, 기본값을 통해 좀 더 간결하게 처리가 가능한 것을 알 수 있다. 
 
+### Example 
+
 ```python
 class Person:
     name = 'dummy'
@@ -45,6 +47,8 @@ except AttributeError as ex:
 
 해당 함수는 내부적으로 getattr(object, name) function을 통해서 object에 attribute가 존재하는지 확인한다. AttributeError가 발생하지 않으면 True를 반환하고 그렇지 않으면 False를 반환한다. 
 
+### Example
+
 ```python
 class Person:
     name = 'dummy'
@@ -67,6 +71,8 @@ if not hasattr(person, 'age'):
     * name : object parameter에 create 또는 overwrite하고자 하는 attribute 이름
     * value : create 또는 overwrite된 attribute의 값
 
+### Example 
+
 ```python
 class Person:
     name = 'dummy'
@@ -75,8 +81,49 @@ person = Person()
 
 setattr(person, 'age', 37)
 print person.age
+
+setattr(person, 'name', 'greenfrog')
+print person.name
 ```
-    
+
+### Consideration
+
+앞선 예제만 보면 setattr의 특별한 점을 찾을 수 없다. 오히려 불편해 보인다.  
+다음 예제를 보면 왜 불편한지 알 수 있다. 
+
+```python
+person.job = 'Programmer'
+print person.job
+```
+
+그렇다면 이러한 함수가 왜 필요한지 고민해볼 필요가 있다.   
+앞서 getattr함수와 hasattr함수의 경우 동적으로 할당 된 attribute에 대한 처리를 위해 필요로하다.   
+setattr함수의 경우 역시 같은 이유로 필요로 하다. 다시 말해서, 특정 object에 attribute를 동적으로 할당할 때 유용할 것이다.   
+
+예를들어, 어플리케이션의 설정을 관리하는 Setting 클래스가 있다고 가정하자.     
+그리고 예제에서는 편의상 dictionary(dict_settings)로 처리하였지만, 별도의 파일로 사용자가 dictionary로 설정을 정의할 수 있다고 가정하자.  
+이러한 경우 사용자는 어플리케이션이 기본으로 제공하는 속성 이외에 사용자 정의 속성을 만들어서 사용할 수도 있다. 이런 경우 settattr함수를 통해 Setting 클래스의 객체에 동적으로 attribute를 동적으로 할당 할 수 있다. 
+
+```python
+class Setting:
+    host = 'localhost'
+    port = 8080
+        
+dict_settings = {
+    'host': '1.1.1.1',
+    'port': 7777,
+    'description': 'This is the example setattr'
+}
+
+setting = Setting()
+
+for key in dict_settings:
+    setattr(setting, key, dict_settings[key])
+
+print setting.host
+print setting.port
+print getattr(setting, 'description', 'There is no description')
+``` 
 
 ## Reference
 
