@@ -16,7 +16,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'default',
             'filename': 'test.log',
-            'maxBytes': 60,
+            'maxBytes': 1024,
             'backupCount': 10,
         }
     },
@@ -29,4 +29,5 @@ LOGGING = {
 logging.config.dictConfig(LOGGING)
 logger = logging.getLogger(__name__)
 
-logger.debug('message', extra={'idx': 0})
+for idx in range(10):
+    logger.debug('message', extra={'idx': idx})
