@@ -51,4 +51,6 @@ RUN pip install \
 #    mod_wsgi==4.5.20 \
     grpcio \
     grpcio-tools \
-    concurrent-log-handler
+    concurrent-log-handler \
+    mock \
+    nose
