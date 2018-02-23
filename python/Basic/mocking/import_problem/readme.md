@@ -114,7 +114,7 @@ OK
 ```python
 # b.py
 
-import get_zipcode
+import a
 
 def test_target():
     return a.get_zipcode() 
