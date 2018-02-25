@@ -1,6 +1,6 @@
 # How to execute test codes that require database in Django 
 
-Django의 다음 명령을 통해 데이터베이스를 사용하는 테스트 코드를 테스트하면, 실제 데이터베이스를 사용하지 않고 테스트를 위한 빈 데이터베이스를 생성한다.  
+Django의 다음 명령을 통해 데이터베이스를 사용하는 테스트 코드를 테스트하면, 실제 데이터베이스를 사용하지 않고 테스트를 위한 빈 데이터베이스를 생성하여 테스트에 사용한다.  
 그리고 테스트가 완료되면 테스트의 성공 유무와는 관계없이 테스트 데이터베이스는 삭제된다. 
 
 >$ ./manage.py test 
@@ -73,8 +73,7 @@ Creating test database for alias 'default'...
 Creating test database for alias 'study'...
 ```
 
-그리고 테스트를 수행하였고, 1개의 테스트를 설공하고, 나머지 1개의 테스트를 실패하였다.  
-
+그리고 테스트를 수행하였고, 1개의 테스트를 성공하고 나머지 1개의 테스트를 실패하였다.  
 그리고 테스트가 모두 완료 된 후 다음과 같이 테스트 시작 시 생성 되었던 테스트 데이터베이스를 모두 삭제하는 것을 알 수 있다. 
 
 ```sh
@@ -94,7 +93,7 @@ test_study 데이터베이스에서 professor 테이블을 찾으려다 존재�
 
 그렇다면 Django는 왜 'test_study' 데이터베이스에서 'professor' 테이블을 찾으려했을까?
 
-앞서 살펴본 바와 같이 Django는 데이터베이스를 사용하는 테스트를 실행시킬 때, 테스트 데이터베이스를 만든다. 이때 DATABASES 설정에 [TEST.NAME](https://docs.djangoproject.com/en/1.11/ref/settings/#test) 설정을 통해 테스트 데이터베이스의 이름을 설정하지 않으면 기본으로 데이터베이스 이름 앞에 **'test_'**를 붙여서 테스트 데이터베이스를 만든다. 
+앞서 살펴본 바와 같이 Django는 데이터베이스를 사용하는 테스트를 실행시킬 때, 테스트 데이터베이스를 만든다. 이때 DATABASES 설정에 [TEST.NAME](https://docs.djangoproject.com/en/1.11/ref/settings/#test) 설정을 통해 테스트 데이터베이스의 이름을 설정하지 않으면 기본으로 데이터베이스 이름 앞에 '**test_**'를 붙여서 테스트 데이터베이스를 만든다. 
 
 그러면 다음과 같이 DATABASES 설정에 [TEST.NAME](https://docs.djangoproject.com/en/1.11/ref/settings/#test) 설정을 통해 테스트 데이터베이스의 이름을 설정한 후 테스트해보자. 
 
