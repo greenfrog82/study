@@ -162,6 +162,72 @@ WSGIScriptAlias / /develop/mysite/wsgi.py
 </VirtualHost>
 ```
 
+## Applying SSL
+
+앞서 /etc/sites-available/000-default.conf의 설정에 SSL 설정을 추가해보자.  
+
+### Activating ssl
+
+Apache에 SSL 설정을 하기 위해서는 우선 다음 명령을 통해 ssl 모듈을 활성화 해야한다.
+
+>$ sudo a2enmod ssl
+
+### Generating a Self-signed Certificate
+
+SSL에서 사용되는 서명은 Self-signed Certificate와 Commercial Certificate가 있지만, 개발, 테스트 또는 내부적인 용도로 사용할 때는 Self-signed Cretificate를 사용한다.  
+
+나는 개발 목적으로 사용할 것이므로 Self-signed Certificate를 생성할 것이다.  
+Self-signed Cretificate를 생성하는 과정은 다음과 같다. 
+
+#### Creating private key (ca.key)
+
+> $ openssl genrsa -out ca.key 2048
+
+#### Generating signing request (ca.csr)
+
+> $ openssl req -nodes -new -key ca.key -out ca.csr
+
+#### Generating a self-signed certificate (ca.crt)
+
+> $ openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
+
+위 과정에서 생성 된 파일들을 /etc/apache2/ssl 디렉토리를 생성 후 해당 디렉토리로 옮기자. 
+
+> $ mkdir /etc/apache2/ssl
+> $ mv ca.crt ca.key ca.csr /etc/apache2/ssl/
+
+### To Configure Apache to use the SSL Certificate
+
+이제 /etc/sites-available/000-default.conf 파일에 SSL 설정을 추가하자.
+
+```xml
+<VirtualHost *:443>
+        ServerName www.example.com
+
+        #ServerAdmin webmaster@localhost
+        #DocumentRoot /var/www/html
+
+        WSGIDaemonProcess example.com python-path=/develop processes=2 threads=15
+        WSGIProcessGroup example.com
+        WSGIScriptAlias / /develop/mysite/wsgi.py
+
+        <Directory /develop/mysite>
+                <Files wsgi.py>
+                        Require all granted
+                </Files>
+        </Directory>
+
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        SSLEngine on
+        SSLCertificateFile /etc/apache2/ssl/ca.crt
+        SSLCertificateKeyFile /etc/apache2/ssl/ca.key
+</VirtualHost>
+```
 
 ## Referecne
 
@@ -170,3 +236,4 @@ WSGIScriptAlias / /develop/mysite/wsgi.py
 * [Apache Core Features](http://httpd.apache.org/docs/current/mod/core.html#directory)
 * [mod_wsgi - Quick Configuration Guide](http://modwsgi.readthedocs.io/en/develop/user-guides/quick-configuration-guide.html#quick-configuration-guide)
 * [DistrosDefaultLayout](https://wiki.apache.org/httpd/DistrosDefaultLayout)
+* [Setting up Apache Server with SSL Support on Ubuntu](https://www.maketecheasier.com/apache-server-ssl-support/)

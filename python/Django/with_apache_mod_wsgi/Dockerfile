@@ -1,17 +1,20 @@
-FROM ubuntu:17.10
+FROM ubuntu:16.04
 
 # To install library
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y \
-    python-dev \
-    python-pip \
-    libmysqlclient-dev
 
 # To install usefull tools.
 RUN apt-get install -y \
     vim \
     curl \
     mysql-client
+
+# To install python library
+RUN apt-get install -y \
+    python-dev \
+    python-pip \
+    libmysqlclient-dev
+
 
 # To install apache and mod-wsgi
 RUN apt-get install -y \
@@ -38,5 +41,3 @@ RUN pip install Django==1.11.5 \
 # RUN make clean
 
 # COPY ./config/apache2.conf /etc/apache2/
-WORKDIR /develop
-
