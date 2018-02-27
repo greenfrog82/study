@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bind demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+           $("button").bind("click", function() {
+               console.log('click1');
+           }).bind('click', function() {
+               console.log('click2');
+           });
+        //    $("button").bind("click", function() {
+        //        console.log('click2');
+        //    });
+        });
+    </script>
+</head>
+
+<body>
+    <button>Click</button>
+</body>
+</html>
