@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bind demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function() {
+            console.log('Before binding click event with jQuery : ', $.data($('button')[0], 'events'));
+
+            $('button').on('click', function() {
+                console.log('click 1');
+            }).on('click', function() {
+                console.log('click 2');
+            }).on('click', function() {
+                console.log('click 3');
+            });            
+
+            console.log('After binding click event with jQuery : ', $.data($('button')[0], 'events'));
+        });
+    </script>
+</head>
+
+<body>
+    <button>Click</button>
+</body>
+</html>
