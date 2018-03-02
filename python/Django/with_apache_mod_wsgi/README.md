@@ -1,6 +1,6 @@
 # Running the Django application on apache web server with mod_wsgi
 
-Django application을 apache web server에서 mod_wsgi를 통해 실행시키는 방법을 설명한다.
+Django application을 Apache Web Server에서 mod_wsgi를 통해 실행시키는 방법을 설명한다.
 이를 설명하는데 사용된 제품들과 버전정보는 다음과 같다. 
 
 * Ubuntu 16.04
@@ -229,6 +229,15 @@ Self-signed Cretificate를 생성하는 과정은 다음과 같다.
 </VirtualHost>
 ```
 
+## Executing the Apache Web Server automatically
+
+앞서 소개한 내용을 통해 Apache Web Server에서 Django application을 서비스하는 방법을 알았다.  
+이제 Docker container가 실행 될 때 Apache Web Server가 자동으로 실행되도록 해보자. 
+
+다음 요구사항을 만족해야한다. 
+
+* Docker container에 설정해둔 
+
 ## Referecne
 
 * [Install and Configure mod_wsgi on Ubuntu 16.04](https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/)
@@ -237,3 +246,4 @@ Self-signed Cretificate를 생성하는 과정은 다음과 같다.
 * [mod_wsgi - Quick Configuration Guide](http://modwsgi.readthedocs.io/en/develop/user-guides/quick-configuration-guide.html#quick-configuration-guide)
 * [DistrosDefaultLayout](https://wiki.apache.org/httpd/DistrosDefaultLayout)
 * [Setting up Apache Server with SSL Support on Ubuntu](https://www.maketecheasier.com/apache-server-ssl-support/)
+* [How to automatically start a service when running a docker container?](https://stackoverflow.com/questions/25135897/how-to-automatically-start-a-service-when-running-a-docker-container)

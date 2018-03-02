@@ -13,3 +13,4 @@ services:
       - ./src:/develop
       - ./config/apache2:/etc/apache2
     working_dir: /develop
+    # command: /start.sh

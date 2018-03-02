@@ -25,7 +25,7 @@ SECRET_KEY = '(1xov%*nt)l3s(kctudjj^!hs(p)!3yg6adlz3x1z=83j(+pc-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.example.com', 'www.example-ssl.com' ]
+ALLOWED_HOSTS = [ 'localhost', 'www.example.com', 'www.example-ssl.com' ]
 
 
 # Application definition

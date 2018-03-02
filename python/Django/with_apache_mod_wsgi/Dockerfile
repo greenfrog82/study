@@ -34,8 +34,14 @@ RUN a2enmod ssl
 RUN mkdir /var/log/apache2/example-ssl
 RUN mkdir /var/log/apache2/example
 
-# COPY ./start.sh /
-# CMD /start.sh
+# There is two way to execute the Apache Web Server automatically.
+# WAY 1.
+# COPY ./start.sh /start.sh
+# RUN chmod +x /start.sh
+
+# WAY 2.
+CMD service apache2 restart && tail -f /var/log/apache2/*
+
 
 # To install mod_wsgi 4.5.17 using source
 # COPY ./lib/mod_wsgi-4.5.17.tar.gz /tmp
