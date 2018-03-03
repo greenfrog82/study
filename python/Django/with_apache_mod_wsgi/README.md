@@ -1,10 +1,11 @@
-# Running the Django application on apache web server with mod_wsgi
+# Running the Django application on apache web server with mod_wsgi in Docker
 
-Django application을 Apache Web Server에서 mod_wsgi를 통해 실행시키는 방법을 설명한다.
-이를 설명하는데 사용된 제품들과 버전정보는 다음과 같다. 
+Docker에서 Django Application을 Apache Web Server와 mod_wsgi를 통해 실행시키는 방법을 설명한다.
 
-* Ubuntu 16.04
-* apache 
+#### Requirement
+
+* Ubuntu 14.04
+* Apache Web Server
     * Server version: Apache/2.4.27 (Ubuntu)
     * Server built:   2017-09-18T15:05:48
 * mod_wsgi 4.5.17
@@ -26,11 +27,13 @@ binaries (apachectl)    ::      /usr/sbin
 start/stop              ::      /etc/init.d/apache2 (start|stop|restart|reload|force-reload|start-htcacheclean|stop-htcacheclean)
 ```
 
-## Install Apache2 and mod_wsgi
+## Installing Apache2 and mod_wsgi
 
 Apache2와 mod_wsgi를 설치하는 방법은 [Dockerfile](./Dockerfile)에 정의되어 있다. 
 
-다음은 [Dockerfile](./Dockerfile)에서 Apache2와 Apache2가 사용하기 위한 mod_wsgi 모듈을 설치하는 내용을 발췌한것이다.
+### Apache2 
+
+다음은 [Dockerfile](./Dockerfile)에서 Apache2 모듈을 설치하는 코드이다. 
 ```
 # To install apache and mod-wsgi
 RUN apt-get install -y \
@@ -41,12 +44,21 @@ RUN apt-get install -y \
     libapache2-mod-wsgi
 ```
 
-다음은 [Dockerfile](./Dockerfile)에서 mod_wsgi 모듈을 pip을 통해서 설치하는 방법이다. 
+### mod_wsgi
+
+mod_wsgi를 설치하는 방법은 두 가지를 모두 시도해보았다. 
+
+#### Using pip
+
+다음은 [Dockerfile](./Dockerfile)에서 mod_wsgi 모듈을 pip을 통해서 설치하는 코드이다.
+
 ```
 pip install mod_wsgi==4.5.20
 ```
 
-다음은 [Dockerfile](./Dockerfile)에서 mod_wsgi 모듈을 source 코드를 통해서 설치하는 방법이다. 
+#### Using source code 
+
+다음은 [Dockerfile](./Dockerfile)에서 mod_wsgi 모듈을 source 코드를 통해서 설치하는 코드이다.   
 pip이 더 간단하므로 이 방법은 주석처리되어있다. 참고만 하자.
 
 ```
@@ -63,20 +75,18 @@ RUN make clean
 
 ## WSGI
 
-WSGI는 web server와 Python web application이 통신을 하기 위한 API 명세로, 파이썬 언어를 지원하는 여러 종류의 웹 서버에서 파이썬 웹 어플리케이션을 호스팅하기 위한 목적으로 사용된다. 
+WSGI는 Web Server와 Python Web Application이 통신을 하기 위한 API 명세로, 파이썬 언어를 지원하는 여러 종류의 웹 서버에서 파이썬 웹 어플리케이션을 호스팅하기 위한 목적으로 사용된다.   
 이 WSGI 명세를 구현한 제품들은 다음과 같다.
 
-* mod_wsgi
-* uwsgi
-* gunicon
+* mod_wsgi (Only for Apache Web Server)
+* uwsgi (Apache, Nginx, etc ...)
+* gunicon (Apache, Nginx, etc ...)
 * etc ..
 
-mod_wsgi는 Apache에서만 사용가능한 모듈이고, uwsgi나 gunicon의 경우 Apache, nginx 그리고 기타 이를 지원하는 웹 서버에서 사용가능하다. 
+mod_wsgi는 Apache에서만 사용가능한 모듈이고, uwsgi나 gunicon의 경우 Apache, Nginx 그리고 기타 이를 지원하는 웹 서버에서 사용가능하다. 
 mod_wsgi가 Apache를 통해 파이썬 웹 어플리케이션을 실행하는 방법은 Embedded Mode와 Deamon Process Mode 두 가지가 있다. 
 
-## Embedded Mode
-
-### Overview
+### Embedded Mode
 
 아파치는 기본적으로 하나의 Apache Process에서 모든 Virtual Host를 서비스한다.
 예를들어, 다음과 같이 2개의 Name based virtual host가 존재한다고 하자.
@@ -92,7 +102,7 @@ mod_wsgi가 Apache를 통해 파이썬 웹 어플리케이션을 실행하는 �
 </VIrtualHost>
 ```
 
-### Configuration
+#### Configuration
 
 편집기를 통해 /etc/apache2/apache2.conf 파일을 열어 다음 설정을 추가한다. 
 
@@ -119,7 +129,7 @@ Embedded Mode와 달리 Daemon Mode를 적용하는 방법은 두 가지가 존�
 #### 1. /etc/apache2/apache2.conf에 설정하기
 
 여기에 설정하면 당연히 모든 VHost가 설정에 영향을 받게된다. 
-다음 설정을 추가한다. 
+다음 설정을 추가하자.
 
 ```xml
 WSGIDaemonProcess example.com python-path=/develop processes=2 threads=15
@@ -231,12 +241,29 @@ Self-signed Cretificate를 생성하는 과정은 다음과 같다.
 
 ## Executing the Apache Web Server automatically
 
-앞서 소개한 내용을 통해 Apache Web Server에서 Django application을 서비스하는 방법을 알았다.  
+앞서 소개한 내용을 통해 Docker에서 Django Application을 Apache Web Server와 mod_wsgi를 통해 실행시키는 방법과 SSL 설정 방법을 알아보았다.
 이제 Docker container가 실행 될 때 Apache Web Server가 자동으로 실행되도록 해보자. 
 
-다음 요구사항을 만족해야한다. 
+### Setting volume about Apache2 directory
 
-* Docker container에 설정해둔 
+앞서 Apache2 directory의 설정파일들을 편집해서 mod_wsgi 설정 및 SSL 설정을 하였다. 하지만 이들 설정은 Host와 Bind되어 있지 않기 때문에 Docker container가 삭제되면 모두 사라져버린다. 따라서 **volume**을 통해 해당 설정을 Host와 Bind하도록 한다. 
+
+Docker container에 있는 파일 또는 디렉토리를 **volume**을 통해 Host와 Bind하는 것은 Host에 있는 경로를 Docker Container로 Bind하는 것과는 방법이 다르다. 왜냐하면, Bind하고자하는 파일 또는 디렉토리가 Host 파일 시스템에 존재하지 않기 때문이다.  
+따라서, Docker container에 있는 파일 또는 디렉토리를 우선 Host 파일 시스템으로 복사해와야한다. 이를 위해 다음 명령을 사용해야한다. 
+
+>$ docker cp <source> <destination>
+
+그럼 위 명령을 통해 Docker container에 존재하는 /etc/apache2 경로를 Host의 config경로로 복사하도록 하자.  
+
+>$ docker cp django_in_apache_modwsgi:/etc/apache2 config
+
+복사가 완료되면 docker-compose.yml에 volume을 추가한다. 
+
+```yml
+volumes:
+      - ./src:/develop
+      - ./config/apache2:/etc/apache2 # added volum
+```
 
 ## Referecne
 
