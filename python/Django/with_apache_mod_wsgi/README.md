@@ -176,7 +176,7 @@ WSGIScriptAlias / /develop/mysite/wsgi.py
 
 앞서 /etc/sites-available/000-default.conf의 설정에 SSL 설정을 추가해보자.  
 
-### Activating ssl
+### Activating ssl apache module
 
 Apache에 SSL 설정을 하기 위해서는 우선 다음 명령을 통해 ssl 모듈을 활성화 해야한다.
 
@@ -263,6 +263,59 @@ Docker container에 있는 파일 또는 디렉토리를 **volume**을 통해 Ho
 volumes:
       - ./src:/develop
       - ./config/apache2:/etc/apache2 # added volum
+```
+
+### Making directory for Apache2 logs
+
+Django Application을 serving하기 위해 설정한 VHost에 대해서 Apache의 log를 출력할 log 경로를 생성한다.   
+원래 운영을 고려한다면 이 log 경로 역시 volume을 통해 Host 파일 시스템에 백업을 해야하지만 여기서는 이 부분에 대해서는 고려하지 않는다. 
+
+Dockerfile에 다음과 같이 각 VHost 별로 log 디렉토리를 생성하는 코드를 추가하자. 
+
+```dockerfile
+RUN mkdir /var/log/apache2/example-ssl
+RUN mkdir /var/log/apache2/example
+```
+
+### Activating ssl apache module
+
+Dockerfile에 다음과 같이 Apache에 SSL 설정을 하기 위해서는 ssl 모듈을 활성화하는 코드를 추가하자. 
+
+```dockerfile
+RUN a2enmod ssl
+```
+
+### Executing Apache Service
+
+마지막으로 Docker Container가 실행될때 마다 Apache Service를 시작시켜주어야한다.  
+이를위해 처음에는 단순히 다음과 같이 Apache Service를 시작시켜주었다. 
+
+```Dockerfile
+CMD service apache2 restart
+```
+
+하지만 위와같이 하면 Apache Service를 시작시킨 후 Docker Container가 종료되어버린다. 이는 Docker의 특성인데 마지막으로 실행 시킨 명령의 실행을 유지시켜주지 않으면 Docker Container는 종료되기 때문이다. 따라서 Apache Service를 실행시켰으면 마지막으로 실행 시킨 명령이 종료되지 않고 유지되도록 해야한다. 이를 처리할 수 있는 방법은 여러가지가 있지만 Apache의 log를 **tail -f** 명령을 통해 출력해주는 방법이 적절할 것이다. 
+
+따라서, Dockerfile에 다음과 같이 코드를 추가하였다. 
+
+```Dockerfile
+CMD service apache2 restart
+CMD tail -f /var/log/apache2/*
+```
+
+위와 같은 방법으로 docker-compose.yml의 **command**키를 사용할 수도 있고 쉘 스크립트를 작성하는 방법도 있다. 
+
+위 내용들을 모두 설정한 후 다음 명령을 통해 Docker Container를 실행시키면 Apache Service가 자동으로 실행된다. 
+
+```sh
+$ docker-compose up
+...
+django_in_amw_1  |                                                       [ OK ]
+django_in_amw_1  | ==> /var/log/apache2/access.log <==
+django_in_amw_1  | tail: unrecognized file system type 0x794c7630 for '/var/log/apache2/access.log'. please report this to bug-coreutils@gnu.org. reverting to polling
+django_in_amw_1  |
+django_in_amw_1  | ==> /var/log/apache2/error.log <==
+django_in_amw_1  | [Sat Mar 03 12:55:30.106314 2018] [mpm_event:notice] [pid 32:tid 139989809170304] AH00489: Apache/2.4.7 (Ubuntu) OpenSSL/1.0.1f mod_wsgi/3.4 Python/2.7.6 configured -- resuming normal operations
 ```
 
 ## Referecne
