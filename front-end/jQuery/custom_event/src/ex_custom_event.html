@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bind demo</title>
+    <style>
+        .on {
+            color: red;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            // without custom event
+            // $(".switch, .clapper").click(function () {
+            //     var light = $(this).closest(".room").find(".lightbulb");
+            //     if (light.is(".on")) {
+            //         light.removeClass("on").addClass("off");
+            //     } else {
+            //         light.removeClass("off").addClass("on");
+            //     }
+            // });
+
+            // with custom event
+            $(".lightbulb").on("light:toggle", function (event) {
+                var light = $(this);
+                if (light.is(".on")) {
+                    light.trigger("light:off");
+                } else {
+                    light.trigger("light.on");  
+                }
+            }).on("light:on", function(event) {
+                $(this).removeClass("off").addClass("on");
+            }).on("light:off", function(event) {
+                $(this).removeClass("on").addClass("off");
+            });
+ 
+            $(".switch, .clapper").click(function () {
+                var room = $(this).closest(".room");
+                room.find(".lightbulb").trigger("light:toggle");
+            });
+
+            $("#master_switch").click(function() {
+                var lightbulbs = $(".lightbulb");
+
+                // Check if any lightbulbs are on
+                if (lightbulbs.is(".on")) {
+                    lightbulbs.trigger("light:off");
+                } else {
+                    lightbulbs.trigger("light:on");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="room" id="kitchen">
+        <div class="lightbulb on">lightbulb - kitchen</div>
+        <div class="switch">switch</div>
+        <div class="switch">switch</div>
+        <div class="clapper">clapper</div>
+    </div>
+    <div class="room" id="bedroom">
+        <div class="lightbulb on">lightbulb - bedroom</div>
+        <div class="switch">switch</div>
+        <div class="switch">switch</div>
+        <div class="clapper">clapper</div>
+    </div>
+    <div id="master_switch">master switch</div>
+</body>
+</html>
