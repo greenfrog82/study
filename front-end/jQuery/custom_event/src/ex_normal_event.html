@@ -11,28 +11,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
         $(function () {
-            $(".lightbulb").on("light:toggle", function (event) {
-                var light = $(this);
+            $(".switch").click(function () {
+                var light = $(this).closest(".room").find(".lightbulb");
                 if (light.is(".on")) {
                     light.removeClass("on").addClass("off");
                 } else {
-                    light.removeClass("off").addClass("on");  
+                    light.removeClass("off").addClass("on");
                 }
-            });
- 
-            $(".switch, .clapper").click(function () {
-                var room = $(this).closest(".room");
-                room.find(".lightbulb").trigger("light:toggle");
             });
         });
     </script>
 </head>
 <body>
     <div class="room" id="kitchen">
-        <div class="lightbulb on">lightbulb - kitchen</div>
+        <div class="lightbulb on">lightbulb</div>
         <div class="switch">switch</div>
-        <div class="switch">switch</div>
-        <div class="clapper">clapper</div>
     </div>
 </body>
 </html>
