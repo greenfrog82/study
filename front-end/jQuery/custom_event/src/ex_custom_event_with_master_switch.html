@@ -24,7 +24,7 @@
                 $(this).removeClass("on").addClass("off");
             });
  
-            $(".switch, .clapper").click(function () {
+            $(".switch").click(function () {
                 var room = $(this).closest(".room");
                 room.find(".lightbulb").trigger("light:toggle");
             });
@@ -46,15 +46,13 @@
     <div class="room" id="kitchen">
         <div class="lightbulb on">lightbulb - kitchen</div>
         <div class="switch">switch</div>
-        <div class="switch">switch</div>
-        <div class="clapper">clapper</div>
     </div>
+    <p>---------------------------</p>
     <div class="room" id="bedroom">
         <div class="lightbulb on">lightbulb - bedroom</div>
         <div class="switch">switch</div>
-        <div class="switch">switch</div>
-        <div class="clapper">clapper</div>
     </div>
+    <p>---------------------------</p>
     <div id="master_switch">master switch</div>
 </body>
 </html>

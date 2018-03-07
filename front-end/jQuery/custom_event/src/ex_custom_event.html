@@ -20,7 +20,7 @@
                 }
             });
  
-            $(".switch, .clapper").click(function () {
+            $(".switch").click(function () {
                 var room = $(this).closest(".room");
                 room.find(".lightbulb").trigger("light:toggle");
             });
@@ -31,8 +31,6 @@
     <div class="room" id="kitchen">
         <div class="lightbulb on">lightbulb - kitchen</div>
         <div class="switch">switch</div>
-        <div class="switch">switch</div>
-        <div class="clapper">clapper</div>
     </div>
 </body>
 </html>

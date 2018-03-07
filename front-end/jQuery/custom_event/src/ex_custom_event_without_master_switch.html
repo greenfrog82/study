@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bind demo</title>
+    <style>
+        .on {
+            color: red;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            function turnOn(light) {
+                light.removeClass("off").addClass("on");
+            }
+            function turnOff(light) {
+                light.removeClass("on").addClass("off");
+            }
+            function toggle(light) {
+                if(light.is(".on")) {
+                    turnOff(light);
+                } else {
+                    turnOn(light);
+                }
+            }
+            
+            $(".switch").click(function () {
+                var room = $(this).closest(".room");
+                toggle(room.find(".lightbulb"));
+            });
+
+            $("#master_switch").click(function() {
+                var lightbulbs = $(".lightbulb");
+
+                // Check if any lightbulbs are on
+                if (lightbulbs.is(".on")) {
+                    turnOff(lightbulbs);
+                } else {
+                    turnOn(lightbulbs);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="room" id="kitchen">
+        <div class="lightbulb on">lightbulb - kitchen</div>
+        <div class="switch">switch</div>
+    </div>
+    <p>---------------------------</p>
+    <div class="room" id="bedroom">
+        <div class="lightbulb on">lightbulb - bedroom</div>
+        <div class="switch">switch</div>
+    </div>
+    <p>---------------------------</p>
+    <div id="master_switch">master switch</div>
+</body>
+</html>
