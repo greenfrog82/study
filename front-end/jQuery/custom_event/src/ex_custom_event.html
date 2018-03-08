@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>bind demo</title>
+    <style>
+        .on {
+            color: red;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $(".lightbulb").on("light:toggle", function (event) {
+                var light = $(this);
+                if (light.is(".on")) {
+                    light.removeClass("on").addClass("off");
+                } else {
+                    light.removeClass("off").addClass("on");  
+                }
+            });
+ 
+            $(".switch").click(function () {
+                var room = $(this).closest(".room");
+                room.find(".lightbulb").trigger("light:toggle");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="room" id="kitchen">
+        <div class="lightbulb on">lightbulb - kitchen</div>
+        <div class="switch">switch</div>
+    </div>
+</body>
+</html>
