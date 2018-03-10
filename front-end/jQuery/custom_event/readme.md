@@ -1,10 +1,10 @@
-# About 커스텀 이벤트
+# About Custom Event
 
 #### Requirement
 
 * jQuery 3.1.1 
 
-[Introducing 커스텀 이벤트s](https://learn.jquery.com/events/introduction-to-custom-events/)에도 밝혔듯이 우리는 DOM Event에 익숙하다. 따라서 커스텀 이벤트라는 것이 낯설다.  
+[Introducing Custom Events](https://learn.jquery.com/events/introduction-to-custom-events/)에도 밝혔듯이 우리는 DOM Event에 익숙하다. 따라서 커스텀 이벤트라는 것이 낯설다.  
 
 일반적으로 우리는 이벤트를 다룰 때, 이벤트를 발생시키는 엘리먼트에 집중하게 된다. 하지만 커스텀 이벤트는 이벤트의 처리 대상이 되는 엘리먼트에 집중한다.  
 이를통해 다음과 같은 이점을 제공한다. 
