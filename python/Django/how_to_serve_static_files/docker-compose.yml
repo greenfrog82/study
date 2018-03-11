@@ -1,0 +1,16 @@
+version: "3"
+services:
+  django_in_amw:
+    build: ./
+    image: django_in_apache_modwsgi:1.0.0
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080
+      - 80:80
+      - 443:443
+    volumes:
+      - ./src:/develop
+      - ./config/apache2:/etc/apache2
+    working_dir: /develop
+    # command: /start.sh
