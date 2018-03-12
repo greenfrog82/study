@@ -7,7 +7,8 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y \
     vim \
     curl \
-    mysql-client
+    mysql-client \
+    tree
 
 # To install python library
 RUN apt-get install -y \
