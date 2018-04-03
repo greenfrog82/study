@@ -50,6 +50,39 @@ function add(n) {
 
 ### Python
 
+```python
+class IntEx(int):
+    def __call__(self, a):
+        return IntEx(self + a)
+
+def add(n):
+    return IntEx(n)
+```
 
 ### Go
 
+
+## Other Solution
+
+### JavaScript
+
+```javascript
+function add(n) {
+  var next = add.bind(n += this | 0);
+  next.valueOf = function() { return n; };
+  return next;
+}
+```
+
+### Python
+
+```python
+class add(int):
+    def __call__(self,n):
+        return add(self+n)
+```
+
+```python
+class add(int):
+    __call__ = lambda self, value: add(self + value)
+```
