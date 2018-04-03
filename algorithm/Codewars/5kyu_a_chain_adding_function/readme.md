@@ -1,4 +1,4 @@
-# A Chain adding function
+# [A Chain adding function](https://www.codewars.com/kata/a-chain-adding-function/train/python)
 
 We want to create a function that will add numbers together when called in succession.
 
@@ -34,3 +34,22 @@ addTwo(3)(5); // 10
 ```
 
 We can assume any number being passed in will be valid whole number.
+
+
+## My Solution
+
+### JavaScript
+
+```javascript
+function add(n) {
+    const f = x => add(n + x);
+    f.valueOf = () => n;
+    return f;
+}
+```
+
+### Python
+
+
+### Go
+

@@ -2,7 +2,6 @@ function add(n) {
     const f = x => add(n + x);
     f.valueOf = () => n;
     return f;
-
 }
 
 console.log(add(1) == 1);
