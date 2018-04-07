@@ -15,6 +15,8 @@ stripUrlParams('www.codewars.com', ['b']) // returns 'www.codewars.com'
 
 ## My Solution
 
+### JavaScript 
+
 ```javascript
 function stripUrlParams(url, paramsToStrip) {
     const splitedUrl = url.split('?');
@@ -37,7 +39,34 @@ function stripUrlParams(url, paramsToStrip) {
 }
 ```
 
+### Python
+
+```python
+import re
+
+def strip_url_params(url, params_to_strip = []):
+    matched = re.match(r'^.+\?', url, re.M | re.I)
+    if not matched:
+        return url
+
+    query_string = matched.group()
+    it = re.finditer(r'&?(\w+)=.+?', url, re.M | re.I)
+    
+    for matched in it:
+        var_name = matched.groups()[0]
+        first_matched_idx = url.find(var_name + '=')
+        
+        if first_matched_idx < matched.start() or var_name in params_to_strip:
+            continue
+
+        query_string += matched.group()
+
+    return query_string
+```
+
 ## Other Solutions
+
+### JavaScript 
 
 ```javascript
 function stripUrlParams(url, paramsToStrip){
@@ -54,4 +83,20 @@ function stripUrlParams(url, paramsToStrip){
     return (paramsToStrip.indexOf(key) !== -1) ? '' : (paramsToStrip.push(key), match);
   });
 }
+```
+
+### Python
+
+```python
+def strip_url_params(url, param_to_strip=[]):
+    if '?' not in url:
+        return url
+    
+    queries = (url.split('?')[1]).split('&')
+    queries_obj = [query[0] for query in queries]
+    for i in range(len(queries_obj) - 1, 0, -1):
+        if queries_obj[i] in param_to_strip or queries_obj[i] in queries_obj[0:i]:
+            queries.pop(i)
+
+    return url.split('?')[0] + '?' + '&'.join(queries)
 ```
