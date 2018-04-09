@@ -24,8 +24,6 @@ class Primes {
 				primes.push(num);
 				yield num++;
 			}
-
-			
 		}
 	}
 }

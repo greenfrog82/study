@@ -7,16 +7,36 @@ If this is too easy, try [Prime Streaming (NC-17)](https://www.codewars.com/kata
 ## My Solution
 
 ```javascript
+class Primes {
+	static * stream() {
+		let num = 2;
+		let isPrime;
+		let idx = 0;
 
+		let primesIdx = 0;
+		let primes = [];
+		
+		while(true) {
+			isPrime = true;
+
+			for(let i=2; i <= Math.sqrt(num); i = (primes.length > primesIdx)? primes[++primesIdx]: i + 1) {
+				if(0 === (num % i)) {
+					num++;
+					isPrime = false;
+					break;
+				}
+			}
+			
+			primesIdx = 0;
+
+			if(isPrime) {
+				primes.push(num);
+				yield num++;
+			}
+		}
+	}
+}
 ```
-
-
-## Other Solutions
-
-```javascript
-
-```
-
 
 ## Reference
 
