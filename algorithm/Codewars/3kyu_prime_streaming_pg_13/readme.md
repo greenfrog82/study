@@ -16,3 +16,9 @@ If this is too easy, try [Prime Streaming (NC-17)](https://www.codewars.com/kata
 ```javascript
 
 ```
+
+
+## Reference
+
+* [[JAVA] 소수 구하기 최적의 알고리즘 (1)](http://marobiana.tistory.com/89)
+* [[C++] 소수 구하기 최적의 알고리즘 (2) - 에라토스테네스의 체](http://marobiana.tistory.com/91)
