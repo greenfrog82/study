@@ -1,69 +1,58 @@
-def parse_molecule(molecule):
-    def get_atom(idx):
-        # tmp = molecule[idx]
-        # idx += 1
-        # if not atom and tmp.isalpha() or atom and tmp.islower():
-        #     atom += tmp
-        #     return get_atom(idx, atom) if len(molecule) > idx else (idx, atom, '') 
-        # else:
-        #     return (idx, atom, tmp)
+import re
 
-        atom = ''
-        while len(molecule) > idx:
-            curr_ch = molecule[idx]
-            idx += 1
-            if not atom and curr_ch.isalpha() or atom and curr_ch.islower():
-                atom += curr_ch
-            else:
-                return idx, atom, curr_ch
+def parse_molecule(formular):
+    p = re.compile(r'[A-Z][a-z]*|[\[|\{|\(|\]|\}|\]\)]|[0-9]*')
+    arr = p.findall(formular)
+    print arr
 
-        return idx, atom, curr_ch
-
-
-    def calc(idx=0):
+    def parse(idx=0):
         repo = {}
-
-        while len(molecule) > idx:
-            idx, atom, curr_ch = get_atom(idx)
-            print 'idx : ', idx
-            print 'atom : ', atom
-            print 'curr_ch : ', curr_ch
-            if atom: 
-                if curr_ch.isdigit():
-                    repo[atom] = repo.get(atom, 1) * int(curr_ch)
-                elif curr_ch.isalpha():
-                    repo[atom] = repo.get(atom, 0) + 1
-                else:
-                    
-
-        return idx, curr_ch, repo
-
-    # def parse():
-    #     repo = {}
-    #     idx, next_ch, pre_ = calc()
-
-    #     if len(molecule) > idx:
-    #         parse()
-    #     else:
-    #         for key, value in pre_repo.iteritems():
+        # atom = None
         
-    # return parse()
+        while(len(arr) > idx):
+            # import pdb; pdb.set_trace()
+            item = arr[idx]
+            idx += 1
+            if item.isalpha():
+                tmp = arr[idx]
+                if tmp.isdigit():
+                    repo[item] = repo.get(item, 0) + int(tmp)
+                    idx += 1
+                else:
+                    repo[item] = repo.get(item, 0) + 1
+            elif item in ['[', '{', '(']:
+                idx, pre_repo = parse(idx)
+                for key, value in pre_repo.iteritems():
+                    repo[key] = repo.get(key, 0) + value
+            else:
+                if len(arr) > idx:
+                    item = arr[idx]
+                    if item.isdigit():
+                        for key, value in repo.iteritems():
+                            repo[key] = value * int(item)
+                        idx += 1
+                return idx, repo
 
-    # idx, next_ch, repo = calc()
+        return idx, repo
 
-    # return repo
-    # return get_atom(0)
-    return calc()
+    _, repo = parse()
+    print repo
+    return repo
 
-# water = 'H2O'
-# print parse_molecule(water) == {'H':2, 'O':1}
+water = 'H2O'
+print parse_molecule(water) == {'H':2, 'O':1}
 
 magnesium_hydroxide = 'Mg(OH)2'
-# print parse_molecule(magnesium_hydroxide) == {'Mg':1, 'O':2, 'H':2}
+print parse_molecule(magnesium_hydroxide) == {'Mg':1, 'O':2, 'H':2}
 
-# fremy_salt = 'K4[ON(SO3)2]2'
-# print parse_molecule(fremy_salt) == {'K':4, 'O':14, 'N':2, 'S':4}
+fremy_salt = 'K4[ON(SO3)2]2'
+print parse_molecule(fremy_salt) == {'K':4, 'O':14, 'N':2, 'S':4}
 
-# print parse_molecule(water)
-print parse_molecule(magnesium_hydroxide)
-# print parse_molecule(fremy_salt)
+glucose = 'C6H12O6'
+print parse_molecule(glucose) == {'H': 12, 'C': 6, 'O': 6}
+
+a = '(C5H5)Fe(CO)2CH3'
+print parse_molecule(a) == {'H': 8, 'C': 8, 'Fe': 1, 'O': 2}
+
+# b = '{[Co(NH3)4(OH)2]3Co}(SO4)3'
+# print parse_molecule(b) == {'H': 42, 'S': 3, 'Co': 3, 'O': 18, 'N': 12}
