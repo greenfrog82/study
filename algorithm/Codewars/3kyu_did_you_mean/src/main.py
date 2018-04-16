@@ -9,18 +9,23 @@ class Dictionary(object):
             words.append(''.join(sorted(item)))
 
         word = ''.join(sorted(word))
-        
-        similar = None
 
+        ret = [self.words[0], 0]
         for i in range(0, len(words)):
             base = words[i]
-            for j in range(0, len(base) if len(base) < len(word) else len(word)):
-                if word[j] == base[j]:
+            compare_idx = 0
+            for j in range(0, len(base)):
+                for k range(compare_idx, len(word)):
+                    if base[j] == 
                     
+                    
+                
+                
+            
 
-        print similar
-        return similar[0]
+        
+# fruits = Dictionary(['cherry', 'pineapple', 'melon', 'strawberry', 'raspberry']);
+# print fruits.findMostSimilar('strawbery') == 'strawberry'
+# print fruits.findMostSimilar('berry') == 'cherry'
 
-fruits = Dictionary(['cherry', 'pineapple', 'melon', 'strawberry', 'raspberry']);
-print fruits.findMostSimilar('strawbery') == 'strawberry'
-print fruits.findMostSimilar('berry') == 'cherry'
+
