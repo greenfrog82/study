@@ -3,10 +3,9 @@ class Dictionary(object):
         self.words = words
         
     def findMostSimilar(self, word):
-        ret = None
-        for i in range(0, len(self.words)):
+        ret = [None, None]
 
-            base = self.words[i]
+        for base in self.words:
             next_idx = 0
             equal_cnt = 0
 
@@ -17,14 +16,11 @@ class Dictionary(object):
                         next_idx = k + 1
                         break
             
-            if i == 0:
-                ret = [base, equal_cnt]
-            elif ret[1] < equal_cnt:
+            will_be_modified_char_cnt = (len(word) - equal_cnt) + (len(base) - equal_cnt)
+            if not ret[0] or ret[1] > will_be_modified_char_cnt:
                 ret[0] = base
-                ret[1] = equal_cnt
-            elif ret[1] == equal_cnt:
-                ret[0] = base if len(ret[0]) > len(base) else ret[0]
-
+                ret[1] = will_be_modified_char_cnt
+                
         return ret[0]
         
 fruits = Dictionary(['cherry', 'pineapple', 'melon', 'strawberry', 'raspberry'])
