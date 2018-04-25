@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            $(function() {
+                $(':button').click(function() {
+                    console.log('test');
+                    // var checked_list = $('form :checkbox:checked');
+
+                    // console.log(checked_list);
+
+                    console.log($('input'));
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <input type='checkbox' value='a' />
+        <input type='checkbox' value='b' />
+        <input type='checkbox' value='c' />
+
+        <form>
+            <input type='button' value='click' />
+            <input type='checkbox' value='d' />
+            <input type='checkbox' value='e' />
+            <input type='checkbox' value='f' />
+        </form>
+    </body>
+</html>
