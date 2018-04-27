@@ -69,3 +69,20 @@ func Accum(s string) string {
     return strings.Join(parts, "-")
 }
 ```
+
+```go
+package kata
+
+import (
+	"strings"
+)
+
+func Accum(s string) string {
+	words := make([]string, len(s))
+
+	for i, c := range s {
+		words[i] = strings.Title(strings.Repeat(strings.ToLower(string(c)), i+1))	
+	}
+
+	return strings.Join(words, "-")
+}

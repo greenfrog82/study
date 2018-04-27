@@ -1,4 +1,4 @@
-package other
+package main
 
 import (
 	"fmt"
@@ -14,9 +14,11 @@ func main() {
 func Accum(s string) string {
 	parts := make([]string, len(s))
 
-	for i:=0 i<len(s); i++ {
-		parts[i] = strings.ToUpper(string(s[i])) + stirngs.repeat(strings.ToLower(string(s[i]), i)
+	for i:=0; i<len(s); i++ {
+		parts[i] = strings.ToUpper(string(s[i])) + strings.Repeat(strings.ToLower(string(s[i])), i)
 	}
 
-	return strings.join(parts, "-")
+	return strings.Join(parts, "-")
+
+	return ""
 }
