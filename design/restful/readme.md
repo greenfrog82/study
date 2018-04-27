@@ -21,7 +21,7 @@ REST는 아키텍처이기 때문에 이를 구현하기 위한 6가지의 가�
 2. Stateless
 3. Cacheable
 4. Uniform Interface
-5. Layerd System
+5. Layered System
 6. Code on Demand (Optional)
 
 ### 1. Client-Server
@@ -111,10 +111,56 @@ GET /article/1234 HTTP/1.1
 4. Hypermedia as the engin of applicaiton state(a.k.a. HATEOAS)
     하이퍼 링크와 URI 템플릿을 이용해서 서버의 URI 구조와 분리시켜라. 
 
+#### HATEOAS (Hypermedia as the engine of application state)
 
-예를들어, 우리는 일반적으로 REST API라고 하면 HTTP + JSON을 통해 서버와 클라이언트를 인터페이싱하는데, 앞서 설명한 내용을 모두 준수할 수 있다.  
-마찬가지로, HTTP + YAML, HTTP + XML 등도 앞서 설명한 내용을 모두 준수한다. 
+앞서 **Uniform Interface의 4번째 제약 사항**이 좀 어려운데 여기서 좀 더 자세히 알아보자.  
+**HATEOAS**는 요청에 대한 응답에 해당 다음에 가능한 요청에 대한 URL을함께 전달하는 것이다.  
 
+예를들어, 은행 서비스가 있다고 가정하자. 
+그리고 'greenfrog'라는 사용자가 해당 서비스에 로그인하였다. 
+이때 은행 서비스는 사용자에게 다음 응답을 준다. 
+아래 응답을 보면 'greenfrog'라는 사용자는 100만원이라는 잔고가 있고 'links' 키에 4개의 url이 정의되어있다. 이것이 해당 사용자가 다음에 요청할 수 있는 요청 url 목록이다.  
+예를들어 입금을 하고 싶으면 'deposit'키를 통해 서버에 요청을 주면 된다. 
+
+```json
+GET /account/12345 HTTP/1.1
+
+{  
+    "id":"greenfrog",
+    "balance": 1000000,
+    "links": {
+        "deposit": "/account/greenfrog/deposit",
+        "withdraw": "/account/greenfrog/withdraw"
+        "transfer": "/account/greenfrog/trasfer",
+        "close": "/account/greenfrog/close"
+    }
+}
+```
+
+이와 같은 방법을 사용하면 앞서, **statelessness** 가이드 라인을 이야기할 때 클라이언트의 상태를 서버가 관리하지 않으므로서 결합도를 낮추고 코드를 간결하게 유지할 수 있도록 한것과 마찬가지로 URL 구조를 클라이언트가 직접 참조 하지 못하게 함으로서 클라이언트 코드가 구체적으로 몰라도 되는 부분을 가려주는 효과를 통해 서버와의 결합도를 낮춘다. 
+또한 **uniform Interface**의 세번째 제약사항인 **Self-descripive message**의 특성을 잘 활용한 예로 응답에 요청한 API에 대해 다음 요청들이 기술되어 있으므로 API의 가독성을 높인다.  
+
+#### 5. Layered System
+
+REST에서는 클라이언트에게 서비스를 하기 위해 필요한 시스템들이 각각 하나의 책임을 지도록 해야한다. 이를 Layerd System이라고 하는데 이를 통해 시스템 단위의 '관심의 분리'를 이루어낸다. 
+
+* API Gateway
+* Load Balancer
+* Cache Server
+* Middleware
+* Services (API Server)
+
+### 6. Code on Demand (Optional)
+
+사실 여러문서를 읽었지만 이 부분에 대해서 분명하게 기술해 놓은 문서를 보지 못했다.  
+따라서, 여러문서들에 추상적으로 작성되어 있는 내용을 정리할 수 밖에 없었다. 
+
+우선 Code on Demand라는 것은 REST에서는 선택적인 가이드라인이다. 따라서 앞서 소개한 가이드라인들은 반드시 지켜야하는 것이지만 이것은 그렇지 않다.  
+이것은 클라이언트의 확장성을 향상시키는 방법으로 서버는 클라이언트에서 동작할 수 있는 스크립트들을 작성해두었다가 클라이언트가 이를 요청했을 때 응답하여 해당 스크립트가 클라이언트 사이드에서 동작하돌고 한다.  
+이게 언뜻 보면 별로 유용해 보이지 않지만 특정 요청을 서버로 전달하고 이를 조합하는 기능을 하는 스크립트가 있다고 가정하자. 이는 공통코드로 A사에서 개발한 클라이언트와 B사에서 개발한 클라이언트 모두에서 쓸 수 있다고 하면 이를 API서버에서 제공해주면 양쪽 개발사에서는 이러한 공통 코드를 별도로 개발하지 않아도 될 것이다. 이러한 측면에서 클라이언트의 확장을 돕는다.  
+
+하지만 실제로는 이 방법이 API의 직관성을 흐려놓고 그다지 유용하지 않기 때문에 서택적인 가이드라인으로 남았다고 한다.
+ 
 
 ## Reference
 
@@ -128,3 +174,6 @@ GET /article/1234 HTTP/1.1
 * [Caching your REST API](http://restcookbook.com/Basics/caching/)
 * [What are idempotent and/or safe methods?](http://restcookbook.com/HTTP%20Methods/idempotency/)
 * [REST - What exactly is meant by Uniform Interface?](https://stackoverflow.com/questions/25172600/rest-what-exactly-is-meant-by-uniform-interface)
+* [REST, Hypermedia & HATEOAS](http://www.django-rest-framework.org/topics/rest-hypermedia-hateoas/)
+* [REST Architectureal Constraints](https://restfulapi.net/rest-architectural-constraints/#layered-system)
+* [RESTful Services Part II : Constraints and Goals](https://medium.freecodecamp.org/restful-services-part-ii-constraints-and-goals-530b8f6298b9)
