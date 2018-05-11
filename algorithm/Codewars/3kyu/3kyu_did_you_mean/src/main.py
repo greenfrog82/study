@@ -34,7 +34,7 @@ class Dictionary(object):
                     elif 1 < len(tmp):
                         same_ch_idx_list = same_ch_idx_list + tmp
                         tmp = []
-                    else:
+                    elif 1 >= len(tmp):
                         tmp = []
 
             if 1 < len(tmp):
