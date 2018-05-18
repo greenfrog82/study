@@ -3,14 +3,6 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// export class Todo {
-//     constructor(key, content) {
-//         this.key = key
-//         this.done = false         
-//         this.content = content
-//     }
-// }
-
 function specificStateList(list, state) {
     let ret = []
     list.forEach(element => {
@@ -22,6 +14,10 @@ function specificStateList(list, state) {
     console.log(ret)
     return ret
 }
+
+const ACTIVE = 0
+const COMPLETED = 1
+const ALL = 2
 
 export default new Vuex.Store({
     state: {
@@ -36,7 +32,8 @@ export default new Vuex.Store({
                 done: false,
                 content: 'Vue'
             }
-        ]
+        ],
+        showOption: ALL
     },
     getters: {
         activatedList(state) {
@@ -44,6 +41,16 @@ export default new Vuex.Store({
         },
         completedList(state) {
             return specificStateList(state.todoList, true)
+        },
+        getToDoList(state, getters) {
+            switch(state.showOption) {
+                case ACTIVE:
+                    return getters.activatedList
+                case COMPLETED:
+                    return getters.completedList
+                default:
+                    return state.todoList
+            }
         }
     },
     mutations: {
@@ -55,5 +62,14 @@ export default new Vuex.Store({
                 content: content
             });
         },
+        active(state) {
+            state.showOption = ACTIVE
+        },
+        completed(state) {
+            state.showOption = COMPLETED
+        },
+        all(state) {
+            state.showOption = ALL
+        }
     }
 });
