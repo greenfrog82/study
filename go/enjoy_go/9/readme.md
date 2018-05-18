@@ -96,6 +96,10 @@ io.Reader와 io.Writer를 생성해놔야하기 때문에 굳이 io.ReadWriter �
 거기에 구조체를 통한 형식정의가 되고 맵핑이 수월하게 되어 Moongoose와 JSONSchema의 장점을 한꺼번에 느낄 수 있어서 아주 만족스러움. 
 
 
+data := { 
+	"test":"test"
+
+}
 
 
 
