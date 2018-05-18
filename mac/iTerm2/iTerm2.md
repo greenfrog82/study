@@ -38,8 +38,8 @@ iTerm2를 사용하면 기본적으로 alt키가 비활성화 되어있다. 따�
 
 ![preference.png](./preference.png)
 
-
 ## Reference
 
 * [iTerm2 - Documentation](https://www.iterm2.com/documentation-one-page.html)
 * [자주 사용할 만한 bash 터미널 단축키(+맥 사용자 ƒ∫ 문제 해결법)](https://mytory.net/archives/10287)
+* [iTerm 2: How to set keyboard shortcuts to jump to beginning/end of line?](https://stackoverflow.com/questions/6205157/iterm-2-how-to-set-keyboard-shortcuts-to-jump-to-beginning-end-of-line)
