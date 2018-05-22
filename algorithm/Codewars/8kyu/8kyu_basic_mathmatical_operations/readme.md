@@ -13,3 +13,17 @@ basic_op('-', 15, 18)       # Output: -3
 basic_op('*', 5, 5)         # Output: 25
 basic_op('/', 49, 7)        # Output: 7
 ```
+
+## My Solution
+
+```python
+def basic_op(operator, value1, value2):
+    return eval('%d%s%d' % (value1, operator, value2))
+```
+
+## Other Solution
+
+```python
+def basic_op(op, a, b):
+    return {'+': a+b, '-': a-b, '*': a*b, '/':a/b}.get(op)
+```
