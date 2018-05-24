@@ -30,6 +30,18 @@ def SumEvenFibonacci(limit):
     return sum_even_fibo
 ```
 
+```go
+func SumEvenFibonacci(limit int) int {
+	sum := 2
+	for first, second := 1, 2; second <= limit; first, second = second, first + second {
+		if 2 < second && 0 == second % 2 {
+			sum += second
+		}
+	}
+	return sum
+}
+```
+
 ## Other Solution
 
 ```python
