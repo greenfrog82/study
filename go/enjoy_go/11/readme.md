@@ -32,6 +32,8 @@
 [How to get “virtualhost” functionality in Go?](https://stackoverflow.com/questions/14170799/how-to-get-virtualhost-functionality-in-go?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
 * http.NewServeMux()의 역할을 정확히 모르겠고, 책에서는 DefaultServeMux와 동일하다고 해서 관련 내용을 찾아봤으나 정확한 내용 파악이 어려움. 일단 http.NewServeMux()는 개발자가 개발한 http.ServeMux를 반환한다고 함.  
 [What is an http request multiplexer?](https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
+* Go run 으로 서버 실행 시키고 Ctrl+C로 죽여도 데몬으로 살아있음. 종료 시그널 사용해서 종료해주어야함. 
+
 
 ## UNIT 59. 명령줄 옵션 사용하기 
 
@@ -44,9 +46,6 @@
 * 따라서 실제 서비스를 개발할 때는 사용하지 못할 것 같다. 
 * Custom Error 역시 error interface의 Error 메소드를 구현하는 방식.
 
-## UNIT 61. 단위 테스트 사용하기 
-
-* 
 ## Reference
 
 * [Understanding Go Standard Http Libraries : ServeMux, Handler, Handle and HandleFunc](https://rickyanto.com/understanding-go-standard-http-libraries-servemux-handler-handle-and-handlefunc/)
