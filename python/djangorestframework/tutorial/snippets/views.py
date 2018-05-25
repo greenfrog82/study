@@ -16,13 +16,21 @@ class SnippetList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class SnippetOwnList(generics.ListAPIView):
+class SnippetBaseReadOnlyList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = SnippetSerializer
+
+
+class SnippetOwnList(SnippetBaseReadOnlyList):
     pagination_class = paginations.OwnContentPageNumberPagination
 
     def get_queryset(self):
         return Snippet.objects.filter(owner=self.request.user)
+
+
+class SnippetSearchList(SnippetBaseReadOnlyList):
+    def get_queryset(self):
+        return Snippet.objects.filter(content__icontains=self.request.query_params.get('content'))
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
