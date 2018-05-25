@@ -2,26 +2,21 @@ package main
 
 import "fmt"
 
-// func fibonacci(num int) []int {
-// 	if 1 > num {
-// 		return 1
-// 	} else {
-// 		return fibonacci(num - 2) + fibonacci(num - 1)
-// 	}
-// }
-
-func wrapper() func(int) int {
-	sum := 0	
-	return func(num int) int {
-		sum = sum + num
-		return sum
+func SumEvenFibonacci(limit int) int {
+	sum := 2
+	for first, second := 1, 2; second <= limit; first, second = second, first + second {
+		if 2 < second && 0 == second % 2 {
+			sum += second
+		}
 	}
+	return sum
 }
 
-
 func main() {
-	// fmt.Println(fibonacci(3))	
-	perform := wrapper()
-	fmt.Println(perform(100))
-	fmt.Println(perform(100))
+	fmt.Println(10 == SumEvenFibonacci(8))
+	fmt.Println(2 == SumEvenFibonacci(1))
+	fmt.Println(2 == SumEvenFibonacci(2))
+	fmt.Println(60696 == SumEvenFibonacci(111111))
+	fmt.Println(2 == SumEvenFibonacci(5))
+	fmt.Println(2 == SumEvenFibonacci(6))
 }
