@@ -30,7 +30,7 @@
 * 검색해보니 golang으로 개발 된 웹서버는 없는 것 같음. 하지만 Reserver Proxy를 해주는 툴들은 존재.
 * virtual host 역시 MultiPlexer를 통해 구현 가능 따라서 웹 서버는 딱히 필요 없어보임. 
 [How to get “virtualhost” functionality in Go?](https://stackoverflow.com/questions/14170799/how-to-get-virtualhost-functionality-in-go?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
-
+* Go run 으로 서버 실행 시키고 Ctrl+C로 죽여도 데몬으로 살아있음. 종료 시그널 사용해서 종료해주어야함. 
 
 ## Reference
 
