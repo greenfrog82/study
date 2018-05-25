@@ -3,7 +3,6 @@ from django.db import models
 
 class ActiveManager(models.Manager):
     def get_queryset(self):
-        import pdb; pdb.set_trace()
         return super(ActiveManager, self).get_queryset().filter(is_active=True)
 
 
@@ -12,7 +11,6 @@ class BaseModel(models.Model):
     objects = ActiveManager()
 
     def delete(self):
-        import pdb; pdb.set_trace()
         self.is_active = False
         self.save()
 
@@ -26,8 +24,8 @@ class Snippet(BaseModel):
     owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
     # created = models.DateTimeField(auto_now_add=True)
 
-    # class Meta:
-    #     ordering = ('created', )
+    class Meta:
+        ordering = ('id', )
 
     # def save(self, *args, **kwargs):
     #     lexer = get_lexer_by_name(self.language)
