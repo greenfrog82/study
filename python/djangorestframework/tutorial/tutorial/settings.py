@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'snippets.apps.SnippetsConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    # 'shared_libs.apps.SharedLibsConfig',
 ]
 
 MIDDLEWARE = [
