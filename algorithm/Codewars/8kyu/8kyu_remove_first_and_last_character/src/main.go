@@ -8,6 +8,8 @@ func RemoveFirstAndLastChar(str string) string {
 	return str[1:len(str) - 1]	
 }
 
-func main() {
-	fmt.Println("bc" == RemoveFirstAndLastChar("abcd"))
-}
+// func main() {
+	// fmt.Println("bc" == RemoveFirstAndLastChar("abcd"))
+// }
+
+
