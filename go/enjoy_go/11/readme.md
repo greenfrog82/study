@@ -30,8 +30,23 @@
 * 검색해보니 golang으로 개발 된 웹서버는 없는 것 같음. 하지만 Reserver Proxy를 해주는 툴들은 존재.
 * virtual host 역시 MultiPlexer를 통해 구현 가능 따라서 웹 서버는 딱히 필요 없어보임. 
 [How to get “virtualhost” functionality in Go?](https://stackoverflow.com/questions/14170799/how-to-get-virtualhost-functionality-in-go?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
+* http.NewServeMux()의 역할을 정확히 모르겠고, 책에서는 DefaultServeMux와 동일하다고 해서 관련 내용을 찾아봤으나 정확한 내용 파악이 어려움. 일단 http.NewServeMux()는 개발자가 개발한 http.ServeMux를 반환한다고 함.  
+[What is an http request multiplexer?](https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
 
+## UNIT 59. 명령줄 옵션 사용하기 
 
+* 명령줄 옵션 기능을 굉장히 강력한 방법으로 지원.
+* 콘솔 툴 개발 시 굉장히 용이할 듯. 
+
+## UNIT 60. 에러 처리하기 
+
+* log.Fatal의 경우 고전적인 방법과 종료를 포함하는 이러한 방식을 함께 사용할 수 있으면 더 좋을듯. 해당 함수 호출 시 서비스를 종료시켜 버리는 것은 위험해 보인다.  
+* 따라서 실제 서비스를 개발할 때는 사용하지 못할 것 같다. 
+* Custom Error 역시 error interface의 Error 메소드를 구현하는 방식.
+
+## UNIT 61. 단위 테스트 사용하기 
+
+* 
 ## Reference
 
 * [Understanding Go Standard Http Libraries : ServeMux, Handler, Handle and HandleFunc](https://rickyanto.com/understanding-go-standard-http-libraries-servemux-handler-handle-and-handlefunc/)
