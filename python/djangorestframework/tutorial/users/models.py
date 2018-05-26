@@ -1,3 +1,4 @@
 from django.db import models
 
-# Create your models here.
+class AdminConfig(models.Model):
+    email_noti_trigger_count = models.PositiveIntegerField(default=2)
