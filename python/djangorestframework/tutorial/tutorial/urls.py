@@ -18,8 +18,7 @@ from django.urls import include
 # from rest_framework.authtoken import views
 
 urlpatterns = [
-    # re_path(r'^api/v1/auth/', views.obtain_auth_token),
-    # re_path(r'^api/v1/auth/', include('rest_auth.urls')),
+
     re_path(r'^api/v1/auth/', include('rest_auth.urls')),
     re_path(r'^api/v1/auth/registration/', include('rest_auth.registration.urls')),
     re_path(r'^api/v1/', include('snippets.urls')),
