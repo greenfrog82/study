@@ -1,4 +1,4 @@
-FROM ubuntu:17.10
+FROM ubuntu:18.04
 
 # To update apt-get and os
 RUN apt-get update && apt-get upgrade -y
@@ -33,7 +33,7 @@ RUN wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz -O go-
 RUN tar -C /usr/local -xzf go-dist.tar.gz
 
 # To install JAVA
-RUN apt-get install -y openjdk-9-jdk
+#RUN apt-get install -y openjdk-9-jdk
 
 # To install apache and mod-wsgi
 RUN apt-get install -y \
@@ -53,4 +53,24 @@ RUN pip install \
     grpcio-tools \
     concurrent-log-handler \
     mock \
-    nose
+    nose \
+	Flask Flask-SQLAlchemy Flask-Migrate Flask-Script \
+	requests \
+	PyJWT
+
+# Python3 related library
+RUN apt-get install -y \
+    python3.6 \
+    python3-pip
+
+RUN pip3 install --upgrade pip
+RUN pip3 install \
+    django \
+    djangorestframework \
+    djangorestframework-jwt \
+    pygments \
+    djoser \
+    httpie \
+    httpie-jwt-auth \
+	django-rest-auth \
+	django-rest-auth[with_social] \
