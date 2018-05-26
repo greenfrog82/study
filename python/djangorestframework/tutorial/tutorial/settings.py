@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'snippets.apps.SnippetsConfig',
     'users.apps.UsersConfig',
+    'comment.apps.CommnetConfig',
     # 'shared_libs.apps.SharedLibsConfig',
 ]
 

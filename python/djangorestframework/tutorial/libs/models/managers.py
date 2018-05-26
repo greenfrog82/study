@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.aggregates import Count
-from random import randint
 from random import shuffle
 
 
