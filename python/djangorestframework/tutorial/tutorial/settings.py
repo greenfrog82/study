@@ -138,3 +138,10 @@ REST_FRAMEWORK = {
 # JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=15),
 # }
+
+CUSTOM_USER_CONFIG = {
+    'PAGINATION_INFO': {
+        'PAGE_SIZE': 5,
+        'MAX_PAGE_SIZE': 10000
+    }
+}

@@ -1,7 +1,7 @@
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework import generics
-from snippets.utils import paginations
+from libs.views import paginations
 from rest_framework import permissions
 from snippets.permissions import IsOwnerOrReadOnly
 
@@ -31,6 +31,11 @@ class SnippetOwnList(SnippetBaseReadOnlyList):
 class SnippetSearchList(SnippetBaseReadOnlyList):
     def get_queryset(self):
         return Snippet.objects.filter(content__icontains=self.request.query_params.get('content'))
+
+
+class SnippetRandomSearchList(SnippetBaseReadOnlyList):
+    def get_queryset(self):
+        return Snippet.objects.random()
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):

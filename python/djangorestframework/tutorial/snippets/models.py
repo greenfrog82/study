@@ -1,21 +1,5 @@
 from django.db import models
-
-
-class ActiveManager(models.Manager):
-    def get_queryset(self):
-        return super(ActiveManager, self).get_queryset().filter(is_active=True)
-
-
-class BaseModel(models.Model):
-    is_active = models.BooleanField(default=True)
-    objects = ActiveManager()
-
-    def delete(self):
-        self.is_active = False
-        self.save()
-
-    class Meta:
-        abstract = True
+from libs.models.models import BaseModel
 
 
 class Snippet(BaseModel):
