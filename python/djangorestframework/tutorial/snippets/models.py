@@ -10,16 +10,17 @@ class Snippet(BaseModel):
     class Meta:
         ordering = ('id', )
 
+    # def save(self, force_insert=False, force_update=False, using=None,
+    #          update_fields=None):
+    #     import pdb; pdb.set_trace()
+    #     super(BaseModel, self).save(force_insert, force_update, using, update_fields)
 
-class Person(BaseModel):
+
+class Tag(BaseModel):
     name = models.CharField(max_length=255)
-    age = models.PositiveIntegerField()
-
-
-class PersonGroup(BaseModel):
-    name = models.CharField(max_length=255)
-    persons = models.ManyToManyField(
-        Person,
-        related_name="groups",
-        related_query_name="group"
+    # persons = models.ManyToManyField(
+    snippets = models.ManyToManyField(
+        Snippet,
+        related_name="tags",
+        related_query_name="tag"
     )

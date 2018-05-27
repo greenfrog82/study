@@ -1,5 +1,7 @@
-from snippets.models import Snippet, Person, PersonGroup
-from snippets.serializers import SnippetSerializer, PersonSerializer, PersonGroupSerializer
+from snippets.models import Snippet
+from snippets.models import Tag
+from snippets.serializers import SnippetSerializer
+from snippets.serializers import TagSerializer
 from rest_framework import generics
 from libs.views import paginations
 from rest_framework import permissions
@@ -16,17 +18,17 @@ class SnippetList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class PersonList(generics.ListCreateAPIView):
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
+class TagList(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
 
     # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
-
-
-class PersonGroupList(generics.ListCreateAPIView):
-    queryset = PersonGroup.objects.all()
-    serializer_class = PersonGroupSerializer
+    #     #
+    #     import pdb;
+    #     pdb.set_trace()
+    #     # # serializer.save()
+    #     # super(PersonList, self).perform_create(serializer)
+    #     serializer.save()
 
 
 class SnippetBaseReadOnlyList(generics.ListAPIView):
