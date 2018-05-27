@@ -6,7 +6,8 @@ from users.models import AdminConfig
 
 @receiver(post_save, sender=User)
 def send_notify_email(sender, instance, created, **kwargs):
-    if not len(User.objects.all()) % AdminConfig.objects.first().email_noti_trigger_count:
+    admin_config = AdminConfig.objects.first()
+    if admin_config and not len(User.objects.all()) % admin_config.email_noti_trigger_count:
         print('--------------- > Send mail to admin')
 
 
