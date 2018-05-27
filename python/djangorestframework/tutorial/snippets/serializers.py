@@ -26,7 +26,8 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 class TagSerializer(serializers.ModelSerializer):
     id = HashidSerializerCharField(source_field='snippets.Tag.id', required=False)
+    snippets = serializers.SlugRelatedField(many=True, slug_field="title", queryset=Snippet.objects.all(), required=False)
 
     class Meta:
         model = Tag
-        fields = ('id', 'name', )
+        fields = ('id', 'name', 'snippets', )
