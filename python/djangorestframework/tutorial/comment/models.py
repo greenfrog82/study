@@ -1,6 +1,7 @@
 from django.db import models
 from libs.models.models import BaseModel
 from snippets.models import Snippet
+from hashid_field import HashidField
 
 class Comment(BaseModel):
     content = models.TextField()
