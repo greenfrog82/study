@@ -9,3 +9,17 @@ class Snippet(BaseModel):
 
     class Meta:
         ordering = ('id', )
+
+
+class Person(BaseModel):
+    name = models.CharField(max_length=255)
+    age = models.PositiveIntegerField()
+
+
+class PersonGroup(BaseModel):
+    name = models.CharField(max_length=255)
+    persons = models.ManyToManyField(
+        Person,
+        related_name="groups",
+        related_query_name="group"
+    )

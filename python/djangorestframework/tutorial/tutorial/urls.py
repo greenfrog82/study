@@ -17,10 +17,16 @@ from django.contrib import admin
 from django.urls import re_path
 from django.urls import path
 from django.urls import include
+from rest_framework.documentation import include_docs_urls
+from rest_framework.settings import api_settings
+from rest_framework import permissions
+from rest_framework import authentication
+
 # from rest_framework.authtoken import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    re_path(r'^docs/', include_docs_urls(title='My API title', authentication_classes=(authentication.BasicAuthentication,), permission_classes=(permissions.IsAuthenticatedOrReadOnly,))),
     re_path(r'^api/v1/auth/', include('rest_auth.urls')),
     re_path(r'^api/v1/auth/registration/', include('rest_auth.registration.urls')),
     re_path(r'^api/v1/', include('snippets.urls')),
