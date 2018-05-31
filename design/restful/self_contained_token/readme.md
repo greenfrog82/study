@@ -3,9 +3,13 @@
 Self-Contained Token은 서버에서 발급되어 클라이언트에서 관리되는 형태의 Token으로 하나의 개념이다.   
 여기에는 사용자 이름, 이메일 주소, 권한등과 같은 정보들이 서버로부터 암호화 되어 클라이언트로 전달된다.   
 
-앞서 이야기한것과 같이  Self-Contained Token은 하나의 개념이므로 이를 구현한 구현체를 두고 이야기하는것이 좋을 것이다. 
-
+앞서 이야기한것과 같이 Self-Contained Token은 하나의 개념이므로 이를 구현한 구현체를 두고 이야기하는것이 좋을 것이다. 
 본 문서에서는 Self-Contained Token을 소개하기 위해 이 개념의 구현체 중 가장 유명한 JWT를 사용하기로한다.  
+
+## What is the JWT?
+
+JWT는 JSON Web Token의 약자로 크라이언트와 서버간의 데이터 셋을 안전한 방법으로 표현하기 위한 [RFC 7519](https://tools.ietf.org/html/rfc7519)에 정의 되어 있는 JSON Object이다. 이 토큰은 Header, payload 그리고 signiture로 구성되어 있다. 
+
 
 Restful Architecture에서 가장 핵심적인 부분은 Statelessness이다.  
 이를 위해서는 클라이언트의 상태를 Redis와 같은 Cache 서버를 Back-End단에 두어 관리해서는 안된다. 
@@ -73,3 +77,4 @@ Restful Architecture에서 가장 핵심적인 부분은 Statelessness이다.
 * []If a JWT token is self contained with all the user information, why do we need a token store in an authorization server?](https://www.quora.com/If-a-JWT-token-is-self-contained-with-all-the-user-information-why-do-we-need-a-token-store-in-an-authorization-server)
 * [Steps to building authentication and authorization for RESTful APIs](https://www.moesif.com/blog/technical/restful-apis/Authorization-on-RESTful-APIs/)
 * [5 Easy Steps to understanding JSON Web Tokens(JWT)](https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec)
+* [JSON Web Token Tutorial with Example in Python](https://blog.apcelent.com/json-web-token-tutorial-with-example-in-python.html)
