@@ -11,7 +11,8 @@ RUN apt-get install -y \
     net-tools \
     iputils-ping \
     wget \
-	tree
+    tree \
+    sqlite3
 
 # To install python library
 RUN apt-get install -y \
@@ -72,5 +73,8 @@ RUN pip3 install \
     djoser \
     httpie \
     httpie-jwt-auth \
-	django-rest-auth \
-	django-rest-auth[with_social] \
+    django-rest-auth \
+    django-rest-auth[with_social] \
+    coreapi \
+    django-hashid-field \
+    django-allauth
