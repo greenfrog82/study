@@ -62,6 +62,7 @@ RUN pip install \
 # Python3 related library
 RUN apt-get install -y \
     python3.6 \
+	python3.6-dev \
     python3-pip
 
 RUN pip3 install --upgrade pip
