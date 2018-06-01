@@ -118,7 +118,7 @@ JWT에 대해서 알아보았으니 이번에는 이것을 왜 사용해야하�
 
 ## Self-Contained Token
 
-![auth_with_token.png](./auth_with_token.png)
+![auth_with_jwt.png](./auth_with_jwt.png)
 
 ### Structure
 
