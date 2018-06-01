@@ -9,8 +9,8 @@ services:
       - PATH=$PATH:/usr/local/go/bin
     #network_mode: "host"
     ports:
-      - 8080:8080
-      - 80:80
+      - 8081:8081
+      #- 80:80
     volumes:
       - ./:/develop
     working_dir: /develop
