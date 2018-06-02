@@ -148,6 +148,12 @@ re.search(r'C\d\dkie', 'C00kie').group() # C00kie
 
 ### ^
 
+^<word> 형식으로 <word>로 시작하는 문장과 매치.
+
+[ex_3.py](./ex_3.py)
+```python
+re.search(r'^Eat cake', 'Eat cake').group() # Eat cake
+```
 
 
 
