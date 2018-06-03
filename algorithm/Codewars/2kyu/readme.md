@@ -7,3 +7,8 @@ Note:
 * Empty strings should be rejected.
 * Your solution should reject strings with any character other than 0 and 1.
 * No leading 0's will be tested unless the string exactly denotes 0.
+
+
+## Reference
+
+* [Divisibility Machines and Regular Expressions](http://www.exstrom.com/blog/abrazolica/posts/divautomata.html)
