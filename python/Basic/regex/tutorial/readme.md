@@ -11,7 +11,6 @@ Data Science에서 문서를 분석하기 위한 전제조건이 되며, 일반�
 * Groups and Grouping using 정규표현식s
 * Greedy vs Non-Greedy Matching
 * re Python Library
-* search() versus match()
 
 **주의**
 
@@ -325,7 +324,7 @@ print(r"re.match(r'<.*>', '<H1>HEADER</H1>') : ", matched_str)
 <H1>HEADER</H1>
 ```
 
-그렇다면, '<H1>'만을 매치하고자 할 때는 어떻게 해야할까?  
+그렇다면, '\<H1\>'만을 매치하고자 할 때는 어떻게 해야할까?  
 이럴 때 사용하는 것이 **Non-Greedy Match**이다. 
 **Non-Greedy Match**는 \<Greedy Match\>?\<word\> 와 같은 형식으로 사용한다.  
 
@@ -342,6 +341,114 @@ print(r"re.match(r'<.*?>', '<H1>HEADER</H1>') : ", matched_str)
 
 ```
 <H1>
+```
+
+## re Python Library
+
+### search(pattern, string, flag=0)
+
+string중에 pattern이 처음으로 매치되는 부분을 찾는다. 
+
+#### Parameter(s)
+
+* pattern : 정규표현식
+* string  : pattern에 매치되는 문자열을 찾고자하는 대상
+
+#### Return
+
+string에서 pattern에 매치되는 문자열을 찾으면 Match Object를 반환하고 그렇지 않으면 None을 반환한다. 
+
+### match(pattern, string, flag=0)
+
+string의 첫번째 부분에서 pattern이 처음으로 매치되는 부분을 찾는다. 
+
+#### Parameter(s)
+
+* pattern : 정규표현식
+* string  : pattern에 매치되는 문자열을 찾고자하는 대상
+
+#### Return
+
+string에서 pattern에 매치되는 문자열을 찾으면 Match Object를 반환하고 그렇지 않으면 None을 반환한다. 
+
+### search vs match
+
+앞서 살표 본 search와 match 함수는 언뜻보면 별 차이가 없어보인다.  
+search의 경우 문자열의 어느부분에서든 pattern과 일치하는 부분을 찾는데 반면, match는 오직 문자열이 시작하는 부분에서 찾는다.  
+다음 예제를 보자. 
+
+[./ex_7.py](./ex_7.py)
+```python
+re.match(r'Cookie', 'This is a Cookie') # None
+re.search(r'Cookie', 'This is a Cookie').group() # Cookie 
+re.match(r'Cookie', 'Cookie is very good').group() # Cookie
+```
+
+### findall(pattern, string, flag=0)
+
+앞서 소개되었던 search나 match의 경우 pattern과 매치되는 한 부분만을 검색하지만 findall은 pattern과 매치되는 모든 부분을 검색한다.  
+
+#### Parameter(s)
+
+* pattern : 정규표현식
+* string  : pattern에 매치되는 문자열을 찾고자하는 대상
+
+#### Return
+
+string에서 pattern에 매치되는 문자열을 찾으면 매치된 문자열들의 리스트를 반환하고, 그렇지 않으면 빈 리스트를 반환한다.  
+
+[./ex_7.py](./ex_7.py)
+```python
+email_address = "Please contact us at: support@datacamp.com, xyz@datacamp.com"
+
+# 'addresses' is a list that stores all the possible match
+addresses = re.findall(r'[\w\.-]+@[\w\.-]+', email_address)
+print(addresses)
+for address in addresses:
+    # support@datacamp.com
+    # xyz@datacamp.com
+    print(address)
+```
+
+### sub(pattern, repl, string, count=0, flags=0)
+
+string중에 pattern과 일치하는 부분을 repl로 변경하여 반환한다. 
+
+#### Parameter(s)
+
+* pattern : 정규표현식
+* repl : 변경 될 문자열 
+* string  : pattern에 매치되는 문자열을 찾고자하는 대상
+* count : 매치되는 문자열들 중 몇 개를 repl로 변경할 것인지 설정, default는 0으로 모든 매치되는 문자열 변경. 
+
+#### Return
+
+string에서 pattern에 매치되는 문자열을 찾으면, 해당 문자열을 repl로 수정하여 반환하고 그렇지 않으면 string 문자열을 그대로 반환 
+
+[./ex_7.py](./ex_7.py)
+```python
+email_address = "Please contact us at: xyz@datacamp.com"
+new_email_address = re.sub(r'([\w\.-]+)@([\w\.-]+)', r'support@datacamp.com', email_address)
+print(new_email_address)
+```
+
+### compile(pattern, flags=0)
+
+앞서 소개한 방법과 같이 match, search, findall, sub등과 같은 함수에 정규표현식(pattern parameter)을 그떄 끄때 넘겨서 사용하는 것은 정규표현식을 엔진이 매번 컴파일해야하는 부담이 있다.   
+따라서 자주 사용되는 정규식의 경우 compile 함수를 통해 미리 컴파일해두면 효율적이다.  
+
+#### Parameter(s)
+
+* pattern : 정규표현식
+
+#### Return
+
+pattern으로 들어 온 정규표현식에 대한 정규표현식 객체를 반환한다. 
+
+[./ex_7.py](./ex_7.py)
+```python
+matched_str = re.match(r'<.*?>', heading).group()
+print(r"re.match(r'<.*?>', '<H1>HEADER</H1>') : ", matched_str)
 ```
 
 ## Reference
