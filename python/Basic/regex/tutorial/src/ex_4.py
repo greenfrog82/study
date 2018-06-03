@@ -1,0 +1,73 @@
+import re
+
+# + 
+print('----------------------------------------------------')
+print('+')
+print('----------------------------------------------------')
+matched_str = re.search(r'Co+kie', 'Cookie').group()
+print("re.search(r'Co+kie', 'Cookie') : ", matched_str)
+matched_str = re.search(r'Co+kie', 'Cokie').group()
+print("re.search(r'Co+kie', 'Cokie') : ", matched_str)
+matched_str = re.search(r'Co+kie', 'Coooooookie').group()
+print("re.search(r'Co+kie', 'Coooooookie') : ", matched_str)
+matched_str = re.search(r'Cko+ie', 'Ckie')
+print("re.search(r'Cko+ie', 'Ckie') : ", matched_str)
+
+# *
+print('----------------------------------------------------')
+print('*')
+print('----------------------------------------------------')
+matched_str = re.search(r'Ca*o*kie', 'Caokie').group()
+print("re.search(r'Ca*o*kie', 'Caokie') : ", matched_str)
+matched_str = re.search(r'Co*kie', 'Cooooookie').group()
+print("re.search(r'Co*kie', 'Cooooookiei') : ", matched_str)
+matched_str = re.search(r'Co*kie', 'Ckie').group()
+print("re.search(r'Co*kie', 'Ckie') : ", matched_str) 
+
+# ? 
+print('----------------------------------------------------')
+print('?')
+print('----------------------------------------------------')
+matched_str = re.search(r'Colou?r', 'Color').group()
+print("re.search(r'Colou?r', 'Color') : ", matched_str)
+matched_str = re.search(r'Colou?r', 'Colour').group()
+print("re.search(r'Colou?r', 'Colour') : ", matched_str)
+matched_str = re.search(r'Colou?r', 'Colouur')
+print("re.search(r'Colou?r', 'Colouur') : ", matched_str)
+
+# {x}
+print('----------------------------------------------------')
+print('{x}')
+print('----------------------------------------------------')
+matched_str = re.search(r'\d{3}', '123').group()
+print("re.search(r'\d{3}', '123') : ", matched_str)
+matched_str = re.search(r'\d{3}', '12')
+print("re.search(r'\d{3}', '12') : ", matched_str)
+matched_str = re.search(r'\d{2}', '123').group()
+print("re.search(r'\d{2}', '123') : ", matched_str)
+matched_str = re.search(r'\d{2}_id', '123_id').group()
+print("re.search(r'\d{2}_id', '123_id') : ", matched_str)
+matched_str = re.search(r'table_\d{2}_id', 'table_123_id')
+print("re.search(r'table_\d{2}_id', 'table_123_id') : ", matched_str)
+
+# {x,}
+print('----------------------------------------------------')
+print('{x,}')
+print('----------------------------------------------------')
+matched_str = re.search(r'\d{3,}', '123').group()
+print("re.search(r'\d{3,}', '123') : ", matched_str)
+matched_str = re.search(r'\d{3,}', '12')
+print("re.search(r'\d{3,}', '12') : ", matched_str)
+matched_str = re.search(r'\d{3,}', '1234567').group()
+print("re.search(r'\d{3,}', '1234567') : ", matched_str)
+
+# {x,y}
+print('----------------------------------------------------')
+print('{x,y}')
+print('----------------------------------------------------')
+matched_str = re.search(r'\d{3,5}', '123').group()
+print("re.search(r'\d{3,5}', '123') : ", matched_str)
+matched_str = re.search(r'\d{3,5}', '12')
+print("re.search(r'\d{3,5}', '12') : ", matched_str)
+matched_str = re.search(r'\d{3,5}', '1234567').group()
+print("re.search(r'\d{3,5}', '1234567') : ", matched_str)
