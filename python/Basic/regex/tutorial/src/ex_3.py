@@ -1,0 +1,121 @@
+import re
+
+# .
+print('----------------------------------------------------')
+print('.')
+print('----------------------------------------------------')
+matched_str = re.search(r'Co.k.e', 'Cookie').group()
+print("re.search(r'Co.k.e', 'Cookie') : ", matched_str)
+matched_str = re.search(r'a.b.c.d.e', 'a1b c@d\te').group()
+print("re.search(r'a.b.c.d.e', 'a1b c@d\te') : ", matched_str)
+matched_str = re.search(r'.', '\n')
+print(r"re.search(r'.', '\n') : ", matched_str)
+
+# \w
+print('----------------------------------------------------')
+print('\w')
+print('----------------------------------------------------')
+matched_str = re.search(r'Co\wk\we', 'Cookie').group()
+print("re.search(r'Co\wk\we', 'Cookie') : ", matched_str)
+matched_str = re.search(r'\w\w\w', 'a1_').group()
+print("re.search(r'\w\w\w', 'a1_') : ", matched_str)
+matched_str = re.search(r'\w', '@')
+print("re.search(r'\w', '@') : ", matched_str)
+matched_str = re.search(r'\w', '\n')
+print(r"re.search(r'\w', '\n') : ", matched_str)
+
+# \W
+print('----------------------------------------------------')
+print('\W')
+print('----------------------------------------------------')
+matched_str = re.search(r'C\Wk\We', 'C@k\te').group()
+print(r"re.search(r'C\Wk\We', 'C@k\te') : ", matched_str)
+matched_str = re.search(r'\W', 'a')
+print("re.search(r'\W', 'a') : ", matched_str)
+matched_str = re.search(r'\W', '0')
+print("re.search(r'\W', '0') : ", matched_str)
+matched_str = re.search(r'\W', '_')
+print("re.search(r'\W', '_') : ", matched_str)
+
+# \s
+print('----------------------------------------------------')
+print('\s')
+print('----------------------------------------------------')
+matched_str = re.search(r'a\sb\sc\sd\n', 'a b\tc\rd\n').group()
+print(r"re.search(r'a\sb\sc\sd\n', 'a b\tc\rd\n') : ", matched_str)
+matched_str = re.search(r'\s', 'a')
+print(r"re.search(r'\s', 'a') : ", matched_str)
+matched_str = re.search(r'\s', '1')
+print(r"re.search(r'\s', '1') : ", matched_str) 
+matched_str = re.search(r'\s', '@')
+print(r"re.search(r'\s', '@') : ", matched_str)
+
+# \S
+print('----------------------------------------------------')
+print('\S')
+print('----------------------------------------------------')
+matched_str = re.search(r'\S\S\S\S', 'a1@_').group()
+print(r"re.search(r'\S\S\S\S', 'a1@_') : ", matched_str)
+matched_str = re.search(r'\S', ' ')
+print(r"re.search(r'\S', ' ') : ", matched_str)
+matched_str = re.search(r'\S', '\t')
+print(r"re.search(r'\S', '\t') : ", matched_str)
+matched_str = re.search(r'\S', '\r')
+print(r"re.search(r'\S', '\r') : ", matched_str)
+matched_str = re.search(r'\S', '\n')
+print(r"re.search(r'\S', '\n') : ", matched_str)
+
+# \d
+print('----------------------------------------------------')
+print('\d')
+print('----------------------------------------------------')
+matched_str = re.search(r'C\d\dkie', 'C00kie').group()
+print(r"re.search(r'C\d\dkie', 'C00kie') : ", matched_str)
+
+# ^
+print('----------------------------------------------------')
+print('^')
+print('----------------------------------------------------')
+matched_str = re.search(r'^Eat cake', 'Eat cake').group()
+print("re.search(r'^Eat cake', 'Eat cake') : ", matched_str)
+matched_str = re.search(r'^cake', 'Eat cake')
+print("re.search(r'^cake', 'Eat cake') : ", matched_str)
+
+# $
+print('----------------------------------------------------')
+print('$')
+print('----------------------------------------------------')
+matched_str = re.search(r'cake$', 'Eat cake').group()
+print("re.search(r'cake$', 'Eat cake') : ", matched_str)
+
+# []
+print('----------------------------------------------------')
+print('[]')
+print('----------------------------------------------------')
+matched_str = re.search(r'[abc]pple', 'apple').group()
+print("re.search(r'[abc]pple', 'apple') : ", matched_str)
+matched_str = re.search(r'[abc]pple', 'bpple').group()
+print("re.search(r'[abc]pple', 'bpple') : ", matched_str)
+matched_str = re.search(r'[abc]pple', 'cpple').group()
+print("re.search(r'[abc]pple', 'cpple') : ", matched_str)
+
+matched_str = re.search(r'[a-zA-Z0-9]', 'abc').group()
+print("re.search(r'[a-zA-Z0-9]', 'abc') : ", matched_str)
+matched_str = re.search(r'[a-zA-Z0-9]', '_@b').group()
+print("re.search(r'[a-zA-Z0-9];, '_@b') : ", matched_str)
+
+matched_str = re.search(r'Number : [^567]', 'Number : 3').group()
+print("re.search(r'Number : [^567]', 'Number : 7') : ", matched_str)
+matched_str = re.search(r'Number : [5^67]', 'Number : ^').group()
+print("re.search(r'Number : [5^67]', 'Number : ^') : ", matched_str)
+matched_str = re.search(r'Number : [^567]', 'Number : 6')
+print("re.search(r'Number : [^5]', 'Number : 6') : ", matched_str)
+
+# \
+print('----------------------------------------------------')
+print('\\')
+print('----------------------------------------------------')
+matched_str = re.search(r'Back\\stail', 'Back\stail').group()
+print("re.search(r'Back\\stail', 'Back\stail') : ", matched_str)
+matched_str = re.search(r'Back\stail', 'Back tail').group()
+print("re.search(r'Back\stail', 'Back tail') : ", matched_str)
