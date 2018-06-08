@@ -11,7 +11,7 @@
 
 ## Syntax
 
-> dict.udpate(dict2) 
+> dict.udpate(dict2)  
 > dict.update(**kwargs)
 
 ## Parameters
@@ -30,6 +30,7 @@
 
 ### Using dict2 param
 
+[./src/ex_dict2.py](./src/ex_dict2.py)
 ```python
 dic_origin = { 
     'name': 'greenforg',
@@ -43,9 +44,21 @@ dic_origin.update({
 
 print dic_origin
 ```
+**실행결과**
+
+실행 결과를 보면 'sex' 키가 추가 되었고 기존에 존재했던 'age' 키의 값이 37로 갱신된것을 알수 있다. 
+
+```python
+{
+    'age': 37, 
+    'name': 'greenforg', 
+    'sex': 'male'
+}
+```
 
 ### Using iterable of key/value pairs param
 
+[./src/ex_dict2.py](./src/ex_dict2.py)
 ```python
 dic_origin = { 
     'name': 'greenforg',
@@ -59,6 +72,18 @@ dic_origin.update([['age', 37], ['sex', 'male']]);
 print dic_origin
 ```
 
+**실행결과**
+
+실행 결과는 앞선 예제와 마찬가지!
+
+```python
+{
+    'age': 37, 
+    'name': 'greenforg', 
+    'sex': 'male'
+}
+```
+
 ### Using **kwargs
 
 ```python
@@ -70,6 +95,18 @@ dic_origin = {
 dic_origin.update(age=37, sex='male')
 
 print dic_origin
+```
+
+**실행결과**
+
+실행 결과는 앞선 예제와 마찬가지!
+
+```python
+{
+    'age': 37, 
+    'name': 'greenforg', 
+    'sex': 'male'
+}
 ```
 
 ## Reference
