@@ -6,10 +6,16 @@ def method_1(inputs, n):
     
 def method_2(inputs, n):
     # Method 2. O(n)    
-    dic = {(el if el < n-el else n-el):(el if el > n-el else n-el) for el in inputs if el != n - el and n - el in inputs}
-    return [(el, dic[el]) for el in inputs if el in dic]
+    dic = {n-val:val for val in inputs if val != n-val}
+    dic = {(k if k < v else v):(k if k > v else v) for k,v in dic.items() if dic.get(dic[k])}
+    return [(k, v) for k,v in dic.items()]
+    
+def method_3(inputs, n):
+    # Method 3. O(n) The following code work well when the problem accept duplication.
+    dic = {n-val:val for val in inputs}
+    return [(val, dic[val]) for val in inputs if val in dic]
 
-find_element = method_1
+find_element = method_2
 
 class Test(unittest.TestCase):
     @classmethod
