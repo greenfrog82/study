@@ -1,6 +1,9 @@
 
-for(let i=0; i<10; i++) {
-    // ..
+function closure() {
+    return () => {
+        for(var i=0; i<10; i++) {
+            // ..
+        }
+    }
 }
 
-console.log(i)
