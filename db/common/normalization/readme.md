@@ -100,6 +100,7 @@ Functional Dependency는 다음과 같이 표현될 수 있다.
 다름과 같은 경우 역시 1NF의 대상으로 앞서와 같은 형태로 변경할 수 있다. 
 
 **Table Student** 
+
 | Student ID  | Name   | Address | Subject             |
 | ----------- | ------ | ------- | ------------------- |
 | 1           | Adam   | Noida   | Bio, Maths, Physics | 
