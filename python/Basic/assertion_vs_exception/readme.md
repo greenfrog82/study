@@ -32,7 +32,7 @@ assert condition, optional message
 
 **assert statement**의 **contidion**은 참, 거짓 평가하며 거짓일 경우 **AssertionError**를 발생시키고 **optional message** 파라메터가 지정되었을 때 해당 메시지도 함께 출력한다.  
 
-[ex_1.py](./ex_1.py)9
+[ex_1.py](./ex_1.py)
 ```python
 # Import math module  
 import math  
@@ -70,6 +70,46 @@ AssertionError: 4 is not the square root of 4
 python -O ex_1.py
 ```
 
+## Assertions and tuples
+
+**asssert statement**를 사용할 때 괄호와 함께 하용하면 언제가 참으로 평가된다. 왜냐하면 **assert statement**를 사용할 때 괄호를 사용하면 이를 Tuple로 인식하고 비어있지 않은 Tuple은 참으로 평가되기 때문이다.  
+
+[ex_2.py](./ex_2.py)
+```python
+assert(1 + 2 == 2, '1 + 2 should be 3')
+```
+
+위 코드를 실행하면 다음과 같이 SyntaxWarning이 발생한다.  
+
+```
+ex_2.py:1: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+assert(1+2 == 2, '1 + 2 should be 3')
+```
+
+따라서, **assert statement**를 사용할 때는 위 점을 주의해야한다. 
+
+## Consideration
+
+Python을 사용하기 전, C++/C#을 사용할 때는 Input parameter나 Return value에 대한 값을 검사하기 위해 **Assertion**을 많이 사용하였다.  
+하지만, Python에서는 거의 사용되는 예를 본적이 없고 주변 개발자들과 이야기해봐도 딱히 필요성을 못 느낀다고 한다. (필요성을 못 느낀단고 하는 부분은 공감이 되지 않는 부분이긴 한데 ..)  
+잘 사용되지 않는 이유를 살펴보니까 StackOverflow에 다음과 같은 글이 있었다.  
+
+[원문 - Why assert is not largely used?](https://stackoverflow.com/questions/9097706/why-assert-is-not-largely-used)
+>I guess the main reason for assert not being used more often is that nobody uses Python's "optimized" mode.
+>
+>Asserts are a great tool to detect programming mistakes, to guard yourself from unexpected situations, but all this error checking comes with a cost. In compiled languages such as C/C++, this does not really matter, since asserts are only enabled in debug builds, and completely removed from release builds.
+>
+>In Python, on the other hand, there is no strict distinction between debug and release mode. The interpreter features an "optimization flag" (-O), but currently this does not actually optimize the byte code, but only removes asserts.
+>
+>Therefore, most Python users just ignore the -O flag and run their scripts in "normal mode", which is kind of the debug mode since asserts are enabled and __debug__ is True, but is considered "production ready".
+>
+>Maybe it would be wiser to switch the logic, i.e., "optimize" by default and only enable asserts in an explicit debug mode(*), but I guess this would confuse a lot of users and I doubt we will ever see such a change.
+>
+>((*) This is for example how the Java VM does it, by featuring a -ea (enable assertions) switch.)
+
+위 문서에서는 -O 옵션을 잘 사용하지 않는다고는 하는데, assert를 Heavy하게 사용하는 경우는 해당 옵션을 사용하면 되기 때문에 이유가 되는것 같지 않다. 
+
+Python에서 assert가 적극적으로 사용되지 않는 이유가 뭘까 ...?
 
 
 ## Summary
@@ -85,3 +125,4 @@ python -O ex_1.py
 * [Python Assertion Statement](https://www.programiz.com/python-programming/assert-statement)
 * [The benefits of programming with assertions (a.k.a. assert statements)](http://pgbovine.net/programming-with-asserts.htm)
 * [Sanity check](https://en.wikipedia.org/wiki/Sanity_check)
+* [Why assert is not largely used?](https://stackoverflow.com/questions/9097706/why-assert-is-not-largely-used)
