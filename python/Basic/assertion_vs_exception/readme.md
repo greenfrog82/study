@@ -126,3 +126,4 @@ Python에서 assert가 적극적으로 사용되지 않는 이유가 뭘까 ...?
 * [The benefits of programming with assertions (a.k.a. assert statements)](http://pgbovine.net/programming-with-asserts.htm)
 * [Sanity check](https://en.wikipedia.org/wiki/Sanity_check)
 * [Why assert is not largely used?](https://stackoverflow.com/questions/9097706/why-assert-is-not-largely-used)
+* [Assertations vs. Exceptions](http://www.drdobbs.com/jvm/assertations-vs-exceptions/228701655)
