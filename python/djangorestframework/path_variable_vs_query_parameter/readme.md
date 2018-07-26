@@ -36,7 +36,11 @@ class UserManager(RetrieveAPIView):
         return super(UserManager, self).retrieve(request, *args, **kwargs)
 ```
 
-이 코드를 실행시키면 **404 Not Found** 에러가 발생한다.
+이 코드를 실행시키면 다음과 같이 **500 SERVER INTERNAL ERROR**가 발생한다. 
+
+```
+[25/Jul/2018 06:19:36] "GET /api/user_manager/user_info/ HTTP/1.1" 500 121237
+```
 
 이러한 결과가 나타나는 이유는 GenericAPIView의 [get_object](http://www.django-rest-framework.org/api-guide/generic-views/#get_objectself)함수에서 request.GET(Query Parameter)를 사용하지 않고, kwargs로 넘어 온 Path Variable을 사용하기 때문이다. 
 
