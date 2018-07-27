@@ -43,12 +43,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'allauth',
-    'allauth.account',
+    # 'allauth',
+    # 'allauth.account',
     'rest_auth.registration',
     'snippets.apps.SnippetsConfig',
-    'users.apps.UsersConfig',
-    'comment.apps.CommnetConfig',
+    # 'users.apps.UsersConfig',
+    # 'comment.apps.CommnetConfig',
 ]
 
 MIDDLEWARE = [

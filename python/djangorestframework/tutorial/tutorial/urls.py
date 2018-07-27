@@ -25,11 +25,11 @@ from rest_framework import authentication
 # from rest_framework.authtoken import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'^docs/', include_docs_urls(title='My API title', authentication_classes=(authentication.BasicAuthentication,), permission_classes=(permissions.IsAuthenticatedOrReadOnly,))),
-    re_path(r'^api/v1/auth/', include('rest_auth.urls')),
-    re_path(r'^api/v1/auth/registration/', include('rest_auth.registration.urls')),
-    re_path(r'^api/v1/', include('snippets.urls')),
-    re_path(r'^api/v1/', include('users.urls')),
-    re_path(r'^api/v1/', include('comment.urls')),
+    # path('admin/', admin.site.urls),
+    # re_path(r'^docs/', include_docs_urls(title='My API title', authentication_classes=(authentication.BasicAuthentication,), permission_classes=(permissions.IsAuthenticatedOrReadOnly,))),
+    # re_path(r'^api/v1/auth/', include('rest_auth.urls')),
+    # re_path(r'^api/v1/auth/registration/', include('rest_auth.registration.urls')),
+    # re_path(r'^api/v1/', include('snippets.urls')),
+    # re_path(r'^api/v1/', include('users.urls')),
+    # re_path(r'^api/v1/', include('comment.urls')),
 ]
