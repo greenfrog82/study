@@ -15,11 +15,14 @@ from django.db import models
 #     #     import pdb; pdb.set_trace()
 #     #     super(BaseModel, self).save(force_insert, force_update, using, update_fields)
 
-# class Author(models.Model):
-#     name = models.CharField(max_length=100)
+class Author(models.Model):
+    name = models.CharField(max_length=100)
 
 
 class Snippet(models.Model):
+    # author = models.ForeignKey(Author, primary_key=True, on_delete=models.CASCADE, unique=True)
+    author = models.OneToOneField(Author, primary_key=True, on_delete=models.CASCADE)
+    # author = models.ForeignKey(Author, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
     code = models.TextField()
