@@ -78,4 +78,5 @@ RUN pip3 install \
     django-rest-auth[with_social] \
     coreapi \
     django-hashid-field \
-    django-allauth
+    django-allauth \
+    mysql-connector-python
