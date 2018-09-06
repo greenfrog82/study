@@ -42,7 +42,7 @@ FaaS의 장단점은 다음과 같다.
 
 FaaS와PaaS는 서버의 배포 및 운영에 대한 관심의 분리를 이뤄냈다는 측면에서 유사해 보인다. 
 
-![faas_diagram](./faas_diagram.jgp)
+![faas_diagram](./faas_diagram.jpg)
 ![m_vs_faas](./m_vs_faas.png)
 
 하지만, 이 둘은 분명한 차이점을 가지고 있다. **PaaS**의 경우는 어플리케이션 전체를 배포되고 24시간동안 실행된다. 일반적으로 Monolothic한 서비스나 MSA를 기반으로한 어플리케이션들이 해당할 것이다.  
