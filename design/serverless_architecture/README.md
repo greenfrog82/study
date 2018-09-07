@@ -5,8 +5,6 @@
 초기에 Serverless Architecture라 하면 server-side logic과 state를 서비스하고 관리하기 위해 클라우드에 존재하는 third-party service 말했다.  
 하지만 요즘에는 stateless compute container에 의해 정의되고 event-driven solution에 의해 모델링 된 service이다.  
 
-앞서 Serverless Architecture에 대해서 복잡하게 이야기했지만 간단히 이야기하면, 클라이언트의 상태를 관리하지 않는 클라우드에 있는 서버에 특정 이벤트(예를들어 API 요청 또는 crontab과 같은 주기적 이벤트)가 발생할 때 동작하기 위한 함수를 
-
 복잡하게 이야기했지만, 간단히 이야기하면 우리가 일반적으로 Backend 시스템을 갖추고 어플리케이션을 올리기 위한 서버를 추상화하고 low-level infrastructure에 대한 고민을 개발자가 되도록 하지 않도록 하기 위한 아키텍처로 결국 개발자의 생산성을 높이고 서버의 운영 비용을 줄이기 위한 목적을 가지고 있다.  
 
 이러한 Serverless Architecture를 구현해 놓은 서비스를 FaaS(Function as a Service)라고 한다. 
