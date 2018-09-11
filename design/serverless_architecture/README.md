@@ -92,3 +92,4 @@ FaaS와PaaS는 서버의 배포 및 운영에 대한 관심의 분리를 이뤄�
 * [An Introduction to Serverless and FaaS (Functions as a Service)](https://medium.com/@BoweiHan/an-introduction-to-serverless-and-faas-functions-as-a-service-fb5cec0417b2)
 * [What is Serverless Architecture? What are its criticisms and drawbacks?](https://medium.com/@MarutiTech/what-is-serverless-architecture-what-are-its-criticisms-and-drawbacks-928659f9899a)
 * [서버리스 아키텍쳐(Serverless)란?](https://velopert.com/3543)
+* [양나르이 칼 ... 멀티 태넌시)(http://www.ddaily.co.kr/news/article.html?no=72827)
