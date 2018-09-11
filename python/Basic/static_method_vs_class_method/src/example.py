@@ -1,14 +1,18 @@
+import pdb
 class TestStatic:
     mark = '[@staticmethod] '
 
-    @staticmethod
-    def print_msg(msg):
-        print TestStatic.mark + msg
-
     @classmethod
     def print_msg(cls, msg):
+        pdb.set_trace()
         print cls.mark + msg
         print TestStatic.mark
+
+
+    @staticmethod
+    def print_msg(msg):
+        pdb.set_trace()
+        print TestStatic.mark + msg
 
 
     def use_mark(self):
@@ -22,3 +26,4 @@ TestStatic.print_msg('classmethod')
 
 # test = TestStatic()
 # test.use_mark()
+
