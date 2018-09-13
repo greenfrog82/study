@@ -18,7 +18,7 @@ class Person(object):
 
 class Student(Person):
     def __init__(self, first_name, last_name):
-       super().__init__(first_name, last_name) 
+        super(Student, self).__init__(first_name, last_name) 
 
     def __str__(self):
         return '[Student] ' + self.first_name + ' ' + self.last_name
