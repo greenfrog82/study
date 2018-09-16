@@ -23,6 +23,8 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(DynamicFieldsModelSerializer, serializers.HyperlinkedModelSerializer):
+    categories = serializers.PrimaryKeyRelatedField(many=True)
+
     class Meta:
         model = Ingredient
-        fields = ('name', 'notes')
+        fields = ('name', 'notes', 'categories')
