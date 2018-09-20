@@ -6,3 +6,11 @@
 
 >Shift + Cmd + .
 
+## Auto Import
+
+>Alt + Enter
+
+
+
+
+
