@@ -8,6 +8,10 @@ b_value =  defaultdic['b']
 print id(a_value)
 print id(defaultdic['a'])
 
-# dic = {}
+defaultdic = defaultdict(lambda: 0)
 
-# print dic['a']
+print defaultdic['a']
+
+defaultdic = defaultdict()
+
+print defaultdic['a']
