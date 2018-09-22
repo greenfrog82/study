@@ -6,18 +6,16 @@
 
 defaultdict는 [dict](https://docs.python.org/2.7/library/stdtypes.html#dict)의 서브클래스로 value가 설정되지 않은 key에 접근할 때 default_factory를 통해 default value를 할당하는 것 이외의 나머지 기능들은 [dict](https://docs.python.org/2.7/library/stdtypes.html#dict)와 동일하다.  
 
-`default_factory`로는 클래스와 함수가 전달 될 수 있다.
+`default_factory`로는 클래스와 함수가 전달 될 수 있다.  
 `default_factory`를 전달하지 않는 경우 default값은 `None`이다. 
 
-# __missing__(key)
+# \_\_missing\_\_(key)
 
-__missing__()는 dict의 __getitem__()이 호출될 때 해당 key가 존재하지 않는 경우 호출되며, default_factory를 호출하여 default value를 해당 key에 할당한다. 
+\_\_missing\_\_()는 dict의 \_\_getitem\_\_()이 호출될 때 해당 key가 존재하지 않는 경우 호출되며, default_factory를 호출하여 default value를 해당 key에 할당한다. 
 
 하지만 **default_factory**가 None일 경우, **KeyError** exception이 발생하며 변경되지 않고 전파된다.  
 
 # Example
-
-## default_factory
 
 앞서 `default_factory`로 클래스와 함수를 전달 할 수 있다고 했다.  
 각각 클래스와 함수를 만들어서 `default_factory`로 전달 한 후 어떻게 동작하는지 살펴보자.  
@@ -46,12 +44,9 @@ def default_factory_by_function():
 
 dd = defaultdict(default_factory_by_function)
 print dd['a'] # print default_factory_by_function
+```
 
-## Example of Python Doc
-
-[8.3.3.1. defaultdict Examples](https://docs.python.org/2.7/library/collections.html#defaultdict-examples)의 예제를 소개한다. 
-
-defaultdict는 특정 그룹에 속한 데이터를 만들어낼 때 굉장히 편리하다. 
+defaultdict는 특정 그룹에 속한 데이터의 리스트를 만들어낼 때 굉장히 편리하다. 
 다음 에제를 보자. 
 
 [ex_list.py](./ex_list_py)
