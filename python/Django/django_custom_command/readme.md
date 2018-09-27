@@ -168,6 +168,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']
+        print_result = kwargs['print']
+
         for i in range(total):
             User.objects.create_user(username=get_random_string(), email='', password='123')
 
@@ -194,7 +196,133 @@ $ python3 manage.py create_users 3 True
 [<User: fllheo8DCEgv>, <User: ijUA1p5qoG7P>, <User: NAtD3utwg5hK>]
 ```
 
-# Optional Arguments 
+### Optional Arguments 
+
+다음은 예제는 사용자 생성 시 임의의 사용자 이름에 prefix를 더하기 위해 `Optional Arguments`를 사용한다.  
+
+[create user with positional arguments](./mysite/core/management/commands/create_users.py)
+```python
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
+from django.utils.crypto import get_random_string
+
+
+class Command(BaseCommand):
+    help = 'Create random users'
+
+    def add_arguments(self, parser):
+        parser.add_argument('total', type=int, help='Indicates the number of users to be created')
+        parser.add_argument('print', type=bool, help='Indicates print result of execution')
+
+        # Optional argument
+        parser.add_argument('-p', '--prefix', type=str, help='Define a username prefix')
+
+    def handle(self, *args, **kwargs):
+        total = kwargs['total']
+        print_result = kwargs['print']
+
+        # Optional argument
+        prefix = kwargs['prefix']
+
+        for i in range(total):
+            if prefix:
+                username = '{prefix}_{random_string}'.format(prefix=prefix, random_string=get_random_string())
+            else:
+                username = get_random_string()
+
+            User.objects.create_user(username=username, email='', password='123')
+
+        if print_result:
+            self.stdout.write(str(User.objects.all().order_by('-id')[:total][::-1]))
+```
+
+`Optional Arguments`는 말 그대로 전달 유무는 사용자 선택이며, 순서 역시 중요하지 않다.  
+다음과 같이 `Optional Arguments`를 전달하지 않거나, `Positional Arguments`의 앞, 중간, 뒤 어디에 위치하여도 잘 동작한다.
+
+```bash
+$ python3 manage.py create_users 5 True
+[<User: PSQ9z4HUMi2e>, <User: jTlTQdbLVS4L>, <User: OBBwfEMaSbE0>, <User: MHyRbNnhwwpw>, <User: CFchR0ess5Ho>]
+
+$ python3 manage.py create_users 3 True --prefix custom_user
+[<User: custom_user_T5z97id9TmRy>, <User: custom_user_XHqqFZVFmw8M>, <User: custom_user_1wl1ZjIiMNCH>]
+
+$ python3 manage.py create_users --prefix melong 3 True
+[<User: melong_sMfxxPmcrjFf>, <User: melong_mcKqtcid8cat>, <User: melong_IazKPBGEmB4K>]
+
+$ python3 manage.py create_users 3 --prefix hoho True
+[<User: hoho_8F9ptAqZYt6j>, <User: hoho_nCNeosIlHazs>, <User: hoho_C6i2aTiTD5sO>]
+```
+
+앞의 예제에서 `Optional Arguments`를 생성할 때 '-p'와 '--prefix'를 parser.add_argument의 각각 첫번째, 두번째 인자로 전달하였다. 첫번째 인자는 축약형이고 두번째 인자는 옵션의 전체 이름을 나타낸다.  
+따라서 앞서의 실행을 다음과 같이 작성해도 동일하게 동작한다.   
+
+```bash
+$ python3 manage.py create_users 3 True -p custom_user
+[<User: custom_user_r11a658s9h3e>, <User: custom_user_QipEKqZJzUih>, <User: custom_user_b2T89AE3lRVs>]
+```
+
+### Flag Arguments
+
+다음 예제는 사용자 생성 시 임의의 사용자를 super user로 생성할지 regular user로 생성할지 판단하기 위해 `Flag Argumetns`를 사용한다.  
+
+[create user with positional arguments](./mysite/core/management/commands/create_users.py)
+```python
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
+from django.utils.crypto import get_random_string
+
+
+class Command(BaseCommand):
+    help = 'Create random users'
+
+    def add_arguments(self, parser):
+        parser.add_argument('total', type=int, help='Indicates the number of users to be created')
+        parser.add_argument('print', type=bool, help='Indicates print result of execution')
+
+        # Optional argument
+        parser.add_argument('-p', '--prefix', type=str, help='Define a username prefix')
+
+        # Flag argument
+        parser.add_argument('-a', '--admin', action='store_true', help='Create an admin account')
+
+    def handle(self, *args, **kwargs):
+        total = kwargs['total']
+        print_result = kwargs['print']
+
+        # Optional argument
+        prefix = kwargs['prefix']
+
+        # Flag argument
+        admin = kwargs['admin']
+
+        for i in range(total):
+            if prefix:
+                username = '{prefix}_{random_string}'.format(prefix=prefix, random_string=get_random_string())
+            else:
+                username = get_random_string()
+
+            create_user = User.objects.create_superuser if admin else User.objects.create_user
+            create_user(username=username, email='', password='123')
+
+        if print_result:
+            self.stdout.write(str(User.objects.all().order_by('-id')[:total][::-1]))
+```
+
+`Flag Arguments`는 `Optional Arguments`의 부분집합으로 모든 특성을 상속받으며, boolean 값을 처리하기 위해 사용된다.  
+이번 예제에서는 super user를 생성할지 regular user를 생성할지를 결정하기 위해 사용했지만, 앞서 `Positiona Arguments`를 `Flag Arguments`로 변경하면 좀 더 자연스울 것이다.  
+
+다음은 위 예제를 실행시킨 결과이다.  
+
+```bash
+$ python3 manage.py create_users 5 True --admin
+[<User: nrbRLJB9hb8l>, <User: lZjGRusdycsd>, <User: ozXr9rgWGqDy>, <User: McvjMHsKw5hI>, <User: JLDmxqTu4zdA>]
+
+$ python3 manage.py shell
+>>> from django.contrib.auth.models import User
+>>> User.objects.get(username='ozXr9rgWGqDy').is_superuser
+True    
+```
+
 
 # Reference
 

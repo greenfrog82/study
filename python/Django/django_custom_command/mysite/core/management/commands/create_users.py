@@ -9,13 +9,31 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('total', type=int, help='Indicates the number of users to be created')
         parser.add_argument('print', type=bool, help='Indicates print result of execution')
+        
+        # Optional argument
+        parser.add_argument('-p', '--prefix', type=str, help='Define a username prefix')
+
+        # Flag argument
+        parser.add_argument('-a', '--admin', action='store_true', help='Create an admin account')
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']
         print_result = kwargs['print']
 
+        # Optional argument
+        prefix = kwargs['prefix']
+
+        # Flag argument
+        admin = kwargs['admin']
+
         for i in range(total):
-            User.objects.create_user(username=get_random_string(), email='', password='123')
+            if prefix:
+                username = '{prefix}_{random_string}'.format(prefix=prefix, random_string=get_random_string())
+            else:
+                username = get_random_string()
+
+            create_user = User.objects.create_superuser if admin else User.objects.create_user
+            create_user(username=username, email='', password='123')
 
         if print_result:
             # https://stackoverflow.com/questions/20555673/django-query-get-last-n-records
