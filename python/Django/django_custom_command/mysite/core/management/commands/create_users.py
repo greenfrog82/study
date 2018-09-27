@@ -8,8 +8,36 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('total', type=int, help='Indicates the number of users to be created')
+        parser.add_argument('print', type=bool, help='Indicates print result of execution')
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']
+        print_result = kwargs['print']
+
         for i in range(total):
             User.objects.create_user(username=get_random_string(), email='', password='123')
+
+        if print_result:
+            # https://stackoverflow.com/questions/20555673/django-query-get-last-n-records
+            # if I don't use str, the following error will occurred.
+            """
+            Traceback (most recent call last):
+            File "manage.py", line 15, in <module>
+                execute_from_command_line(sys.argv)
+            File "/usr/local/lib/python3.5/dist-packages/django/core/management/__init__.py", line 381, in execute_from_command_line
+                utility.execute()
+            File "/usr/local/lib/python3.5/dist-packages/django/core/management/__init__.py", line 375, in execute
+                self.fetch_command(subcommand).run_from_argv(self.argv)
+            File "/usr/local/lib/python3.5/dist-packages/django/core/management/base.py", line 316, in run_from_argv
+                self.execute(*args, **cmd_options)
+            File "/usr/local/lib/python3.5/dist-packages/django/core/management/base.py", line 353, in execute
+                output = self.handle(*args, **options)
+            File "/develop/python/Django/django_custom_command/mysite/core/management/commands/create_users.py", line 22, in handle
+                # https://stackoverflow.com/questions/20555673/django-query-get-last-n-records
+            File "/usr/local/lib/python3.5/dist-packages/django/core/management/base.py", line 142, in write
+                if ending and not msg.endswith(ending):
+            AttributeError: 'QuerySet' object has no attribute 'endswith
+            """
+            self.stdout.write(str(User.objects.all().order_by('-id')[:total][::-1]))
+        
+        

@@ -124,6 +124,7 @@ class Command(BaseCommand):
 
 `Positional Arguments`는 앞선 예제와 같이 `add_arguments`메소드를 정의하고 `parser.add_argument`를 통해 정의된다.   
 `Positional Arguments`는 CC를 실행 시키기 위한 **필수** 입력 argument이다. 따라서, 실행을 위해서는 반드시 입력을 해주어야한다.   
+또한 **반드시 전달되는 순서를 지켜주어야한다**.  
 다음과 같이 CC를 실행 시킬 때 `Positional Arguments`를 전달하지 않으면 CC의 실행이 멈추고 이를 전달하라는 메시지를 출력한다.   
 
 ```bash
@@ -149,22 +150,51 @@ Type "help", "copyright", "credits" or "license" for more information.
 <QuerySet [<User: LAARbZrDSLWy>, <User: qLFRYV5Ijjxt>, <User: Jl78LjE1sa7n>]>
 ```
 
+앞선 예제에 실행 결과를 화면에 출력하는 `Positional Arguments` `print`를 추가해 보자.  
+
+[create user with positional arguments](./mysite/core/management/commands/create_users.py)
+```python
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
+from django.utils.crypto import get_random_string
 
 
+class Command(BaseCommand):
+    help = 'Create random users'
 
+    def add_arguments(self, parser):
+        parser.add_argument('total', type=int, help='Indicates the number of users to be created')
+        parser.add_argument('print', type=bool, help='Indicates print result of execution')
 
+    def handle(self, *args, **kwargs):
+        total = kwargs['total']
+        for i in range(total):
+            User.objects.create_user(username=get_random_string(), email='', password='123')
 
+        if print_result:
+            self.stdout.write(str(User.objects.all().order_by('-id')[:total][::-1]))
+```
 
+이제 `Positional Arguments`의 순서를 바꿔서 전달해보자.  
+다음과 같이 에러가 발생한다.
 
+```bash
+$ python3 manage.py create_users True 3
+usage: manage.py create_users [-h] [--version] [-v {0,1,2,3}]
+                              [--settings SETTINGS] [--pythonpath PYTHONPATH]
+                              [--traceback] [--no-color]
+                              total print
+manage.py create_users: error: argument total: invalid int value: 'True'
+```
 
+다음은 `Positional Arguments`를 정상적으로 전달했을 때의 실행결과이다. 
 
+```bash
+$ python3 manage.py create_users 3 True
+[<User: fllheo8DCEgv>, <User: ijUA1p5qoG7P>, <User: NAtD3utwg5hK>]
+```
 
-
-
-
-
-
-
+# Optional Arguments 
 
 # Reference
 
