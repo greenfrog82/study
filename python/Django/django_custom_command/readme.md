@@ -323,6 +323,58 @@ $ python3 manage.py shell
 True    
 ```
 
+## Arbitrary List of Arguments
+
+이번에는 `Positional Arguments`를 통해 리스트를 전달받을 수 있도록 해보자.  
+다음 예제는 특정 사용자의 id 목록을 전달받아 해당 사용자를 지운다.   
+
+```python
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
+
+
+class Command(BaseCommand):
+    help = 'Delete users'
+
+    def add_arguments(self, parser):
+        parser.add_argument('user_id', nargs='+', type=int, help='User ID')
+
+    def handle(self, *args, **kwargs):
+        user_ids = kwargs['user_id']
+        
+        for user_id in user_ids:
+            try:
+                user = User.objects.get(pk=user_id)
+                user.delete()
+                self.stdout.write('User "%s (%s)" deleted with success!' % (user.username, user_id))
+            except User.DoesNotExist:
+                self.stdout.write('User with id "%s" does not exits.' % user_id)
+```
+
+parser.add_argument의 keyword argument인 `nargs`에 `'+'`를 전달하면 리스트를 인자로 받을 수 있다.   
+
+다음은 아이디 하나만 전달하는 경우 여러개의 아이디 목록을 전달하는 경우의 실행결과이다.  
+
+```bash
+$ python3 manage.py delete_users 2
+User "qLFRYV5Ijjxt (2)" deleted with success!
+
+$ python3 manage.py delete_users 2 3 4
+User with id "2" does not exits.
+User "Jl78LjE1sa7n (3)" deleted with success!
+User "WYERoJF109g4 (4)" deleted with success!
+```
+
+## Cron Job
+
+매주 월요일 리포트를 생성하거나 한달에 한번 특정 사이트를 크롤링 하는 등, CC를 일정한 주기에 따라 실행해줘야한다면 **Cron Job**을 이용할 수 있다.  
+방법은 아주 간단한데, CC를 crontab에 등록하기만 하면 된다.  
+
+다음은 매일 오전 4시에 my_custom_command를 실행한다. 
+
+```bash
+0 4 * * * /home/mysite/venv/bin/python /home/mysite/mysite/manage.py my_custom_command
+```
 
 # Reference
 
