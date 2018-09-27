@@ -98,7 +98,58 @@ optional arguments:
 
 Django는 CC에서 command line arguments를 다루기 위해 [argparse](https://docs.python.org/3/library/argparse.html) Python standard libarary를 사용하며, `BaseCommand`의 `add_arguments`메소드 정의해야한다.
 
+
 ### Positional Arguments
+
+다음 예제는 `total`이라는 argument를 전달받아 전달받은 수 만큼 임의의 사용자를 생성하는 예제이다.  
+
+[create user with positional arguments](./mysite/core/management/commands/create_users.py)
+```python
+from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
+from django.utils.crypto import get_random_string
+
+
+class Command(BaseCommand):
+    help = 'Create random users'
+
+    def add_arguments(self, parser):
+        parser.add_argument('total', type=int, help='Indicates the number of users to be created')
+
+    def handle(self, *args, **kwargs):
+        total = kwargs['total']
+        for i in range(total):
+            User.objects.create_user(username=get_random_string(), email='', password='123')
+```
+
+`Positional Arguments`는 앞선 예제와 같이 `add_arguments`메소드를 정의하고 `parser.add_argument`를 통해 정의된다.   
+`Positional Arguments`는 CC를 실행 시키기 위한 **필수** 입력 argument이다. 따라서, 실행을 위해서는 반드시 입력을 해주어야한다.   
+다음과 같이 CC를 실행 시킬 때 `Positional Arguments`를 전달하지 않으면 CC의 실행이 멈추고 이를 전달하라는 메시지를 출력한다.   
+
+```bash
+$ python3 manage.py create_users
+usage: manage.py create_users [-h] [--version] [-v {0,1,2,3}]
+                              [--settings SETTINGS] [--pythonpath PYTHONPATH]
+                              [--traceback] [--no-color]
+                              total
+manage.py create_users: error: the following arguments are required: total
+```
+
+다음은 `Positional Arguments`를 정상적으로 전달하여 CC를 실행시킨 결과이다.   
+`total` argument로 전달한 수 만큼 임의의 사용자를 생성한 것을 알 수 있다.  
+
+```bash
+python3 manage.py shell
+Python 3.5.2 (default, Nov 23 2017, 16:37:01)
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: LAARbZrDSLWy>, <User: qLFRYV5Ijjxt>, <User: Jl78LjE1sa7n>]>
+```
+
+
 
 
 
