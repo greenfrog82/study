@@ -143,15 +143,6 @@ datetime.datetime(2018, 9, 27, 23, 59, 25, 318455, tzinfo=<UTC>)
 datetime.datetime(2018, 9, 27, 23, 59, 30, 418160, tzinfo=<UTC>)
 ```
 
-`auto_now_add` 파라
-
-
-
-
-
-
-
-
 # Reference
 
 * [auto_now VS auto_now_add](http://tomining.tistory.com/145)
