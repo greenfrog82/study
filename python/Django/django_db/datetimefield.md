@@ -1,5 +1,4 @@
-# [DateTimeField](https://docs.djangoproject.com/en/2.1/ref/models/fields/#datetimefield) and 
-[DateField](https://docs.djangoproject.com/en/2.1/ref/models/fields/#datefield)
+# [DateTimeField](https://docs.djangoproject.com/en/2.1/ref/models/fields/#datetimefield) and [DateField](https://docs.djangoproject.com/en/2.1/ref/models/fields/#datefield)
 
 ```python
 class DateTimeField(auto_now=False, auto_now_add=False, **options)
@@ -42,9 +41,6 @@ auto_now_add의 값이 True인 경우, 모델이 **최초로 저장**될 때 현
 **Note**
 
 auto_now_add의 값이 True인 경우라도 해당 필드의 값은 언제든지 수정 될 수 있다.
-
-? 다음은 Django 공식 문서에 있는 내용인데, BOLD 처리한 부분이 이해가 안된다 ..
->Automatically set the field to now when the object is first created. Useful for creation of timestamps. **Note that the current date is always used; it’s not just a default value that you can override.** 
 
 # Example
 
