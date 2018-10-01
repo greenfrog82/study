@@ -314,4 +314,172 @@ django.db.transaction.TransactionManagementError: Transaction managed block ende
             transaction.commit()
 ```
 
+## SavePoints
+
+`SavePoints`는 트랜잭셔 내부에서 부분적으로 트랜잭션을 다루기 위한 것이다. PostgreSQL 8, Oracle, MySQL(ver 5.0.3 이상, InnoDB engine)가 이를 지원하며, 지원하지 않는 DB를 사용하는 경우 해당 기능은 동작하지 않는다.
+
+`SavePoints`는 `autocommit`의 경우 모든 동작을 즉시 `commit` 해버리기 때문에 사용할 수 없다.   
+`SavePoints`는 `commit_on_success`와 `commit_manually`를 사용할 때 유용하며 부분적인 트랜잭션을 수행할 수 있다. 
+
+`SavePoints`는 다음 세가지 메소드를 통해 제어된다. 
+
+>transaction.savepoint(using=None)
+
+`savepoint`를 생성하며 `savepoint ID(sid)`를 반환한다. 이 반환된 `sid`를 통해 해당 `savepoint`에 대한 `commit`과 `rollback`이 이루어진다.   
+
+>transaction.savepoint_commit(sid, using=None)
+
+인자로 전달받은 `sid`가 포함하고 있는 DB operation을 `commit`한다.
+
+>transaction.savepoint_rollback(sid, using=None)
+
+인자로 전달받은 `sid`가 포함하고 있는 DB operation을 `rollback`한다. 
+
+### Example
+
+앞서 `autocommit`모드에서는 `Savepoints`의 동작이 무의미하다고 언급했었다. 
+정말 그런지 확인해보자.
+
+```python
+class Command(BaseCommand):
+    @transaction.autocommit
+    def handle(self, *args, **options):
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='test')
+        transaction.savepoint_rollback(sid)
+```
+
+앞선 에제에서 `SavePoints`에 대해서 `rollback`을 했지만, `commit`이되어 데이터가 존재하는 것을 확인 할 수 있다. 
+
+```python
+>>> TransModel.objects.all()
+[<TransModel: TransModel object>]
+>>> TransModel.objects.all()[0].name
+u'test'
+>>>
+```
+
+이번에는 `commit_on_success`에서 `SavePoints`를 테스트해보자.  
+우선, `SavePoints`를 `commit`하지 않으면 어떻게 될까? 객체를 생성한 후 `commit`을 생략해보자.  
+
+```python
+class Command(BaseCommand):
+    @transaction.commit_on_success
+    def handle(self, *args, **options):
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='test commit_on_success without savepoint_commit')
+```
+
+`commit_on_success`는 해당 함수의 동작이 정상적으로 호출되면 `commit`을 수행하므로 해당 데이터가 저장된 것을 확인 할 수 있다. 
+
+```python
+>>> TransModel.objects.all()
+[<TransModel: TransModel object>]
+>>> TransModel.objects.all()[0].name
+u'test commit_on_success without savepoint_commit'
+>>>
+```
+
+이번에는 `SavePoints` 바깥 트랜잭션에서 데이터를 하나 생성하고, `SavePoints` 안쪽에서 생성한 데이터를  `savepoint_rollback`을 통해서 `rollback`해보자. 
+
+```python
+class Command(BaseCommand):
+    @transaction.commit_on_success
+    def handle(self, *args, **options):
+        TransModel.objects.create(name='commit_on_success')
+        
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='test commit_on_success without savepoint_commit')
+        transaction.savepoint_rollback(sid)
+```
+
+실행결과를 보면 `SavePoints`의 데이터는 `rollback`된 것을 확인할 수 있다. 
+
+```python
+>>> TransModel.objects.all()
+[<TransModel: TransModel object>]
+>>> TransModel.objects.all()[0].name
+u'commit_on_success'
+>>>
+```
+
+`SavePoints`의 바깥 트랜잭션은 `rollback`을 하고, `SavePoints` 안쪽에서 생성한 데이터를 `commit`하면 어떻게 될까?
+
+```python
+class Command(BaseCommand):
+    @transaction.commit_on_success
+    def handle(self, *args, **options):
+        TransModel.objects.create(name='commit_on_success')
+        
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='test commit_on_success without savepoint_commit')
+        transaction.savepoint_commit(sid)
+
+        raise Exception('commit_on_success raise exception')
+```
+
+위 예제를 실행하면 다음과 같이 exception이 발생한다. 앞서 설명한것과 같이 `commit_on_success`는 exception이 발생하면 해당 트랜잭션을 `rollback`시킨다.
+
+```bash
+    raise Exception('commit_on_success raise exception')
+Exception: commit_on_success raise exception
+```
+
+Djagno Shell에서 데이터를 확인해보면 `SavePoints`는 `commit`을 했지만 바깥쪽 트랜잭션이 `rollback`되면 함께 데이터가 `rollback`되는 것을 확인 할 수 있다.  
+
+```python
+>>> TransModel.objects.all()
+[]
+```
+
+>이 부분이 아주 중요한데, `SavePoints`를 `commit`했다 하더라도 실제적인 `commit`은 바깥쪽 트랜잭션에 영향을 받는다. 바깥쪽 트랜잭션에서 `Savepoints`이 `commit`을 해주지 않으며 `commit`이 이루어지지 않는다.  
+만약 바깥쪽 트랜잭션에서 `rollback`을 해버린다면 `SavePoints`의 `commit` 역시 모두 `rollback`되어 버린다.
+
+이러한 특징은 `commit_manually`를 통해 좀 더 직관적으로 이해할 수 있다. 다음과 같은 예제를 작성해보자.
+
+첫번째 바깥쪽 트랜잭션에서는 `commit`을 수행하고 `SavePoints`에서도 `commit`을 호출한다.  
+두번쨰 바깥쪽 트랜잭션에서는 `commit`을 수행하고 `SavePoints`에서는 `rollback`을 호출한다.  
+세번째 바깥쪽 트랜잭션에서는 `rollback`을 수행학 `SavePoints`에서는 `commit`을 호출한다.
+
+```python
+class Command(BaseCommand):
+    @transaction.commit_manually
+    def handle(self, *args, **options):
+        TransModel.objects.create(name='First Transaction')
+
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='First SavePoints')
+        transaction.savepoint_commit(sid)
+
+        transaction.commit()
+
+        TransModel.objects.create(name='Second Transaction')
+
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='Second SavePoints')
+        transaction.savepoint_rollback(sid)
+
+        transaction.rollback()
+
+        TransModel.objects.create(name='Third Transaction')
+
+        sid = transaction.savepoint()
+        TransModel.objects.create(name='Third SavePoints')
+        transaction.savepoint_rollback(sid)
+
+        transaction.commit()
+```
+
+실행결과를 보면 첫번째 트랜잭션 결과는 `commit`되었고 두번째 트랜잭션은 `rollback`되었으며, 마지막 세번째 트랜잭션은 바깥쪽 트랜잭션은 `commit`되고 안쪽 트랜잭션은 `rollback`된 것을 확인 할 수 있다.
+
+```python
+>>> TransModel.objects.all()
+[<TransModel: TransModel object>, <TransModel: TransModel object>, <TransModel: TransModel object>]
+>>> TransModel.objects.all()[0].name
+u'First Transaction'
+>>> TransModel.objects.all()[1].name
+u'First SavePoints'
+>>> TransModel.objects.all()[2].name
+u'Third Transaction'
+```
 
