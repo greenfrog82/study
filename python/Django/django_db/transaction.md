@@ -483,3 +483,62 @@ u'First SavePoints'
 u'Third Transaction'
 ```
 
+## When do we use SavePoints?
+
+개발자는 다음과 같은 의도로 다음 예제를 개발하였다.  
+'A'를 먼저 생성한다. 그리고 age 속성을 전달해서 'B'을 생성할 때 exception일 발생하면 'B' 데이터 생성에 대해서만 `rollback`을 하고 'C'를 생성하도록 하고자 한다. 
+
+```python
+class Command(BaseCommand):
+    @transaction.commit_on_success
+    def handle(self, *args, **options):
+        TransModel.objects.create(name='A')
+
+        try:
+            TransModel.objects.create(name='B')
+            raise Exception
+        except:
+            transaction.rollback()
+
+        TransModel.objects.create(name='C')
+```
+
+실행결과는 다음과 같이 의도치 않게 데이터 'A'까지 `rollback`되어 버렸다.   
+
+```python
+>>> TransModel.objects.all()
+[<TransModel: TransModel object>]
+>>> TransModel.objects.all()[0].name
+u'C'
+```
+
+이러한 경우, `SavePoints`를 사용하면 이 문제를 쉽게 해결할 수 있다.  
+
+```python
+>>> TransModel.objects.all()
+[<TransModel: TransModel object>, <TransModel: TransModel object>]
+>>> TransModel.objects.all()[0].name
+u'A'
+>>> TransModel.objects.all()[1].name
+u'C'
+```
+
+## Database-level autocommit
+
+PostgreSQL 8.2 이상 버전을 사용하면 `database-level autocommit` 옵션을 사용할 수 있다. 만약, 이 옵션을 사용하면 항상 열려있는 트랜잭션이 없기 때문에 exception이 처리 된 후에도 작업을 계속할 수 있다. 
+
+```python
+a.save() # succeeds
+try:
+    b.save() # Could throw exception
+except IntegrityError:
+    pass
+c.save() # succeeds
+```
+
+>**Note**
+`database-level autocommit`은 `autocommit decorator`와 동작이 비슷해 보이지만 엄연히 다르다. `database-level autocommit`은 계속적인 트랜잭션이 존재하지 않지만, `autocommit decorator`는 각각 동작을 수행할 때 트랜잭션이 존재하며 DB가 수정될 때 `commit`이 발생한다.  
+
+### TODO
+
+* Database-level autocommit 시 `commit_on_success`와 `commit_manually`등에 미치는 영향과 이점과 허점등을 조사해볼 것. 우선순위 최하!!
