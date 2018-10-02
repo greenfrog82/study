@@ -38,7 +38,8 @@ repository_root는 프로젝트의 실질적인 root directory로 django_project
 
 **CHECK**
 
-우리 회사의 경우 책과같이 repository_root 경로가 분리되어 있다. 하지만, 일부 배포에 필요한 파일들이 django_project_root에 있는듯 책과는 형태가 좀 차이가 있는듯하다. 
+우리같은 경우 책과같이 repository_root 경로가 분리되어 있다. 하지만, 일부 배포에 필요한 파일들이 django_project_root에 있는듯 책과는 형태가 좀 차이가 있는듯하다. 
+-- 우리같은 경우 fablic 파일이 프로젝트 경로에 존재하고 doc이나 배포파일등은 어디서 관리하는지 보이지 않는다.
 
 ### Second Level: django_project_root
 
@@ -67,7 +68,8 @@ repository_root경로의 존재에 대해서는 전적으로 동의.
 **CHECK**
 
 * django_project_root 경로의 templates/ 경로의 의미는 알겠는데, 이렇게 templates 파일을 관리하는 경우가 있는가?
-* config/의 경우 일반적으로 django-admin.py를 통해 프로젝트를 생성하면, 프로젝트 명과 동일하게 경로가 생성되는데 이 이름을 이런식으로 바꿔서 사용하라는건가? 아니면 프로젝트 생성 시 해당 이름을 정해줄 수 있는건가?
+* config/의 경우 일반적으로 django-admin.py를 통해 프로젝트를 생성하면, 프로젝트 명과 동일하게 경로가 생성되는데 이 이름을 이런식으로 바꿔서 사용하라는건가? 아니면 프로젝트 생성 시 해당 이름을 정해줄 수 있는건가? 
+  이건 보니까 뒤에 [cookiecutter-django](https://github.com/pydanny/cookiecutter-django)와 같이 django-admin의 startproject를 customize해서 경로명을 저런식으로 처리하는 것 같음.
 
 ## 3.4 What About the Virtualenv?
 
@@ -91,6 +93,7 @@ virtualenv 경로를 VCS에서 관리할 필요가 없는데 이는 *requirement
 **CHECK**
 
 우리 virtualenv의 경우 이러한 형태로 관리되고 있는지 확인해볼 것.
+우리 virtualenv는 책과 같이 분리되어있음.
 
 ### TIP: Listing Current Dependencies
 
