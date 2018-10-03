@@ -36,16 +36,6 @@ Djagno 2.x 버전에서의 Django Project 구조
 
 repository_root는 프로젝트의 실질적인 root directory로 django_project_root이외에도 readme.md, requirements.txt, .gitignore 그리고 배포를 위해 요구되는 파일들이 존재한다. 
 
-**CHECK**
-
-우리같은 경우 책과같이 repository_root 경로가 분리되어 있다. 하지만, 일부 배포에 필요한 파일들이 django_project_root에 있는듯 책과는 형태가 좀 차이가 있는듯하다. 
--- 우리같은 경우 fablic 파일이 프로젝트 경로에 존재하고 doc이나 배포파일등은 어디서 관리하는지 보이지 않는다.
-
-**Info**
-
-pip-env는 npm과 같이 패키지를 사용하게 해준다.  
-pip-env을 사용할 때도 repository_root가 분리되어 있을 때 
-
 ### Second Level: django_project_root
 
 django-admin.py startproject를 통해 생성되는 실제 Djandgo Project 경로
@@ -74,10 +64,6 @@ repository_root경로의 존재에 대해서는 전적으로 동의.
 
 * django_project_root 경로의 templates/ 경로의 의미는 알겠는, 이렇게 templates 파일을 관리하는 경우가 있는가?
   * 공통 템플릿 사용 시
-* config/의 경우 일반적으로 django-admin.py를 통해 프로젝트를 생성하면, 프로젝트 명과 동일하게 경로가 생성되는데 이 이름을 이런식으로 바꿔서 사용하라는건가? 아니면 프로젝트 생성 시 해당 이름을 정해줄 수 있는건가? 
-  이건 보니까 뒤에 [cookiecutter-django](https://github.com/pydanny/cookiecutter-django)와 같이 django-admin의 startproject를 customize해서 
-  경로명을 저런식으로 처리하는 것 같음.
-  config/ rename 시켜서 configuration 경로를 명시적으로
 
 ## 3.4 What About the Virtualenv?
 
@@ -98,18 +84,6 @@ or virtualenvwrapper를 사용하고 있다면,
 
 virtualenv 경로를 VCS에서 관리할 필요가 없는데 이는 *requirements.txt*파일에 해당 환경에서 사용 될 라이브러리들이 명시되어 있기 때문이다. 따라서 *requirements.txt*만 VCS에서 관리되면 된다.  
 
-**CHECK**
-
-우리 virtualenv의 경우 이러한 형태로 관리되고 있는지 확인해볼 것.
-우리 virtualenv는 책과 같이 분리되어있음.
-
-* pyenv를 관련 내용 확인 해보자.
-  * 장점과 단점
-  * 일단 장점은 여러버전의 Python을 사용할 수 있다. 
-  * 운영적인 관점에 서버가 죽을 수 있다는 가정을 운영한다면 virtualenv같은 세세한 설정은 필요없을 수 있다.
-* PYthon3.4과 Python3.6가 뭔지 모르는 문제가 있다. 이러한 문제로 충돌이라고 생각된다.
-
-
 ### TIP: Listing Current Dependencies
 
 내가 사용하고 있는 virtualenv에서 사용되고 있는 라이브러리들의 version을 확인하고 싶으면 다음 명령을 사용하자.
@@ -124,7 +98,10 @@ startproject를 통해 Django Project를 생성하면 현업에서 프로젝트�
 
 **CHECK**
 
-어떤면에서 Django의 default 프로젝트 구조가 복잡해진다는거지?
+어떤면에서 Django의 default 프로젝트 구조가 복잡해진다는거지? 
+이 부분에 대해서 스터디 일원들 대부분은 공감하지 못했고, cookiecutter-django가 제공하는 프로젝트 템플릿 역시 프로젝트 구조를 간단하게 만든다고 할수는 없다는 의견.  
+하지만 cookiecutter-django가 db, bootstrap 설정 등 기본적인 설정을 편리하게 해준다면 편리할 것 같다는 의견 역시 있었다.  
+내 개인적인 의견으로는 책에서 소개하는 repository-directory 정도는 공감이 가지만 나머지는 프로젝트를 진행하면서 직접 프로젝트 구조를 잡아가는것도 문제는 없다고 생각된다. 
 
 ### 3.5.2 Our Favorite Project Template
 

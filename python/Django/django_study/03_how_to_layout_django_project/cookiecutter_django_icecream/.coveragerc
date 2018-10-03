@@ -1,5 +1,0 @@
-[run]
-include = cookiecutter_django_icecream/*
-omit = *migrations*, *tests*
-plugins =
-    django_coverage_plugin
