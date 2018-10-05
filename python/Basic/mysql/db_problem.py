@@ -1,17 +1,19 @@
 import MySQLdb as my
  
-db = my.connect(host="ngpdb.cdnetworks.com",
-    user="prism_ui",
-    passwd="tuNS?eLS(HIp60",
-    db="prism"
+db = my.connect(
+    host="docker.for.mac.localhost",
+    user="root",
+    passwd="1234",
+    db="study_db"
 )
-
-print db
-
 
 cursor = db.cursor()
 
-format_strings = ','.join(['%s'] * 3)
-print format_strings
-ret = cursor.execute("select * from auth_user where username in (%(name)s)", {'name': ','.join(['jaeyoung.cho'])})
-print ret
+# import pdb; pdb.set_trace()
+cursor.execute(
+    "select * from person where name in %(name)s", 
+    {'name': ['greenfrog']}
+)
+
+for row in cursor.fetchall():
+    print(row)
