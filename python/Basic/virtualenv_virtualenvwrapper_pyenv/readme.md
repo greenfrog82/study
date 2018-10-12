@@ -234,10 +234,178 @@ $ workon django_ex
 
 > deactivate ENV
 
+## pyenv
+
+pyenv는 하나의 머신에서 여러 파이썬 버전을 쉽게 switch할 수 있도록 해준다.   
+해당 라이브러리가 파이썬 버전을 switch하는 원리는 다음과 같다. 
+
+>When we install pyenv, we add an additional directory of shims to the front of our $PATH. Each shim intercepts commands (python, pip, etc) and redirects them to the appropriate location.
+
+### Installing
+
+일단 Mac에서 설치하는 방법을 가이드한다.  
+
+```bash
+$ brew update
+$ brew install pyenv
+$ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+$ source ~/.bash_profile
+```
+
+### pyenv install --list
+
+위 명령을 사용하면 pyenv과 관리할 수 있는 파이썬의 종류를 출력해준다.  
+출력해보면 알겠지만 굉장히 많은 종류의 파이썬을 지원한다.  
+
+### Installing Python
+
+다음 명령을 통해서 pyenv를 통해 관리하고자하는 파이썬을 설치할 수 있다. 
+
+> $ pyenv install [python version]
+
+예를들어, Python 2.7.15를 사용하고자 한다면 다음과 같이 설치를 할 수 있다. 
+
+```bash
+$ pyenv install 2.7.15
+python-build: use openssl from homebrew
+python-build: use readline from homebrew
+Downloading Python-2.7.15.tar.xz...
+-> https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tar.xz
+Installing Python-2.7.15...
+python-build: use readline from homebrew
+Installed Python-2.7.15 to /Users/a201808045/.pyenv/versions/2.7.15
+```
+
+### Show installed Python version
+
+다음 명령을 통해 pyenv에 설치된 Python version을 확인할 수 있다.
+
+> $ pyenv versions
+
+위 명령을 통해 설치 된 파이썬 버전을 확인해보자. 
+
+```bash
+$ pyenv versions
+pyenv: version `2.7.13' is not installed (set by PYENV_VERSION environment variable)
+  system
+  2.7.15
+  3.7.0
+```
+
+### Setting default Python version
+
+시스템 전역에서 기본으로 사용하고자 하는 파이썬 버전을 설정하기 위해서는 다음 명령을 사용한다.    
+
+> $ pyenv global [python version]
+
+예를들어, Python 2.7.15를 기본으로 사용하고자 한다면 다음과 같이할 수 있다.  
+
+```bash
+$ pyenv global 2.7.15
+pyenv versions
+  system
+* 2.7.15 (set by /Users/a201808045/.pyenv/version)
+  3.7.0
+```
+
+### Activation different version of Python
+
+다음 명령을 통해 특정 버전의 파이썬을 활성화 할 수 있다.  
+
+> $ pyenv shell [version]
+
+위 명령을 통해 앞서 설치했던 파이썬 버전을 활성화해보자.   
+
+```bash
+$ pyenv shell 3.7.0
+$ pyenv versions
+  system
+  2.7.15
+* 3.7.0 (set by PYENV_VERSION environment variable)
+```
+
+## pyenv-virtualenvwrapper
+
+`pyenv-virtualenvwrapper`는 pyenv의 plugin으로 `pyenv virtualenvwrapper` 명령을 통해 `virtualenvwrapper`을 관리할 수 있게한다. 
+
+### Installation
+
+다음 명령을 통해 `pyenv-virtualenvwrapper`를 설치할 수 있다.  
+
+> $ brew install pyenv-virtualenvwrapper
+
+다음 코드들을 ~/.bash_profile에 추가하자. (앞선 에제를 통해 WORKON_HOME을 추가해두었다면 이부분은 생략가능하다.)
+
+```bash
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+export WORKON_HOME=$HOME/.virtualenvs
+pyenv virtualenvwrapper_lazy # virtualenvwrapper_lazy decreases shell load time
+```
+
+### Making virtual environment
+
+`pyenv-virtualenvwrapper`를 통해 가상환경을 만드는 방법은 `virtualwrapper`와 동일하다. **단지 현재 pyenv를 통해 선택된 파이썬 버전이 해당 가상환경의 파이썬 버전으로 지정 된다는 것만 다르다.**
+
+다음과 같이 각각 pyevn를 통해 파이썬 2.7.15를 선택한 버전의 가상환경과 3.7.0을 선택한 버전의 가상환경을 만들어보자.  
+
+```bash
+$ mkvirtualenv py2
+New python executable in /Users/a201808045/.virtualenv/py2/bin/python2.7
+Also creating executable in /Users/a201808045/.virtualenv/py2/bin/python
+Installing setuptools, pip, wheel...done.
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py2/bin/predeactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py2/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py2/bin/preactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py2/bin/postactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py2/bin/get_env_details
+$ workon py2
+(py2) $ python
+Python 2.7.15 (default, Oct 12 2018, 09:56:13)
+[GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.10.44.2)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>>
+$ mkvirtualenv py3
+WARNING: the pyenv script is deprecated in favour of `python3.7 -m venv`
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py3/bin/predeactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py3/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py3/bin/preactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py3/bin/postactivate
+virtualenvwrapper.user_scripts creating /Users/a201808045/.virtualenv/py3/bin/get_env_details
+$ workon py3
+(py3) a201808045@PM201808045001 ~/.virtualenv $ python
+Python 3.7.0 (default, Oct 12 2018, 10:00:43)
+[Clang 10.0.0 (clang-1000.10.44.2)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+```
+
+#### Note
+
+재미있는것은 가상환경 안에서는 pyenv를 통해 파이썬 버전을 선택하더라도 해당 파이썬 버전이 동작하지 않는다. 
+
+```bash
+(py3) $ pyenv shell 2.7.15
+(py3) $ pyenv version
+2.7.15 (set by PYENV_VERSION environment variable)
+$ python
+Python 3.7.0 (default, Oct 12 2018, 10:00:43)
+[Clang 10.0.0 (clang-1000.10.44.2)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+```
+
+PATH를 확인해보면 shims가 먼저 명령을 가로체지 않고 가상환경의 경로를 먼저 보도록 되어있다. 
+
+```bash
+$ echo $PATH
+/Users/a201808045/.virtualenv/py3/bin:/Users/a201808045/.pyenv/shims:/usr/local/Cellar/postgresql@9.4/9.4.19/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+```
 
 ## Check
 
 * 다른 언어들은 예를들어, 자바는 class path C#, C++등은 dependency path 노드는 node_modules등을 통해 라이브러리를 격리한다. 직접 사용하면서 느낀것은 아예 환경자체를 분리하고 가상환경을 활성화 하고 비활성화할때 훅을 디렉토리 단계에서 관리할 수 있어서 편리한 면도 있는것 같은다.
+* pyenv가 호스트 머신에서 다양한 파이썬 버전을 쉽게 변경해주는 것과 mkvirtualenv할 때 pyenv를 통해 선택 된 파이썬 버전이 설정된다는것 말고 뭐가 좋다는거지 ..
 
 
 
@@ -247,5 +415,6 @@ $ workon django_ex
 * [virtualevnwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/#)
 * [pyenv](https://github.com/pyenv/pyenv)
 * [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-* [pyenv-virtualenvwrapper]()
+* [pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper)
 * [Use different Python version with virtualenv](https://stackoverflow.com/questions/1534210/use-different-python-version-with-virtualenv)
+* [Ultimate Solution to Python Virtual Environments: pyenv + virtualenvwrapper](https://alysivji.github.io/setting-up-pyenv-virtualenvwrapper.html)
