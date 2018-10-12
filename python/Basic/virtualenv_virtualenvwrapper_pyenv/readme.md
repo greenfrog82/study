@@ -162,11 +162,82 @@ wheel      0.32.1
 ## virtualenvwrapper
 
 앞서 virtualenv는 가상환경의 경로를 개발자가 세세히 관리하지 않으면 여기저기 흩어져 관리하기 어렵게 되고, 가상환경을 활성화 시키기 위해서는 가상환경의 경로를 찾아야하는등 불편한 점이 여러가지 있다.   
-이를 개선한 것이 virtualenvwrapper로 
+이를 개선한 것이 virtualenvwrapper로 다음과 같은 특징을 갖는다.   
+
+* Organizes all of your virtual environments in one place.
+* Wrappers for managing your virtual environments (create, delete, copy).
+* Use a single command to switch between environments.
+* Tab completion for commands that take a virtual environment as argument.
+* User-configurable hooks for all operations (see Per-User Customization).
+* Plugin system for more creating sharable extensions (see Extending Virtualenvwrapper). 
+
+### Install
+
+virtualenvwrapper를 다음 명령을 통해 설치한다.  
+
+> $ pip install virtualenvwrapper
+
+### Initialize
+
+virtualenvwrapper를 사용하기 위해서는 초기화가 필요하다. 
+초기화 단계에서는 가상환경 디렉토리들을 관리하기 위한 경로를 설정하고 virtualenvwrapper.sh을 실행시켜 virtualenvwrapper를 기동하는 것이다.  
+이를 .bashrc(Unix/Linux) 또느 .bash_profile(OS X)에 저장해서 사용한다. 
+
+```bash
+$ echo 'export WORKON_HOME=~/.virtualenv' >> ~/.bashrc
+$ echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+### Making Virtual Environment
+
+가상환경을 만들때는 다음 명령을 사용한다.
+
+> $ mkvirtualenv ENV
+
+django_ex라는 가상환경을 만들어보자. 
+
+```bash
+$ mkvirtualenv django_ex
+```
+
+방금 생선한 django_ex 가상환경을 WORKON_HOME에서 찾아보자. 
+`virtualenv`와 달리 다른 가상환경을과 함께 일관된 경로에서 가상환경들이 관리되고 있는 것을 알 수 있다. 
+
+```bash
+$ ll ~/.virtualenv
+total 24
+drwxr-xr-x 6 root root 4096 Oct 12 00:21 ./
+drwx------ 1 root root 4096 Oct 12 00:09 ../
+drwxr-xr-x 5 root root 4096 Oct 12 00:14 django_2/
+drwxr-xr-x 5 root root 4096 Oct 12 00:12 django_ex/
+drwxr-xr-x 5 root root 4096 Oct 12 00:21 test/
+drwxr-xr-x 5 root root 4096 Oct 12 00:21 test2/
+```
+
+### Activation Virtual Environment
+
+가상환경의 활성화는 다음 명령을 사용한다. `virtualenv`와 비교해서 편리한 점은 사용하고자하는 가상환경의 경로로 이동하지 않아도 된다는 것이다.   
+
+> workon ENV
+
+앞서 생성한 가상환경을 활성화 해보자. 
+
+```bash
+$ workon django_ex
+(django_ex) $ 
+```
+
+### Deactivation Virtual Environment
+
+가상환경을 비활성화하는 방법은 `virtualenv`와 동일하다.  
+
+> deactivate ENV
+
+
 ## Check
 
-* 다른 언어들은 예를들어, 자바는 class path C#, C++등은 dependency path 노드는 node_modules등을 통해 라이브러리를 격리한다. 직접 사용하면서 느낀것은 아예 환경자체를 분리하고 가상환경을 활성화 하고 비활성화할때 훅을 디렉토리 단계에서 관리할 수 있어서 편리한 면도 있는것 같은다. 
-* 
+* 다른 언어들은 예를들어, 자바는 class path C#, C++등은 dependency path 노드는 node_modules등을 통해 라이브러리를 격리한다. 직접 사용하면서 느낀것은 아예 환경자체를 분리하고 가상환경을 활성화 하고 비활성화할때 훅을 디렉토리 단계에서 관리할 수 있어서 편리한 면도 있는것 같은다.
 
 
 
@@ -177,3 +248,4 @@ wheel      0.32.1
 * [pyenv](https://github.com/pyenv/pyenv)
 * [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 * [pyenv-virtualenvwrapper]()
+* [Use different Python version with virtualenv](https://stackoverflow.com/questions/1534210/use-different-python-version-with-virtualenv)
