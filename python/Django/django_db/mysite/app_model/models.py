@@ -6,3 +6,8 @@ class Article(models.Model):
     # created_date = models.DateTimeField(auto_now_add=True)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
+
+
+class Point(models.Model):
+    x = models.PositiveIntegerField()
+    y = models.PositiveIntegerField()

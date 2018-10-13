@@ -8,6 +8,8 @@ Python3와 Django 2.x에서 데이터베이스를 다루는 방법들에 대해�
 
 ## QuerySet
 
+* [Operators that return new QuerySets](https://docs.djangoproject.com/en/2.1/ref/models/querysets/#operators-that-return-new-querysets)
+
 ## Transaction
 
 * [Transaction](./transaction.md)
