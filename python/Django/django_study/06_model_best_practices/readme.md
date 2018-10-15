@@ -65,5 +65,76 @@ Django의 모델이 DB Table과 어떻게 맵핑되는지 이해하기 쉽다.
 * Proxy model ... ??
 * 혼란과 상당한 오버헤드를 발생시키기 때문에, 반드시 **multi-table inheritance**는 피해야한다. 차라리 명시적인 `OneToOneFields`나 `ForeignKeys`를 사용해라. 
 
+### 6.1.3 Model Inheritance in Practice: The TimeStampedModel
 
+Djagno 프로젝트의 모든 모데에서 **created**와 **modified** timestamp 필드 포함하는것은 아주 일반적이다. 이러한 필드를 각각 그리고 모든 모델에 수동으로 추가할 수 있지만, 이는 많은 작업량을 필요로하고 휴먼 에러를 발생시킬 위험을 가지고 있다. 이에 대한 좋은 해결 방법은 이러한 `TimeStampedModel`이라는 공통 필드를 모아놓은 **abstract  base class**를 작성하는 것이다.  
+
+```python
+# my_app/models.py
+from djagno.db import models
+
+class TimeStampModel(models.Model):
+    """
+    An abstract base class model that provides self-
+    updating ``created`` and ``modified`` fields.
+    """   
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+```
+
+위 코드에서 우리는 Meta 클래스의 abstract = True 코드에 주목할 필요가 있다. 이 코드가 TimeStampModel을 **abstract class**로 만든다. 
+
+**TimeStampModel**을 상속받아서 새로운 클래스를 만든 경우, `migrate`를 수행헀을 때 **core_timestampedmodel** 테이블을 생성하지 않는다.   
+
+```python
+# my_app/models.py
+from django.db import models
+
+from core.models import TimeStampedModel
+
+class Flavor(TimeStampedModel):
+    title = models.CharField(max_length=200)
+```
+
+위 모델은 오직 **flavors_flavor** 테이블만을 생성한다. 이것은 정확히 우리가 원하는 동작이다. 
+
+다음은 위 모델을 `migrate` 했을 때 DB에 생성된 테이블이다.  
+Django의 기본적인 테이블 이외에 **my_app_flavor**가 추가된 것을 알 수 있고, 스키마를 확인해보면 **abstract class**인 TimeStampedModel에 정의된 **created**와 **modified** 필드가 포함되어 있는것을 알 수 있다. 
+
+```bash
+sqlite> .tables
+auth_group_permissions      django_content_type
+auth_permission             django_migrations
+auth_user                   django_session
+auth_user_groups            my_app_flavor
+auth_user_user_permissions
+
+sqlite> .schema my_app_flavor
+CREATE TABLE "my_app_flavor" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "created" datetime NOT NULL, "modified" datetime NOT NULL, "title" varchar(200) NOT NULL);
+```
+
+반면에, TimeStampedModel을 **abstract class**로 만들지 않고 **concreate base class**로 생성한 후 위와 같이 상속한다면 **my_app_timestampedmodel** 테이블이 생성된다. 뿐만 아니라 TimeStampedModel을 하위 클래스들은 TimeStampedModel의 필드를 갖지 않고 ForeignKey 제약 조건이 걸려있는 것을 알 수 있다. 
+
+```bash
+sqlite> .tables
+auth_group                  django_admin_log
+auth_group_permissions      django_content_type
+auth_permission             django_migrations
+auth_user                   django_session
+auth_user_groups            my_app_flavor
+auth_user_user_permissions  my_app_timestampedmodel
+
+sqlite> .schema my_app_timestampedmodel
+CREATE TABLE "my_app_timestampedmodel" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "created" datetime NOT NULL, "modified" datetime NOT NULL);
+
+sqlite> .schema my_app_flavor
+CREATE TABLE "my_app_flavor" ("timestampedmodel_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "my_app_timestampedmodel" ("id") DEFERRABLE INITIALLY DEFERRED, "title" varchar(200) NOT NULL);
+```
+
+기억해라, **concreate base class**를 상속하는 것은 데이터에 접근할 때 join을 해야하기 때문에 성능이 좋지 않다. 
+
+## 6.1.4 Database Migrations
 
