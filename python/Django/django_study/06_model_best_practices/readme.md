@@ -92,6 +92,10 @@ class Flavor(TimeStampedModel):
 * Proxy model ... ??
 * 혼란과 상당한 오버헤드를 발생시키기 때문에, 반드시 **multi-table inheritance**는 피해야한다. 차라리 명시적인 `OneToOneFields`나 `ForeignKeys`를 사용해라. 
 
+#### TODO
+
+Proxy Model 실
+
 ### 6.1.3 Model Inheritance in Practice: The TimeStampedModel
 
 Djagno 프로젝트의 모든 모데에서 **created**와 **modified** timestamp 필드 포함하는것은 아주 일반적이다. 이러한 필드를 각각 그리고 모든 모델에 수동으로 추가할 수 있지만, 이는 많은 작업량을 필요로하고 휴먼 에러를 발생시킬 위험을 가지고 있다. 이에 대한 좋은 해결 방법은 이러한 `TimeStampedModel`이라는 공통 필드를 모아놓은 **abstract  base class**를 작성하는 것이다.  
@@ -174,13 +178,17 @@ Django의 모델을 **migrations**할 때의 팁!
     * ?? makemigrations가 정확히 어떤 동작을하는지 설명이 필요 .. 
     * 일단 내가 알기로는 migration을 위한 코드를 만드는 과정 그리고 이러한 코드들이 migrations 경로에 남아 이력이되어 rollback이 가능하도록 하는 것.
 * 모델의 변경이 심한 경우 `makemigrations`명령을 통해 생성 된 migration code를 실행하기 전에 검토해봐라. 또한 `sqlmigrate` 명령을 통해서 migration code를 실행할 때 생성되는 쿼리를 확인하여라. 
-    * ?? 이렇게 쿼리를 보는것이 실제 테이블이 어떻게 생성되는지 확인할 수 있어서 굉장히 중요해보이는데 실제로 이러한 작업을 하는지? 
+    * ?? 이렇게 쿼리를 보는것이 실제 테이블이 어떻게 생성되는지 확인할 수 있어서 굉장히 중요해보이는데 실제로 이러한 작업을 하는지? 이걸 DBA에게 줘서 뭔가 확인해달라.
 * 자신의 migration 로직을 가지고 있지 않은 third-party app에 대한 migration의 작성을 관리하기 위해서는 `MIGRATION MODULES` 설정을 사용해라. 
     * ?? 아 .. 이건 또 뭐지 .... ????????????
 * migration code가 관리하기 어려울만큼 늘어난다면 `squashmigrations`명령을 통해 해결할 수 있다.
     * ?? 이건 또 ... what the fuck!
 
 ### Migration Commands 
+
+**TODO**
+
+-delete-ghost-migrations 에 대해서 알아보기
 
 **CHECK**
 아래 명령들에 대응하는 Django 1.4의 명령들은 무엇인가?
