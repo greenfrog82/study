@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'my_app.apps.MyAppConfig',
+    'my_migration.apps.MyMigrationConfig',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MIGRATION_MODULES = {
+    'my_migration': None
+}
