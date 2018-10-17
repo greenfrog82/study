@@ -10,6 +10,7 @@ Python3와 Django 2.x에서 데이터베이스를 다루는 방법들에 대해�
 
 * [Operators that return new QuerySets](./operator_with_queryset.md)
 * [Update()](./queryset_update.md)
+* [bulk_create()](./bulk_create.md)
 
 ## Transaction
 
