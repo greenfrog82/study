@@ -198,8 +198,6 @@ Django의 모델을 **migrations**할 때의 팁!
 
 # 6.2 Django Model Design
 
-
-
 ### Migration Commands 
 
 **CHECK**
@@ -464,6 +462,127 @@ No changes detected
 ```
 
 `None`설정은 새로운 설정을 위해 테스트 settings.py 파일을 만들었을 때 관련 없는 앱의 migration을 막기 위해 사용될 수 있다고 한다.  
+
+## 6.2 Django Model Design
+
+최소한의 관심을 받는 가장 어려운 주제들 중 하나는 모델 디자인에 관한 것이다.
+어떻게 이른 최적화 없이 성능 좋은 디자인을 할 수 있을까? 여기서 이에 대한 전략에 대해 알아보자.  
+### 6.2.1 Start Normalized
+
+[About Database Normalization](https://github.com/greenfrog82/study/tree/master/db/common/normalization)
+
+Django의 모델을 디자인한다면, 항상 `Normalization`부터 시작하자. 시간을 갖고 다른 모델이 이미 저장하고 있는 데이터가 없는지 확인하자.   
+
+이러한 전약에서는 `relationship field(ForeignKey, OneToOne, ManyToMany)`들을 충분히 사용하고 이르게 `Denormalization`은 하지말자.
+
+### 6.2.2 Cache Before Denormalizing
+
+종종, 캐쉬를 적절하게 사용하는 것은 모델을 `Denormalization`하여 발생하는 문제를 해결할 수 있다. 이후 chapter 24, Finding and Reducing Bottlenecks에서 이 부분에 대해서 다룬다.   
+
+### 6.2.3 Denormalize Only if Absolutely Needed
+
+`Normalization`을 잘 모르는 경우 `Denormalization`의 유혹에 넘어갈 수 있다. 하지만 그러지 마라! `Denormalization`이 프로젝트에서 발생하는 문제들을 모두 해결해 줄 것 같이 보일수 있다. 사실은 그렇지 않다. 오히려 프로젝트의 복잡도를 높이고 데이터 유실률을 극적으로 증가시킨다.   
+
+따라서, `Denormalization`을 진행하기 전에 반드시 `Cache`를 먼저 고려하여라!
+
+**CHECK**
+
+Denormalization을 해야만 했던 경우와 왜 그랬는지 그리고 Cache를 적용해서 해결하는 방벙에 대해서 알고 있는 분 있으면 먼저 이야기해보자.
+
+### 6.2.4 When to Use Null and Blank
+
+모델의 field를 정의할 때 `null=True`와 `blank=True`옵션을 정의할 수 있다. 이 두 옵션의 기본값은 **False**이다.  
+
+이 두 옵션을 언제 사용해야하는가는 모든 개발자가 겪는 혼란이다.   
+
+여기서 위 두 옵션을 언제 사용해야하는지에 대한 가이드를 알아보자.  
+
+#### CharField, TextField, SlugField, EmailField, CommaSeparatedIntegerField(deprecated on 2.1), UUIDField
+
+* null=True
+    Don't do this.  
+    이 필드들에 값을 입력하지 않으면 장고는 언제나 **None** 또는 **빈 문자열**을 반환한다.
+* blank=True
+    Okay.  
+    widget이 빈값을 허용하게 하려면 이 옵션을 사용하자. 이 옵션을 사용하면 사용자가 값을 입력하지 않으면 DB에 빈 문자열이 입력된다.
+
+#### FileField, ImageField
+
+* null=True
+    Don't do this.   
+    MEDIA_ROOT 경로로부터 저장되는 파일 또는 이미지들의 경로는 `CharField`로 저장한다. 따라서 앞서 설명한것과 동일한 이유로 해당 옵션은 사용하지말자.  
+* blank=True
+    앞서 설명한것과 동일한 이유로 해당 옵션의 사용은 허용된다.   
+
+#### BooleanField
+
+* null=True
+    Don't do this. `NullBooleanField`를 대신 사용하자.
+* blank=True
+    Don't do this.  
+    ?? 왜 이유가 없지 ... null=True와 같은건가?
+
+#### IntegerField, FloatField, DecimalField, DurationField, etc
+
+* null=True
+    Okay.  
+    만약 DB에 **NULL**값을 저장하고자 한다면, 사용하자.
+* blank=True
+    Okay.  
+    만약 widget에서 빈값을 입력받고자 한다면, 사용하자. 
+
+#### DateTimeField, DateField, TimeField, etc
+
+* null=True
+    Okay.
+    만약 DB에 **NULL**값을 저장하고자 한다면, 사용하자.
+* blank=True
+    Okay.  
+    widget(e.g. select box)에서 빈값을 받고자 한다면, 사용하자. 
+
+#### GenericIPAddressField
+
+* null=True
+    Okay.  
+    만약 DB에 **NULL**값을 저장하고자 한다면, 사용하자.
+* blank=True
+    만약 widget에서 빈값을 입력받고자 한다면, 사용하자. 
+
+### 6.2.5 When to Use BinaryField
+
+bytes, bytearray 또는 memoryview를 저장할 수 있다.   
+일반적인 field들과 달리 filter, exclude와 같은 쿼리를 사용할 수 없다.   
+해당 필드는 다음과 같은 경우 사용할 수 있다. 
+
+* MessagePack-formatted content.
+* Raw sensor data.
+* Compressed data.
+
+해당 필드의 활용도는 무한하지만, 반드시 기억해야할 것은 바이너리 데이터가 엄청 커질 수 있어 DB가 느려질 수 있다는것이다. 이런 경우 바이너리 데이터는 파일 형태로 저장하고 `FileField`가 이 경로를 저장하고 있도록하자.   
+
+**CHECK**
+
+확인 결과 우리는 아예 해당 필드를 사용하지 않는다. 그럼 우리의 파일관리는 전부 파일시스템에?
+
+#### WARNING: Don't Serve Files From BinaryField!
+
+http://2scoops.co/three-things-not-to-put-in-database에 따르면 다음 세가지 성격의 파일은 DB에 저장하지 말라고 나온다.  
+
+* Images, files, and binary data
+    * read/write를 DB에 하는것은 언제난 파일 시스템보다 느리다.
+    * DB를 backup하는 경우 데이터가 점점 커져서 시간이 오래걸리게 된다. 
+    * 이러한 데이터에 저장하기 위해서는 어플리케이션과 DB Layer를 거쳐야만한다. 
+* Ephemeral data
+    수명이 짧은 데이터들의 경우 redis와 같은 캐쉬를 사용해라. 
+* Log
+    Log를 DB에 쌓는것이 무조건 나쁘다는것은 아니다. Log를 쌓는 장소 Production의 데이터가 저장된 같은 DB일 경우 문제가 된다.  
+    차라리 Splunk? 이런 툴이나 전통적인 로깅 방식을 사용해라. 
+
+
+
+    
+
+
 
 
 # Reference
