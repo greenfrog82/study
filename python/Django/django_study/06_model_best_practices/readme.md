@@ -180,15 +180,27 @@ Django의 모델을 **migrations**할 때의 팁!
 * 모델의 변경이 심한 경우 `makemigrations`명령을 통해 생성 된 migration code를 실행하기 전에 검토해봐라. 또한 `sqlmigrate` 명령을 통해서 migration code를 실행할 때 생성되는 쿼리를 확인하여라. 
     * ?? 이렇게 쿼리를 보는것이 실제 테이블이 어떻게 생성되는지 확인할 수 있어서 굉장히 중요해보이는데 실제로 이러한 작업을 하는지? 이걸 DBA에게 줘서 뭔가 확인해달라.
 * 자신의 migration 로직을 가지고 있지 않은 third-party app에 대한 migration의 작성을 관리하기 위해서는 `MIGRATION MODULES` 설정을 사용해라. 
-    * ?? 아 .. 이건 또 뭐지 .... ????????????
 * migration code가 관리하기 어려울만큼 늘어난다면 `squashmigrations`명령을 통해 해결할 수 있다.
-    * ?? 이건 또 ... what the fuck!
+
+마이그레이션을 개발하고 관리해라!
+
+* 해당 프로젝트를 배포하기 전에 적용된 마이그레이션이 롤백될 수 있는지 확인해라. 언제나 완벽하게 이러한 체크를 수행할 수 없겠지만, 이를 수행하지 않으면 큰 프로젝트이 경우 버그를 추적하고 배포하는것에 어려움을 느낄 것이다. 
+    * ?? 버그 추적이 어렵다는게 어떤 의미일까
+    * ?? 배포하는것의 어려움을 해결할 수 있다는 것이 롤백이 되기 때문일텐데, 실제로 이러한 경험이 있는지 이야기해보자.
+* 수백만개의 행을 갖는 테이블이 있는 경우 스테이징 서버에서 해당 데이터 사이즈에 대한 광범위한 테스트를 진행해라. 실제 서버에서는 더 많이 시간이 필요할 수 있다.  
+    * ?? 요즘같이 무정지 배포를 하는 경우 시간적인 문제가 이슈가 될 수 있을까? 오히려 테이블이 깨지지 않는지 이런부분이 더 이슈가 될 것 같은데? 이런걸 테스트한다는게 더 이유가 되지 않을지?
+* 만약 MySQL을 사용한다면, 
+    * 스키마의 변경이 있을 때 반드시 백업을 수행해라. MySQL은 스키마변경에 대한 트랜잭션이 부족하므로 롤백이 불가능하다. 
+    * 스키마 변경을 수행하기 전에 할 수 있다면 프로젝트를 read-only 모드로 해두어라.
+        * ?? 이게 무슨 소리지?
+    * 주의하지 않으면 많은 양의 데이터를 가지고 있는 테이블의 스키마 변경에 많은 시간이 필요할 수 있다. 
+        * ?? 그럼 어떻게 주의를 하란 말이지? 
+
+# 6.2 Django Model Design
+
+
 
 ### Migration Commands 
-
-**TODO**
-
--delete-ghost-migrations 에 대해서 알아보기
 
 **CHECK**
 아래 명령들에 대응하는 Django 1.4의 명령들은 무엇인가?
@@ -328,7 +340,87 @@ $ python3 manage.py showmigrations -p
 
 ### [squashmigrations](https://docs.djangoproject.com/en/2.1/ref/django-admin/#squashmigrations)
 
-....
+Django는 일반적으로 100개정도의 마이그레이션은 성능이슈없이 처리하지만, 그 이상은 그렇지 않다. 그리고 마이그레이션 파일들이 많으면 이를 정리할 필요를 느낄 것이다. 이를 수행하는 것이 `squshmigrations` command이다. 
+
+>django-admin squashmigrations app_label [start_migration_name] migration_name
+
+**Parameter(s)**
+
+* app_label : squashmigrations을 하고자하는 앱 이름
+* start_migration_name (Option) : squashmigrations을 하고자하는 시작 migration 이름. 
+* migration_name : squashmigrations을 하고자하는 migration 이름으로, `start_migration_name` 옵션이 이 있는경우 해당 migration부터 이 옵션까지, 없는 경우 처음부터 이 옵션까지 squshmigrations을 수행한다. 
+
+**Example**
+
+다음과 같이 my_app에 마이그레이션 목록이 존재한다. 이를 처음부터 0004번 아미그레이션까지 `squashmigrations`해보자.  
+
+```bash
+$ python3 ./manage.py showmigrations my_app
+my_app
+ [X] 0001_initial
+ [X] 0002_article
+ [X] 0003_author
+ [X] 0004_article_author
+```
+
+다음은 `squashmigrations`명령을 수행한 내용이다.  
+
+```bash
+$ python3 ./manage.py squashmigrations my_app 0004
+Will squash the following migrations:
+ - 0001_initial
+ - 0002_article
+ - 0003_author
+ - 0004_article_author
+Do you wish to proceed? [yN] y
+Optimizing...
+  No optimizations possible.
+Created new squashed migration /develop/python/Django/django_study/mysite/my_app/migrations/0001_squashed_0004_article_author.py
+  You should commit this migration but leave the old ones in place;
+  the new migration will be used for new installs. Once you are sure
+  all instances of the codebase have applied the migrations you squashed,
+  you can delete them.
+```
+
+이제 `squashmigrations`이후 마이그레이션 항목을 확인해보자. 마이그레이션이 하나로 정리된 것을 확인할 수 있다.  
+
+```bash
+python3 ./manage.py showmigrations my_app
+my_app
+ [X] 0001_squashed_0004_article_author (4 squashed migrations)
+```
+
+이제 해당 `showmigrations`을 통해 `squashmigrations`된 마이그레이션을 확인해보면, 앞선 마이그레이션들이 하나의 파일로 정리된 것을 볼 수 있다. 만약 최적화가 되었다면 일부 쿼리가 제외되었겠지만, 지금은 최적화될 내용이 존재하지 않기 때문에 앞선 마이그레이션 쿼리가 그대로 존재하는것을 확인 할 수 있다.   
+
+```bash
+python3 ./manage.py sqlmigrate my_app 0001_squashed_0004_article_author
+BEGIN;
+--
+-- Create model TimeStampedModel
+--
+CREATE TABLE "my_app_timestampedmodel" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "created" datetime NOT NULL, "modified" datetime NOT NULL);
+--
+-- Create model Flavor
+--
+CREATE TABLE "my_app_flavor" ("timestampedmodel_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "my_app_timestampedmodel" ("id") DEFERRABLE INITIALLY DEFERRED, "title" varchar(200) NOT NULL);
+--
+-- Create model Article
+--
+CREATE TABLE "my_app_article" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "content" varchar(200) NOT NULL);
+--
+-- Create model Author
+--
+CREATE TABLE "my_app_author" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(120) NOT NULL);
+--
+-- Add field author to article
+--
+ALTER TABLE "my_app_article" RENAME TO "my_app_article__old";
+CREATE TABLE "my_app_article" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "content" varchar(200) NOT NULL, "author_id" integer NOT NULL REFERENCES "my_app_author" ("id") DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO "my_app_article" ("content", "author_id", "id") SELECT "content", 1, "id" FROM "my_app_article__old";
+DROP TABLE "my_app_article__old";
+CREATE INDEX "my_app_article_author_id_19c2ced7" ON "my_app_article" ("author_id");
+COMMIT;
+```
 
 ### [MIGRATION_MODULES Migration Settings](https://docs.djangoproject.com/en/2.1/ref/settings/#migration-modules)
 
