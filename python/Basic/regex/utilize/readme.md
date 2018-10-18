@@ -14,6 +14,9 @@
 ```python
 def method_me(str_):
     res = re.search(r'^(.+?)\((.+)\)', str_)
+    if not res:
+        return str_
+
     groups = res.groups()
     return u'{} {}'.format(groups[0].strip(), groups[1].strip())
 
