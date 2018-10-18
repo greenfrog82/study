@@ -12,9 +12,11 @@
 
 [solution_1.py](./solution_1.py)
 ```python
-def solution(str_):
-    res = re.search(r'^(.+)\((.+)\)', str_)
+def method_me(str_):
+    res = re.search(r'^(.+?)\((.+)\)', str_)
     groups = res.groups()
-    
     return u'{} {}'.format(groups[0].strip(), groups[1].strip())
+
+def method_falsetru(str_):
+    return re.sub(r'\s*\((.+?)\)', lambda m: ' ' + m.group(1).strip(), str_)
 ```
