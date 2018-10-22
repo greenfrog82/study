@@ -66,10 +66,9 @@ class TimeStampedModel(models.Model):
 
 부모 클래스는 단독으로 사용할 수 없다.
 
-#### Multi-table inheritance
+#### Multi-table inheritance or Concrete inheritance
 
-??
-다음과 같은 경우를 이야기하는건지 .. 아니면 TimeStampeModel과 같은 모델을 다중 상속하는 건지 ... 아니면 abstract class를 다중상속하는건지 ... 
+다음과 같이 Concreate Class를 상속하는 것으로, 묵시적인 부모와 자식간의 ForigenKey 관계를 포현한다.
 
 ```python
 class TimeStampedModel(models.Model):
@@ -81,20 +80,41 @@ class Flavor(TimeStampedModel):
     title = models.CharField(max_length=200)
 ```
 
+**Pros**
+
+* `Abstract base classes`와 달리 각 모델이 별도의 테이블을 갖는다.
+* 따라서, 부모 모델 또는 자식 모델을 별도로 조회할 수 있다. 
+* 부모 모델로부터 자식모델을 다음과 같은 형태로 조회할 수 있다.  
+    **parent.child**
+
+**Cons**
+
+* 자식 테이블을 조회할 때 모든 부모 테이블에 대한 `join`이 필요해 많은 오버헤드가 발생한다. 
+* 따라서, 이 방법은 가급적 사용하지 않기를 권장한다.
+
 #### Proxy models
 
-?? 이게 뭔지 전혀 ... 모르겠다. 
+하나의 테이블에 대해서 여러개의 모델을 정의할 수 있다.  
+
+**Pros**
+
+* 하나의 테이블에 대해서 여러개의 행위를 정의할 수 있다. 
+
+**Cons**
+
+* 모델의 필드를 변경할 수 없다.  
+
+**TODO**
+
+* Multi-table inheritance의 실제 예제 작성
+* Proxy Model의 실제 예제 작성
 
 다음은 언제 어떤 타입의 상속을 사용해야하는가에 대한 간단한 규칙이다.
 
 * 여러분이 오직 몇 개의 모델들을 가지고 있고 하나 또는 두개의 분명한 필드들이 중복된다면, 굳이 상속이 필요없다. 그저 필요한 필드를 몇 개의 모델에 추가해주면 된다. 
 * 모델간에 반복되는 모델의 유지보수가 혼란이나 의도하지 않는 실수를 야기한다면, 대부분의 경우 **abstract base model**로 공통 필드를 옮겨야한다.  
-* Proxy model ... ??
+* Proxy modeld은 때때로 유용하고 편리한 기능이지만 상속 스타일과는 아주 다르다.
 * 혼란과 상당한 오버헤드를 발생시키기 때문에, 반드시 **multi-table inheritance**는 피해야한다. 차라리 명시적인 `OneToOneFields`나 `ForeignKeys`를 사용해라. 
-
-#### TODO
-
-Proxy Model 실
 
 ### 6.1.3 Model Inheritance in Practice: The TimeStampedModel
 
@@ -577,13 +597,6 @@ http://2scoops.co/three-things-not-to-put-in-database에 따르면 다음 세가
 * Log
     Log를 DB에 쌓는것이 무조건 나쁘다는것은 아니다. Log를 쌓는 장소 Production의 데이터가 저장된 같은 DB일 경우 문제가 된다.  
     차라리 Splunk? 이런 툴이나 전통적인 로깅 방식을 사용해라. 
-
-
-
-    
-
-
-
 
 # Reference
 
