@@ -598,7 +598,127 @@ http://2scoops.co/three-things-not-to-put-in-database에 따르면 다음 세가
     Log를 DB에 쌓는것이 무조건 나쁘다는것은 아니다. Log를 쌓는 장소 Production의 데이터가 저장된 같은 DB일 경우 문제가 된다.  
     차라리 Splunk? 이런 툴이나 전통적인 로깅 방식을 사용해라. 
 
+### 6.2.6 Try to Avoid Using Generic Relations
+
+`generic relations`과 `django.contrib.contenttypes.fields.GenericForeignKey`의 사용을 피하도록하자. 이것을 사용하는것은 문제거리를 안고 다니는것이다.  
+
+`generic relations` 제약사항이 없는 foreign key(GenericForeignKey)를 사용하는 것이다. 이것은 foreign key 제약조건을 사용할 수 있는 프로젝트에서 foreign key 제약조건을 사용할 수 없는 NoSQL 데이터 저장소를 사용하는 것과 같다. 
+
+`generic relations`은 다음 문제들을 일으킨다.
+
+* 모델 간 인덱싱 부족을 쿼리속도가 떨어진다. 
+* 존재하지 않는 레퍼런스를 참조할 수 있어, 테이블 데이터의 integrity가 떨어진다.  
+
+예를들어, 다음과 같이 `GenericForeignKey`를 사용하는 테이블 `GFKModel`을 생성했다고 가정하자. 
+
+```python
+class GFKModel(models.Model):
+    content = models.CharField(max_length=200)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+```
+
+위 모델을 migrate한 SQLite 구문을 보면 다음과 같다. 
+
+```sql
+CREATE TABLE "my_app_gfkmodel" (
+    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "content" varchar(200) NOT NULL, "object_id" integer unsigned NOT NULL, "content_type_id" integer NOT NULL REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED);
+CREATE INDEX "my_app_gfkmodel_content_type_id_725fe405" ON "my_app_gfkmodel" ("content_type_id");
+```
+
+그럼 앞서 이갸기 했던 문제를 확인해보자. 먼저 인덱싱이 없어 쿼리가 느리다는 .. 일단 위 쿼리문을 보면 인덱스를 만들고 있다. 그럼 ... 쿼리할 때 뭐가 느리다는거지? 
+
+```python
+>>> GFKModel.objects.create(content='a', content_object=Article.objects.first())
+<GFKModel: GFKModel object (1)>
+>>> GFKModel.objects.create(content='a', content_object=Sample.objects.first())
+<GFKModel: GFKModel object (2)>
+>>> GFKModel.objects.all()
+<QuerySet [<GFKModel: GFKModel object (1)>, <GFKModel: GFKModel object (2)>]>
+>>> GFKModel.objects.first()
+<GFKModel: GFKModel object (1)>
+>>> GFKModel.objects.first().content_object
+<Article: Article object (1)>
+>>> GFKModel.objects.last().content_object
+<Sample: Sample object (1)>
+```
+
+```python
+>>> connection.queries[9]
+{'sql': 'INSERT INTO "my_app_gfkmodel" ("content", "content_type_id", "object_id") VALUES (\'a\', 13, 1)', 'time': '0.005'}
+```
+
+**TODO** 
+
+Generic Relations에 대해서 더 확인해볼 것. 
+그리고 Casecade.delete의 동작도... (http://www.mysqltutorial.org/mysql-on-delete-cascade/)
+
+
+시간이 지남에 따라 관계를 맺어야하는 경우 `ForeignKey`와 `ManyToMany`를 사용하는 것이 `GenericForeignKey`를 사용하는 것보다 속도와 데이터 유효성 측면에서 더 좋다는것을 알게되었다.  
+
+**CHECK .. 아래 내용 이해안됨.**
+
+`GenericForeignKey`의 사용이 실제로 문제가 되는 경우는 `GenericForeignKey`의 제약되지 않는 기능이 프로젝트의 기본 데이터를 정의하는 방법이 될때이다. 예를들어, 여러모델의 모든 관계를 `GenericForeignKey`를 통해 맺을 때 문제가 된다. 
+
+정리하면, 
+
+* `GenericForeignKey`의 사용을 피하자.
+* `GenericForeignKey`의 사용이 필요하다면, PostgreSQL을 지원하는 필드들 중 이를 지원하는 필드를 사용해서 문제를 해결해라.
+* 이건 정말 무슨 소리 ... ????? 그래도 `GenericForeignKey`의 사용을 피할 수 없다면 third-party 앱을 사용해라. third-party 앱의 isloation은 데이터 cleaner를 지키는데 ㅇ도움을 줄것이다? 뭐야 이거!
+
+## 6.3 The Model _meta API
+
+`_meta` API의 본래 목적은 Django가 자체적으로 사용하기 위한 모델의 추가적인 정보를 저장하는 것이다. 그러나 지금은 개발자들이 충분히 활용할 수 있음이 증명되어 version 1.8부터 문서화 되었다.   
+`_meta` API는 `django.db.models.options.Options`의 객체이다. 
+
+대부분의 프로젝트에서는 필요없는 기능이지만, 여러분이 필요한 경우 다음과 같은 기능을 제공한다.  
+
+* 모델의 필드 목록을 반환한다.
+* 모델에 정의 된 필드의 클래스를 반환한다. 
+* Relation 정보
+* pk 정보
+* abstract, proxy 모델 여부
+
+`_meta` API는 다음 경우에 유용하다.  
+
+* Django모델을 검사하는 툴을 만들 때
+* 특화 된 Django from 라이브러리를 만들 때
+* Django Model의 데이터를 편집하는 admin과 같은 툴을 만들 때
+
+## 6.4 Model Managers
+
+`Model Manager`는 Django ORM을 통해 쿼리를 수행할 때 사용된다. Django는 각 모델을 위한 기본 `Model Manager`를 제공하며, 커스텀 `Model Manager`를 생성할 수도 있다.  
+
+예제만 보면, `Model Manager`를 만들어서 사용하는것이 명시적으로 보일 수 있지만, 실제로는 그렇지 않다. 
+
+먼저, 모델이 상속되었을 때, `Abstract Base Class`의 자식 클래스는 부모 모델의 `Model Manager`를 상속받는다. 하지만 `Concreate Base Class`의 자식 클래스는 그렇지 않다.
+다음으로 여기 내용이 이해 안됨 ....??
+
+6.5 Understanding Fat Models
+
+Fat Models을 사용하면 코드 재사용성이 높아지지만 점점 코드 덩어리가 커져 코드를 이해하기 어려워진다고 한다. 결국 OOP 원칙을 따르라고 하는데, 문제를 잘게 나눠서 해결하는 것이다.  
+이를 위한 방법으로 Mixins과 Stateless Helper Functions을 이야기하고 있다.   
+
+6.5.1 Model Behaviors a.k.a Mixins
+
+모델의 행위를 abstract class에 저으이하는 것을 말한다.  
+
+6.5.2 Stateless Helper Function
+
+모델의 로직을 외부 함수로 옮기는 것인데, stateless라는 것은 결국 input을 던져서 내부에서 바꾸지 않고 반환하여 처리하는 것을 이야기한다. 이를 통해 로직을 격리하고 데이터를 분리한다. 
+
+6.5.3 Mixin vs Helper Functions
+
+어느 것을 사용하냐는 결국 비즈니스와 경험에 따라 ... 우리도 토론해보자.
+
+
+
+
+
 # Reference
+
+
 
 * [Migrations](https://docs.djangoproject.com/en/2.1/topics/migrations/)
 * [Squashing migrations](https://docs.djangoproject.com/en/2.1/topics/migrations/#migration-squashing) 
