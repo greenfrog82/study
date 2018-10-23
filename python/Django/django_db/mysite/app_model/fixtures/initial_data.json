@@ -1,0 +1,42 @@
+[
+    {
+        "model": "app_model.article",
+        "pk": 1,
+        "fields": {
+                "content": "test maker",
+                "created_date": "2018-09-28T01:51:45.560Z",
+                "updated_date": "2018-09-28T01:51:45.567Z"
+            }
+    },
+    {
+        "model": "app_model.article",
+        "pk": 2,
+        "fields": {
+                "content": "test maker 2",
+                "created_date": "2018-09-28T01:51:45.560Z",
+                "updated_date": "2018-09-28T01:51:45.567Z"
+            }
+    },
+    {
+        "model": "auth.user",
+        "pk":1,
+        "fields": {
+            "username": "greenfrog",
+            "password": "1234"
+        }
+    },
+    {
+        "model": "app_model.userprofile",
+        "pk":1,
+        "fields": {
+            "user": 1,
+            "hobby": "a"
+        },
+        "model": "app_model.userprofile",
+        "pk":2,
+        "fields": {
+            "user": 1,
+            "hobby": "b"
+        }
+    }
+]

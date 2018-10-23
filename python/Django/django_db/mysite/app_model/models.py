@@ -5,7 +5,7 @@ from django.utils import timezone
 class Article(models.Model):
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
 
     # def save(self, **kwargs):
     #     import pdb; pdb.set_trace()
@@ -18,8 +18,8 @@ class Point(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    hobby = models.CharField(max_length=16)
+    platform = models.CharField(max_length=10)
+    platform_id = models.CharField(max_length=10)
 
-    class Meta():
-        ordering = ['-id']
+    class Meta:
+        unique_together = ('user', 'platform', 'platform_id')
