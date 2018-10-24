@@ -1,5 +1,7 @@
 # virtualenv, virtualenvwrapper and pyenv
 
+`macOS Mojave version 10.14`
+
 Python은 라이브러리 의존관계를 격리하기 위해서 가상환경을 사용한다. 이때 사용하는것이 `virtualenv`라는 라이브러리이고 이를 사용하기 편하게 하고 확장한 라이브러리가 `virtualwrapper`이다.  
 `pyenv`는 하나의 머신에서 여러개의 파이썬 버전을 충돌없이 사용할 수 있도록 해준다.  
 
@@ -323,6 +325,47 @@ $ pyenv versions
   2.7.15
 * 3.7.0 (set by PYENV_VERSION environment variable)
 ```
+
+### Trouble Shooting
+
+#### zipimport.ZipImportError: can't decompress data; zlib not available
+
+다음과 같이 파이썬을 설치하고자 할 때, **zipimport.ZipImportError**가 발생하면서 설치를 실패한다. 
+
+```bash
+$ pyenv install 3.6.6
+python-build: use openssl from homebrew
+python-build: use readline from homebrew
+Downloading Python-3.6.6.tar.xz...
+-> https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tar.xz
+Installing Python-3.6.6...
+python-build: use readline from homebrew
+
+BUILD FAILED (OS X 10.14 using python-build 20180424)
+
+Inspect or clean up the working tree at /var/folders/4_/lpcky64949bft1yncpb0l8zh0000gn/T/python-build.20181024223850.19571
+Results logged to /var/folders/4_/lpcky64949bft1yncpb0l8zh0000gn/T/python-build.20181024223850.19571.log
+
+Last 10 log lines:
+  File "/private/var/folders/4_/lpcky64949bft1yncpb0l8zh0000gn/T/python-build.20181024223850.19571/Python-3.6.6/Lib/ensurepip/__main__.py", line 5, in <module>
+    sys.exit(ensurepip._main())
+  File "/private/var/folders/4_/lpcky64949bft1yncpb0l8zh0000gn/T/python-build.20181024223850.19571/Python-3.6.6/Lib/ensurepip/__init__.py", line 204, in _main
+    default_pip=args.default_pip,
+  File "/private/var/folders/4_/lpcky64949bft1yncpb0l8zh0000gn/T/python-build.20181024223850.19571/Python-3.6.6/Lib/ensurepip/__init__.py", line 117, in _bootstrap
+    return _run_pip(args + [p[0] for p in _PROJECTS], additional_paths)
+  File "/private/var/folders/4_/lpcky64949bft1yncpb0l8zh0000gn/T/python-build.20181024223850.19571/Python-3.6.6/Lib/ensurepip/__init__.py", line 27, in _run_pip
+    import pip._internal
+zipimport.ZipImportError: can't decompress data; zlib not available
+make: *** [install] Error 1
+```
+
+이 문제를 해결하는 방법은 다음 사이트에 잘 소개되어있다.  
+[pyenv - Suggested build environment](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
+
+다음과정을 따라 문제를 해결해보자. 
+
+>$ brew install openssl readline sqlite3 xz zlib
+>$ sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
 
 ## pyenv-virtualenvwrapper
 
