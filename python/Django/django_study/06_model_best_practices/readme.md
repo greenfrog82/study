@@ -598,6 +598,8 @@ http://2scoops.co/three-things-not-to-put-in-database에 따르면 다음 세가
     Log를 DB에 쌓는것이 무조건 나쁘다는것은 아니다. Log를 쌓는 장소 Production의 데이터가 저장된 같은 DB일 경우 문제가 된다.  
     차라리 Splunk? 이런 툴이나 전통적인 로깅 방식을 사용해라. 
 
+- 보안적인 이슈 또는 데이터의 안정성 이슈로 Images, files 그리고 이진데이터를 DB 쓰는 경우도 있다. 
+
 ### 6.2.6 Try to Avoid Using Generic Relations
 
 `generic relations`과 `django.contrib.contenttypes.fields.GenericForeignKey`의 사용을 피하도록하자. 이것을 사용하는것은 문제거리를 안고 다니는것이다.  
