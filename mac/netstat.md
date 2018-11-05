@@ -64,6 +64,55 @@ netstat -anp tcp | grep 3306
 tcp46      0      0  *.3306                 *.*                    LISTEN
 ```
 
+### -p (protocol)
+
+특정 프로토콜의 소켓 정보만을 표시한다. 프로토콜의 이름 또는 이명은 `/etc/protocols`에 정의되어있다. 
+
+예를들어, `tcp` 프로토콜의 소켓 정보만을 표시해보자. 
+
+```bash
+$ netstat -p tcp
+Active Internet connections
+Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)
+tcp4       0      0  localhost.12443        localhost.50073        FIN_WAIT_2
+tcp4      31      0  localhost.50073        localhost.12443        CLOSE_WAIT
+tcp4       0      0  localhost.12443        localhost.50072        FIN_WAIT_2
+tcp4      31      0  localhost.50072        localhost.12443        CLOSE_WAIT
+tcp4       0      0  localhost.12443        localhost.50071        FIN_WAIT_2
+...
+```
+
+### -v 
+
+`netstat`는 기본적으로 다음 정보들을 출력한다. 
+
+* Protocol
+* Recv-Q
+* Send-Q
+* Local Address
+* Foreign Address
+* (state)
+
+`-v`옵션을 사용하면 위 정보들 이외에 추가적으로 다음 정보들을 출력한다. 
+
+* rhiwat
+* shiwat
+* pid
+* epid
+* state
+* options
+
+```bash
+$ netstat -vp tcp
+Active Internet connections
+Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)     rhiwat shiwat    pid   epid  state    options
+tcp4       0      0  localhost.12443        localhost.50160        FIN_WAIT_2  405894 146988    356      0 0x21b1 0x00000004
+tcp4      31      0  localhost.50160        localhost.12443        CLOSE_WAIT  407512 146988    703      0 0x0122 0x00000008
+tcp4       0      0  localhost.12443        localhost.50156        FIN_WAIT_2  403857 146988    356      0 0x21b1 0x00000004
+tcp4      31      0  localhost.50156        localhost.12443        CLOSE_WAIT  405309 146988    703      0 0x0122 0x00000008
+tcp4       0      0  localhost.12443        localhost.50151        FIN_WAIT_2  407657 146988    356      0 0x21b1 0x00000004
+```
+
 ## How to find process using specific port
 
 `netstat`을 통해 특정 포트를 사용하는 `pid`를 찾는 방법에 대해서 알아보자.   
@@ -88,9 +137,6 @@ $ kill -9 41657
 $ netstat -vanp tcp | grep 8080
 $
 ```
-
-
-
 
 # Reference
 
