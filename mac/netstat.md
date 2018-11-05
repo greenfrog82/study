@@ -86,6 +86,7 @@ tcp4       0      0  *.8080                 *.*                    LISTEN      1
 ```bash
 $ kill -9 41657
 $ netstat -vanp tcp | grep 8080
+$
 ```
 
 
