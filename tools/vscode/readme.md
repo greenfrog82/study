@@ -32,10 +32,7 @@ Linting, Debugging (multi-threaded, remote), Intellisense, code formatting, refa
 
 ## Git 
 
-### Show Markdown preview 
+### ShortCut
 
-Ctrl + K + V
-
-
-
-
+* `CMD + b` : Open/Close Exporer 
+* `CMD + p` : Find file
