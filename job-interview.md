@@ -15,6 +15,10 @@
 * Binary Search
 * Quick Sort
 
+## 웹 기초 
+
+* [URL Encoding에 대해서 설명하시오.](./web/url_encoding.md)
+
 ## Python
 
 * mutable과 immutable sequence를 각각 나열하시오.
