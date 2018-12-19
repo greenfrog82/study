@@ -56,6 +56,7 @@
     }, 0);
     console.log('Bye');
     ```
+* [Attribute vs Property](https://github.com/greenfrog82/TIL_JavaScript/tree/master/javascript/attr_vs_props)
 
 ## DB
 
