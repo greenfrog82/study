@@ -58,6 +58,13 @@
     ```
 * [Attribute vs Property](https://github.com/greenfrog82/TIL_JavaScript/tree/master/javascript/attr_vs_props)
 
+* SPA 를 작성하는 방식에 대해서 아는 대로 설명.
+    * 전통적인 링크, form submit 방식.
+    * AJAX 방식.
+    * hash(#) 이용하는 방식.
+    * pjax 방식.
+    * [참고](https://poiemaweb.com/js-spa)
+
 ## DB
 
 ### General
