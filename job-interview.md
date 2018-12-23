@@ -98,12 +98,19 @@
 
 ## Windows 개발자
 
+* [SOLID 원칙에 대해서 설명하시오.](http://www.nextree.co.kr/p6960/) 
+* Design Pattern
+    * Template Method Pattern
+    * Decorator Pattern
+    * State Pattern
+* [C/C++의 Pointer와 Reference의 차이점.](https://github.com/greenfrog82/study/tree/master/cpp/pointer_and_reference)
+* IPC 방식에 대해서 아는대로 설명하시오. 
+* Windows에서 Process와 Thread의 차이점에 대해서 설명하시오. 
 * UI Thread와 Worker Thread의 차이점. 
     * Worker Thread에서 데이터를 처리한 후 화면을 어떻게 갱신할 수 있는지?
-* [C/C++의 Pointer와 Reference의 차이점.](https://github.com/greenfrog82/study/tree/master/cpp/pointer_and_reference)
-* IPC 방식에 대해서 아는데로 설명하시오. 
-* Windows에서 Process와 Thread의 차이점에 대해서 설명하시오. 
-
+* Singleton에 대해서 설명하시오.
+    * [Double Checked Locking](https://en.wikipedia.org/wiki/Double-checked_locking)에 대해서 설명하시오.
+* Message Loop에 대해서 설명하시오. 
 
 ## Coding Test
 
