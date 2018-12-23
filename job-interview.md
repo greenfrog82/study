@@ -57,7 +57,12 @@
     console.log('Bye');
     ```
 * [Attribute vs Property](https://github.com/greenfrog82/TIL_JavaScript/tree/master/javascript/attr_vs_props)
-
+* [Function.prototype.call()과 Function.prototype.apply()에 대해서 설명하시오.](https://github.com/greenfrog82/study/tree/master/javascript/apply%2Ccall)
+* [Number vs parseInt](https://github.com/greenfrog82/study/tree/master/javascript/convert_from_string_to_number)
+* [Scope](https://github.com/greenfrog82/study/tree/master/javascript/scope)
+    * Function Scope vs Block Scope
+    * Lexical Scope
+* class vs Prototype class
 * SPA 를 작성하는 방식에 대해서 아는 대로 설명.
     * 전통적인 링크, form submit 방식.
     * AJAX 방식.
@@ -87,6 +92,15 @@
     * Steateless에 대해서 설명하는지 확인.
     * 이를 설명했다면, 이를 구현하기 위한 방법에 대해서 설명요구. 
 * HATEOAS(Hypermedia as the engine of application state)에 대해서 설명하시오. 
+
+## Windows 개발자
+
+* UI Thread와 Worker Thread의 차이점. 
+    * Worker Thread에서 데이터를 처리한 후 화면을 어떻게 갱신할 수 있는지?
+* [C/C++의 Pointer와 Reference의 차이점.](https://github.com/greenfrog82/study/tree/master/cpp/pointer_and_reference)
+* IPC 방식에 대해서 아는데로 설명하시오. 
+* Windows에서 Process와 Thread의 차이점에 대해서 설명하시오. 
+
 
 ## Coding Test
 
