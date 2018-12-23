@@ -4,11 +4,14 @@
 
 ### 자료구조
 
+* [Time Complexity](https://wiki.python.org/moin/TimeComplexity)
 * Hash
     * 데이터 검색 시 시간 복잡도
         * key 충돌이 없는 경우: O(1)
         * key 충돌이 있는 경우: O(n)
     * 데이터 삽입 시 시간 복잡도 
+        * key 충돌이 없는 경우: O(1)
+        * key 충돌이 있는 경우: O(n)
 
 ### 알고리즘
 
