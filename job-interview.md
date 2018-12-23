@@ -104,5 +104,5 @@
 
 ## Coding Test
 
-* [배열에서 중복된 원소 찾기](DailyCoding/etc/find_a_duplicated_value/readme.md)
-* [덧셈의 합에 대응하는 중복되지 않는 배열 원소 구하기](DailyCoding/tree/master/etc/find_numbers_of_sum_equals_with_param/readme.md)
+* [배열에서 중복된 원소 찾기](https://github.com/greenfrog82/DailyCoding/tree/master/etc/find_a_duplicated_value)
+* [덧셈의 합에 대응하는 중복되지 않는 배열 원소 구하기](https://github.com/greenfrog82/DailyCoding/tree/master/etc/find_numbers_of_sum_equals_with_param)
