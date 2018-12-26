@@ -15,8 +15,8 @@
 
 ### 알고리즘
 
-* Binary Search
-* Quick Sort
+* Binary Search O(logn)
+* Quick Sort O(nlogn)
 
 ## 웹 기초 
 
@@ -98,6 +98,7 @@
 
 ## Windows 개발자
 
+* 다형성에 대해서 설명하시오. 
 * [SOLID 원칙에 대해서 설명하시오.](http://www.nextree.co.kr/p6960/) 
 * Design Pattern
     * Template Method Pattern
