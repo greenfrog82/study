@@ -22,12 +22,22 @@
 
 * [URL Encoding에 대해서 설명하시오.](./web/url_encoding.md)
 
+## Service
+
+### API 연동 시
+
+* API 서비스 연동 시 time-out에 대해서 고려를 해야하는데 이를 고려해야하는 이유가 무엇인가?
+
 ## Python
 
 * mutable과 immutable sequence를 각각 나열하시오.
     * mutable sequence : list, bytearray, array.array, collections.deque, and memoryview
     * immutable sequence : tuple, str, and bytes
 * iterator vs generator
+* list가 있는데 tuple이 존재하는 이유? 
+    * list는 mutable, tuple은 immutable
+    * list는 homogeneous 아이템들을 저장하고, tuple은 heterogeneous 아이템들을 저장한다. 
+    * list는 hashable하지 않기 때문에 dictionary나 set에서 사용될 수 없지만, tuple은 hashable하기 때문에 사용될 수 있다.
 
 ## Django
 
