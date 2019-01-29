@@ -18,26 +18,63 @@
 * Binary Search O(logn)
 * Quick Sort O(nlogn)
 
+## 운영체제
+
+* IPC 방식에 대해서 아는대로 설명하시오. 
+* Process와 Thread의 차이점에 대해서 설명하시오.
+    * Memory 공유 부분
+* Thread
+    * Race Condition이 무엇인가?
+    * Critical Section이 무엇인가?
+    * Live Lock과 Dead Lock이 무엇인가?
+    * 스케쥴러에 대해서
+        * Time Slice
+        * Round Robin
+
 ## 웹 기초 
 
 * [URL Encoding에 대해서 설명하시오.](./web/url_encoding.md)
 
-## Service
+## 보안
 
-### API 연동 시
+* CSRF에 대해서 설명하시오. 
 
-* API 서비스 연동 시 time-out에 대해서 고려를 해야하는데 이를 고려해야하는 이유가 무엇인가?
+## Design
+
+* 모바일, 테블릿, 데스크탑 앱을 운영하는 백엔드 서비스 개발 시
+    * 서비스 개발을 어떤 기준으로 할 것인가?
+        * 모바일, 테블릿, 데스크탑 마다 보여주는 정보의 양, 그리고 트래픽등을 고려해서 시스템을 설계할 수 있는지 확인
+* API 서비스 개발 중 CPU Intensive한 작업을 요하는 경우가 있다.
+    * 이러한 경우 어떤 문제가 발생할 수 있는가?
+        * API 서비스가 처리할 수 있는 요청의 수가 떨어질 것임.
+        * CPU 연산이 많아짐에 따라 응답속도가 느려질 수 있음.
+    * 이 문제를 어떻게 해결 할 것인가?
+        * Celery와 같은 형태의 Async 처리
+        * Celery같은 것을 사용하는 경우 Job Queue에 ORM객체를 넣어서 처리하는것이 좋은가? 아니면 ID를 전달해서 처리하는것이 좋은가? 그 이유는?
+* API 서비스 연동 시 time-out에 대해서 고려를 해야하는데, 이를 고려해야하는 이유가 무엇인가?
+    * 클라이언트 요청을 더 많이 소화하기 위한 내용이 고려된 대답 필요.
+    * time-out을 고려했다면, 
+        * DB를 다른 request가 최대한 활용하게 하려면 어떻게 해야할까? (close connection)
+        * 클라이언트 요청은 여전히 못받고 있을텐데 이에 대한 대응방안이 있는가?
+            * 응답을 반드시 받아야하는 경우는 특별한 방법이 없어보임.
+            * 하지만 응답을 바로 받지 않는다면, Async로 처리가능. 
 
 ## Python
 
 * mutable과 immutable sequence를 각각 나열하시오.
     * mutable sequence : list, bytearray, array.array, collections.deque, and memoryview
     * immutable sequence : tuple, str, and bytes
+* dunder method가 무엇이며, 왜 필요한지에 대해서 설명하시오.
+* context manager에 대해서 설명하시오.
 * iterator vs generator
+    * yield에 대해서
 * list가 있는데 tuple이 존재하는 이유? 
     * list는 mutable, tuple은 immutable
     * list는 homogeneous 아이템들을 저장하고, tuple은 heterogeneous 아이템들을 저장한다. 
     * list는 hashable하지 않기 때문에 dictionary나 set에서 사용될 수 없지만, tuple은 hashable하기 때문에 사용될 수 있다.
+* @staticmethod와 @classmethod의 차이점에 대해서
+* MRO(Method Resolution Order)에 대해서
+* __str__(고객)과 __repr__(개발)의 차이점에 대해서
 
 ## Django
 
@@ -48,6 +85,7 @@
 ### TDD
 
 * TestCase와 TransactionTestCase의 차이점을 설명하시오.
+* TDD개발 방식에 대해서 설명하시오.
 
 ### ORM
 
@@ -75,6 +113,9 @@
 * [Scope](https://github.com/greenfrog82/study/tree/master/javascript/scope)
     * Function Scope vs Block Scope
     * Lexical Scope
+* Closure 에 대해서 설명하시오.
+    * Curry에 대해서 설명하시오.
+    * Memoization에 대해서 설명하시오.
 * class vs Prototype class
 * SPA 를 작성하는 방식에 대해서 아는 대로 설명.
     * 전통적인 링크, form submit 방식.
@@ -106,7 +147,7 @@
     * 이를 설명했다면, 이를 구현하기 위한 방법에 대해서 설명요구. 
 * HATEOAS(Hypermedia as the engine of application state)에 대해서 설명하시오. 
 
-## Windows 개발자
+## OOP
 
 * 다형성에 대해서 설명하시오. 
 * [SOLID 원칙에 대해서 설명하시오.](http://www.nextree.co.kr/p6960/) 
@@ -114,16 +155,24 @@
     * Template Method Pattern
     * Decorator Pattern
     * State Pattern
+* Singleton에 대해서 설명하시오.
+    * [Double Checked Locking](https://en.wikipedia.org/wiki/Double-checked_locking)에 대해서 설명하시오.
+
+## Windows 개발자
+
 * [C/C++의 Pointer와 Reference의 차이점.](https://github.com/greenfrog82/study/tree/master/cpp/pointer_and_reference)
-* IPC 방식에 대해서 아는대로 설명하시오. 
 * Windows에서 Process와 Thread의 차이점에 대해서 설명하시오. 
 * UI Thread와 Worker Thread의 차이점. 
     * Worker Thread에서 데이터를 처리한 후 화면을 어떻게 갱신할 수 있는지?
-* Singleton에 대해서 설명하시오.
-    * [Double Checked Locking](https://en.wikipedia.org/wiki/Double-checked_locking)에 대해서 설명하시오.
 * Message Loop에 대해서 설명하시오. 
 
 ## Coding Test
 
 * [배열에서 중복된 원소 찾기](https://github.com/greenfrog82/DailyCoding/tree/master/etc/find_a_duplicated_value)
 * [덧셈의 합에 대응하는 중복되지 않는 배열 원소 구하기](https://github.com/greenfrog82/DailyCoding/tree/master/etc/find_numbers_of_sum_equals_with_param)
+
+
+# Reference
+
+* [이직일기](http://raccoonyy.github.io/diary-of-changing-job/)
+* https://code.i-harness.com/ko-kr/q/213a1
