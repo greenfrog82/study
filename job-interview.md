@@ -75,6 +75,27 @@
 * @staticmethod와 @classmethod의 차이점에 대해서
 * MRO(Method Resolution Order)에 대해서
 * __str__(고객)과 __repr__(개발)의 차이점에 대해서
+* ListComp의 scope 이슈 
+    * 2.x
+        ```python
+        In [1]: x = 'test'
+
+        In [2]: [x for x in range(10)]
+        Out[2]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        In [3]: x
+        Out[3]: 9
+        ```
+    * 3.x 
+       ```python
+       In [1]: x = 'test'
+
+       In [2]: [x for x in range(10)]
+       Out[2]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+       In [3]: x
+       Out[3]: 'test'
+       ```
 
 ## Django
 
@@ -146,6 +167,10 @@
     * Steateless에 대해서 설명하는지 확인.
     * 이를 설명했다면, 이를 구현하기 위한 방법에 대해서 설명요구. 
 * HATEOAS(Hypermedia as the engine of application state)에 대해서 설명하시오. 
+
+## Git 
+
+* 소스코드가 이미 origin에 올라가있는 상태에서 rebase를 하면 안되는 이유에 대해서?
 
 ## OOP
 
