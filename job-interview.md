@@ -26,10 +26,18 @@
 * Thread
     * Race Condition이 무엇인가?
     * Critical Section이 무엇인가?
+        * 배타적 접근(한번에 하나의 쓰레드만 접근)이 요구되는 공유 리소스 
+        * 메모리 구조를 4단계(코드, 데이터, 힙, 스택)으로 나뉘다고 할 때, 어떤 영역이 공유 리소스가 되는가? (데이터와 힙)
+        * 크리티컬 섹션에 대한 lock을 수행하지 않았을 경우, 발생하는 문제를 설명해보시오. 
     * Live Lock과 Dead Lock이 무엇인가?
     * 스케쥴러에 대해서
-        * Time Slice
         * Round Robin
+            * 우선순위 스케쥴링 알고리즘에 동일한 우선순위를 갖은 프로세스에 대해서 Time-Slice를 적용한것.
+            * 라운드 로빈 방식에서 스케쥴러가 동작하는 경우는 언제인가?
+                * 타임 슬라이스 마다
+                * 프로세스의 생성과 소멸
+                * 프로세스가 I/O 작업 중이거나 블록(sleep)되어 있을 때
+        
 
 ## 웹 기초 
 
@@ -38,6 +46,7 @@
 ## 보안
 
 * CSRF에 대해서 설명하시오. 
+* CORS에 대해서 설명하시오. 
 
 ## Design
 
@@ -96,6 +105,19 @@
        In [3]: x
        Out[3]: 'test'
        ```
+* 함수의 디폴트 인자에 함수를 전달하는 경우 문제점
+   ```python
+    >>> def perform(num, arr=[1,2,3]):
+    ...     arr.append(num)
+    ...     return arr
+
+    >>> perform(10)
+    [1, 2, 3, 10]
+
+
+    >>> perform(12)
+    [1, 2, 3, 10, 12]
+    ```
 
 ## Django
 
@@ -176,11 +198,13 @@
 
 * 다형성에 대해서 설명하시오. 
 * [SOLID 원칙에 대해서 설명하시오.](http://www.nextree.co.kr/p6960/) 
+* Extens와 Composite 중에 객체간 결합도를 낮출 수 있는 방법이 무엇이며 왜 그런지 설명하시오.
 * Design Pattern
     * Template Method Pattern
     * Decorator Pattern
     * State Pattern
 * Singleton에 대해서 설명하시오.
+    * https://jeong-pro.tistory.com/86
     * [Double Checked Locking](https://en.wikipedia.org/wiki/Double-checked_locking)에 대해서 설명하시오.
 
 ## Windows 개발자
