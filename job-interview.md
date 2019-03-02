@@ -75,6 +75,8 @@
     * immutable sequence : tuple, str, and bytes
 * dunder method가 무엇이며, 왜 필요한지에 대해서 설명하시오.
 * context manager에 대해서 설명하시오.
+    * 언제 사용하였는지?
+    * 어떻게 구현되는지?
 * iterator vs generator
     * yield에 대해서
 * list가 있는데 tuple이 존재하는 이유? 
@@ -139,7 +141,9 @@
     * ForeignKey
     * OneToOne
     * ManyToMany
-    
+* select_for_update()
+* ForeignKey.on_delete은 무엇을 하기위해 사용되는지 설명하시오.
+
 ## JavaScript
 
 * 다음 코드가 어떻게 동작할지 설명하시오. (대답했다면, 이벤트 루프와 연결지어서 답변 받을것)
@@ -175,6 +179,9 @@
 * Union
     * Union vs Union All
     * Union을 어떤 경우 활용하였는지 설명하시오. 
+* Transaction Isolation Level에 대해서 설명하시오.
+    * 표준 SQL에 있는 Isolation Level을 설명하시오.
+    * read committed와 repeatable read는 각각 언제 사용할 수 있는지 설명하시오.
 
 ### MySQL
 
