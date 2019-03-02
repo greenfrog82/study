@@ -143,6 +143,9 @@
     * ManyToMany
 * select_for_update()
 * ForeignKey.on_delete은 무엇을 하기위해 사용되는지 설명하시오.
+* N+1 Query Problem이 무엇인지 설명하시오.
+    * 해결 방법은?
+    * select_related vs prefetch_related에 대해서 설명하시오.
 
 ## JavaScript
 
