@@ -146,6 +146,9 @@
 * N+1 Query Problem이 무엇인지 설명하시오.
     * 해결 방법은?
     * select_related vs prefetch_related에 대해서 설명하시오.
+* class Meta에 대해서 설명하시오.
+    * abstract = True의 의미가 무엇인가?
+    * abstract = True를 한 모델을 상속하는 것과 일반 모델을 상속하는 것의 차이가 무엇인가?
 
 ## JavaScript
 
