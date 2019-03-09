@@ -188,6 +188,11 @@
 * Transaction Isolation Level에 대해서 설명하시오.
     * 표준 SQL에 있는 Isolation Level을 설명하시오.
     * read committed와 repeatable read는 각각 언제 사용할 수 있는지 설명하시오.
+        * tx-1이 read committed일때 update를 실행하였고, tx-2가 read committed일때 update를 실행했다. 그리고 tx-1이 commit을 하고 tx-2가 commit을 하면 어떤 트랜잭션의 변경사항이 반영되는가?
+        * tx-1이 repeatable read일때 update를 실행하였고, tx-2가 read committed일때 update를 실행했다. 그리고 tx-1이 commit을 하고 tx-2가 commit을 하면 어떤 트랜잭션의 변경사항이 반영되는가?
+    * select ... for update의 용도
+        * tx-1에서 select .. for update를 사용하여 1번 row를 lock을 걸었다. 그리고 tx-2가 같은 row를 update하려고 한다. 이때 tx-2는 어떤 상태가 되는가?
+    * lock based vs MVCC에 대해서 설명하시오.
 
 ### MySQL
 
