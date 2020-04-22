@@ -77,8 +77,7 @@
 * context manager에 대해서 설명하시오.
     * 언제 사용하였는지?
     * 어떻게 구현되는지?
-* iterator vs generator
-    * yield에 대해서
+* iterator vs generator (https://data-flair.training/blogs/python-generator-vs-iterator/)
 * list가 있는데 tuple이 존재하는 이유? 
     * list는 mutable, tuple은 immutable
     * list는 homogeneous 아이템들을 저장하고, tuple은 heterogeneous 아이템들을 저장한다. 
