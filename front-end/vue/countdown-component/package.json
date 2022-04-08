@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "countdown": "^2.6.0",
-    "moment": "^2.18.1",
+    "moment": "^2.29.2",
     "moment-countdown": "0.0.3",
     "vue": "^2.3.3"
   },
